@@ -21,6 +21,7 @@ group :assets do
 end
 
 gem "rspec-rails", ">= 2.9.0.rc2", :group => [:development, :test]
+gem "fabrication", "~> 1.3.2", :group => [:development, :test]
 
 group :development do
   gem "haml-rails", ">= 0.3.4"
@@ -48,7 +49,7 @@ end
 
 group :test do
   gem "capybara", ">= 1.1.2"
-  gem "cucumber-rails", ">= 1.3.0"
+  gem "cucumber-rails", ">= 1.3.0", :require => false
   gem "email_spec", ">= 1.2.1"
   gem "mongoid-rspec", ">= 1.4.4"
   gem "database_cleaner", ">= 0.7.2"

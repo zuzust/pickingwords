@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem "haml", ">= 3.1.4"
 gem "simple_form"
 gem "will_paginate", ">= 3.0.3"
+gem "will_paginate_mongoid", ">= 1.0.5"
 gem "devise", ">= 2.1.0.rc"
 gem "mongoid", ">= 2.4.8"
 gem "bson_ext", ">= 1.6.2"
@@ -43,8 +44,11 @@ group :development do
   gem "guard-bundler", ">= 0.1.3"
   gem "guard-rails", ">= 0.0.3"
   gem "guard-livereload", ">= 0.3.0"
+  gem "rack-livereload", ">= 0.3.6"
   gem "guard-rspec", ">= 0.4.3"
   gem "guard-cucumber", ">= 0.6.1"
+  gem "guard-spork", ">= 0.6.1"
+  gem "guard-coffeescript", "~> 0.5.7"
 end
 
 group :test do
@@ -54,4 +58,5 @@ group :test do
   gem "mongoid-rspec", ">= 1.4.4"
   gem "database_cleaner", ">= 0.7.2"
   gem "launchy", ">= 2.1.0"
+  gem "spork-rails", ">= 3.2.0"
 end

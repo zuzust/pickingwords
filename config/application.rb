@@ -23,6 +23,7 @@ module Pickingwords
       g.view_specs false
       g.helper_specs false
       
+      # See http://fabricationgem.org/#!rails-3
       g.test_framework      :rspec, :fixture => true
       g.fixture_replacement :fabrication
     end

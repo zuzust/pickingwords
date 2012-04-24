@@ -2,3 +2,7 @@
   User: #{@user.name}
 %p
   Email: #{@user.email if @user.email}
+%p
+  Translated chars: #{@user.profile.trans_chars}
+%br/
+= link_to 'Back', root_path

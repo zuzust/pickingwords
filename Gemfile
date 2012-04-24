@@ -59,4 +59,5 @@ group :test do
   gem "database_cleaner", ">= 0.7.2"
   gem "launchy", ">= 2.1.0"
   gem "spork-rails", ">= 3.2.0"
+  gem "faker", "~> 1.0.1"
 end

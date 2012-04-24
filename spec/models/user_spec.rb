@@ -14,7 +14,7 @@ describe User do
   it "should create a new instance given a valid attribute" do
     User.create!(@attr)
   end
-  
+
   it "should require an email address" do
     no_email_user = User.new(@attr.merge(:email => ""))
     no_email_user.should_not be_valid
@@ -62,6 +62,7 @@ describe User do
     it "should have a password confirmation attribute" do
       @user.should respond_to(:password_confirmation)
     end
+
   end
   
   describe "password validations" do
@@ -96,6 +97,22 @@ describe User do
 
     it "should set the encrypted password attribute" do
       @user.encrypted_password.should_not be_blank
+    end
+
+  end
+  
+  describe "profile" do
+
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+
+    it "should be created on instance creation" do
+      @user.should respond_to(:profile)
+    end
+
+    it "should initialize translated chars to zero" do
+      @user.profile.trans_chars.should == 0
     end
 
   end

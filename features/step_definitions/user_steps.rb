@@ -19,7 +19,7 @@ end
 def create_user
   create_visitor
   delete_user
-  @user = Fabricate(:user, email: @visitor[:email])
+  @user = Fabricate(:user, :email => @visitor[:email])
 end
 
 def delete_user
@@ -186,6 +186,5 @@ Then /^I should see an account edited message$/ do
 end
 
 Then /^I should see my name$/ do
-  create_user
   page.should have_content @user[:name]
 end

@@ -1,4 +1,4 @@
-h1. Pickingwords
+h1. Pickingwords !https://secure.travis-ci.org/zuzust/pickingwords.png?branch=master(Build Status)!:http://travis-ci.org/zuzust/pickingwords
 
 Store and manage your tiny translations in a simple and funny way.
 

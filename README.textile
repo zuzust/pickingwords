@@ -1,4 +1,4 @@
-h1. Pickingwords !https://secure.travis-ci.org/zuzust/pickingwords.png?branch=master(Build Status)!:http://travis-ci.org/zuzust/pickingwords
+h1. Pickingwords !https://secure.travis-ci.org/zuzust/pickingwords.png(Build Status)!:http://travis-ci.org/zuzust/pickingwords !https://gemnasium.com/zuzust/pickingwords.png(Dependency Status)!:https://gemnasium.com/zuzust/pickingwords
 
 Store and manage your tiny translations in a simple and funny way.
 
@@ -16,7 +16,7 @@ h2. Dependencies
 
 To use this application, you will need:
 
-* The Ruby language (version 1.9.2 or newer)
+* The Ruby language (version 1.9.3 or newer)
 * Rails (version 3.2.3 or newer)
 
 h2. Installing the Application

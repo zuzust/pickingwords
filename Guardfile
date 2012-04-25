@@ -58,12 +58,16 @@ group :backend do
     watch('app/controllers/application_controller.rb')  { "spec/controllers" }
     # Capybara request specs
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
+
+    watch(%r{^spec/fabricators/(.+)_fabricator\.rb$})   { |m| ["spec/models/#{m[1]}_spec.rb", "spec/controllers/#{m[1]}s_controller_spec.rb"] }
   end
 
   guard 'cucumber', :cli => "--no-profile --color --format progress --strict --drb", :all_on_start => false, :all_after_pass => false do
     watch(%r{^features/.+\.feature$})
     watch(%r{^features/support/.+$})                      { 'features' }
     watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
+    
+    watch(%r{^spec/fabricators/(.+)\.rb$})                { 'features' }
   end
 
 end

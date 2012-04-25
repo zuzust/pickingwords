@@ -48,7 +48,7 @@ group :development do
   gem "guard-rspec", ">= 0.4.3"
   gem "guard-cucumber", ">= 0.6.1"
   gem "guard-spork", ">= 0.6.1"
-  gem "guard-coffeescript", "~> 0.5.7"
+  gem "guard-coffeescript", ">= 0.6.0"
 end
 
 group :test do

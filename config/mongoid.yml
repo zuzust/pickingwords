@@ -1,3 +1,5 @@
+allow_dynamic_fields: false
+
 development:
   host: localhost
   database: pickingwords_development

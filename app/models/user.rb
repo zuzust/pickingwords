@@ -42,9 +42,11 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
   field :name
-  index :name, unique: true
 
   embeds_one :profile, class_name: "UserProfile"
+
+  index :name, unique: true
+
   before_create { |user| user.build_profile }
 
   validates_presence_of :name

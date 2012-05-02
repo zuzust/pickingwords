@@ -1,0 +1,9 @@
+= simple_form_for(@tracked_word) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.simple_fields_for :word do |fw|
+      = fw.input :name
+
+  .form-actions
+    = f.button :submit

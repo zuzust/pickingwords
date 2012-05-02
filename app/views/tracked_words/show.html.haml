@@ -1,0 +1,22 @@
+%h3 Word
+
+%br
+
+%p
+  %b Name:
+  = @tracked_word.name
+%p
+  %b Searches:
+  = @tracked_word.searches
+%p
+  %b Picks:
+  = @tracked_word.picks
+%p
+  %b Favs:
+  = @tracked_word.favs
+
+%br
+
+= link_to 'Edit', edit_tracked_word_path(@tracked_word)
+\|
+= link_to 'Back', tracked_words_path

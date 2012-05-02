@@ -1,3 +1,15 @@
-%h3 Home
-- @users.each do |user|
-  %p User: #{link_to user.name, user}
+%table.table.table-bordered.table-striped
+  %tr
+    %th Name
+    %th Searches
+    %th Picks
+    %th Favs
+    %th Updated at
+
+  - @tracked_words.each do |tracked_word|
+    %tr
+      %td= tracked_word.name
+      %td= tracked_word.searches
+      %td= tracked_word.picks
+      %td= tracked_word.favs
+      %td= tracked_word.updated_at

@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @users = User.all
+    @tracked_words = TrackedWord.all
   end
 end

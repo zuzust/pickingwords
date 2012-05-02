@@ -1,0 +1,17 @@
+%h3 Words
+
+%br
+
+%table.table.table-bordered.table-striped
+  %tr
+    %th Name
+    %th Searches
+    %th Picks
+    %th Favs
+    %th
+
+  = render @tracked_words
+
+%br
+
+= link_to 'New Word', new_tracked_word_path, :class => 'btn'

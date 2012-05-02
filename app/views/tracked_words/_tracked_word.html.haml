@@ -1,0 +1,11 @@
+%tr
+  %td= tracked_word.name
+  %td= tracked_word.searches
+  %td= tracked_word.picks
+  %td= tracked_word.favs
+  %td
+    = link_to 'Show', tracked_word
+    \|
+    = link_to 'Edit', edit_tracked_word_path(tracked_word)
+    \|
+    = link_to 'Destroy', tracked_word, :confirm => 'Are you sure?', :method => :delete

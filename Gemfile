@@ -60,4 +60,5 @@ group :test do
   gem "launchy", ">= 2.1.0"
   gem "spork-rails", ">= 3.2.0"
   gem "faker", "~> 1.0.1"
+  gem "random-word", "~> 1.3.0"
 end

@@ -7,8 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 puts 'EMPTY THE MONGODB DATABASE'
 Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
+
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'bart', :email => 'bart@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc
+user = User.create! :name => 'devel', :email => 'devel@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc
 puts 'New user created: ' << user.name
-user2 = User.create! :name => 'hommer', :email => 'hommer@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc
-puts 'New user created: ' << user2.name
+
+puts 'SETTING UP SAMPLE TRACKED WORDS'
+twords = []
+twords << TrackedWord.create!(:word_attributes => { :name => "awesome" })
+twords << TrackedWord.create!(:word_attributes => { :name => "cumbersome" })
+twords << TrackedWord.create!(:word_attributes => { :name => "wonderful" })
+puts 'New tracked words created: ' << twords.map(&:name).to_sentence

@@ -1,15 +1,20 @@
-allow_dynamic_fields: false
+defaults: &defaults
+  allow_dynamic_fields: false
+  identity_map_enabled: true
 
 development:
+  <<: *defaults
   host: localhost
   database: pickingwords_development
 
 test:
+  <<: *defaults
   host: localhost
   database: pickingwords_test
 
 # set these environment variables on your prod server
 production:
+  <<: *defaults
   host: <%= ENV['MONGOID_HOST'] %>
   port: <%= ENV['MONGOID_PORT'] %>
   username: <%= ENV['MONGOID_USERNAME'] %>

@@ -65,6 +65,9 @@ Spork.prefork do
 
     config.before(:each) do
       DatabaseCleaner.clean
+
+      # See http://mongoid.org/docs/identity_map.html
+      Mongoid::IdentityMap.clear
     end
 
   end

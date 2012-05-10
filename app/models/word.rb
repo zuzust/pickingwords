@@ -1,19 +1,16 @@
 class Word
   include Mongoid::Document
-  include Mongoid::Timestamps
+  include Mongoid::Timestamps::Updated
 
-  field :name, localize: true
+  field :name, default: "unknown", localize: true
 
-  belongs_to :wordable, polymorphic: true, index:true
-
-  index "name.ca"
-  index "name.es"
-  index "name.en"
+  embedded_in :tracked, class_name: "TrackedWord"
 
   validates :name, presence: true
 
   def localize(locale, translation)
     self.name_translations[locale] = translation
+    self
   end
 
   def translate(locale)

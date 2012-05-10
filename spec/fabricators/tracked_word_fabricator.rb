@@ -1,6 +1,6 @@
 Fabricator(:tracked_word) do
   searches 1
-  picks    0
+  picked   0
   favs     0
-  word!
+  word     { |tracked| Fabricate(:word, :tracked => tracked) }
 end

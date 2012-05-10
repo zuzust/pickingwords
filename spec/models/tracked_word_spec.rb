@@ -31,8 +31,9 @@ describe TrackedWord do
     end
 
     it "should provide localized translations" do
-      tracked.word.name_translations = { "en" => translations[:en], "ca" => translations[:ca], "es" => translations[:es] }
-
+      tracked.localize("ca", translations[:ca])
+      tracked.localize("es", translations[:es])
+      
       tracked.translate("ca").should == translations[:ca]
       tracked.translate("es").should == translations[:es]
     end

@@ -1,6 +1,5 @@
 class Word
   include Mongoid::Document
-  include Mongoid::Timestamps::Updated
 
   field :name, default: "unknown", localize: true
 

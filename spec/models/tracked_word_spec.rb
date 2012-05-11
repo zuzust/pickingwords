@@ -19,6 +19,11 @@ describe TrackedWord do
 
     let(:tracked) { Fabricate(:tracked_word, valid_attributes) }
 
+    it "should be required" do
+      no_word = TrackedWord.new
+      no_word.should_not be_valid
+    end
+    
     it "should accept localized translations" do
       tracked.localize("ca", translations[:ca])
       tracked.localize("es", translations[:es])

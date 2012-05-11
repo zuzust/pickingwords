@@ -27,6 +27,10 @@ describe TrackedWordsController do
     { word_attributes: { name: "word" } }
   end
   
+  def invalid_attributes
+    { word_attributes: { name: "" } }
+  end
+  
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # TrackedWordsController. Be sure to keep this updated too.
@@ -96,8 +100,9 @@ describe TrackedWordsController do
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        TrackedWord.any_instance.stub(:save).and_return(false)
-        post :create, {:tracked_word => {}}, valid_session
+        # TrackedWord.any_instance.stub(:save).and_return(false)
+        # post :create, {:tracked_word => {}}, valid_session
+        post :create, {:tracked_word => invalid_attributes}, valid_session
         response.should render_template("new")
       end
     end
@@ -135,23 +140,35 @@ describe TrackedWordsController do
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        TrackedWord.any_instance.stub(:save).and_return(false)
-        put :update, {:id => @tracked.to_param, :tracked_word => {}}, valid_session
+        # TrackedWord.any_instance.stub(:save).and_return(false)
+        # put :update, {:id => @tracked.to_param, :tracked_word => {}}, valid_session
+        put :update, {:id => @tracked.to_param, :tracked_word => invalid_attributes}, valid_session
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested tracked_word" do
-      expect {
+    describe "with no picks associated" do
+      it "destroys the requested tracked_word" do
+        expect {
+          delete :destroy, {:id => @tracked.to_param}, valid_session
+        }.to change(TrackedWord, :count).by(-1)
+      end
+
+      it "redirects to the tracked_words list" do
         delete :destroy, {:id => @tracked.to_param}, valid_session
-      }.to change(TrackedWord, :count).by(-1)
+        response.should redirect_to(tracked_words_url)
+      end
     end
 
-    it "redirects to the tracked_words list" do
-      delete :destroy, {:id => @tracked.to_param}, valid_session
-      response.should redirect_to(tracked_words_url)
+    describe "with associated picks" do
+      it "cannot destroy the requested tracked_word" do
+        @tracked.picks.create!(from_lang: "en", to_lang: "ca")
+        expect {
+          delete :destroy, {:id => @tracked.to_param}, valid_session
+        }.to change(TrackedWord, :count).by(0)
+      end
     end
   end
 

@@ -6,7 +6,7 @@ class TrackedWord
   field :picked,   type: Integer, default: 0
   field :favs,     type: Integer, default: 0
 
-  embeds_one :word, inverse_of: :tracked, validate: false
+  embeds_one :word, inverse_of: :tracked
 
   accepts_nested_attributes_for :word
   attr_protected :searches, :picked, :favs

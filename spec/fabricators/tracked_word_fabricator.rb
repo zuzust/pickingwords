@@ -1,5 +1,5 @@
 Fabricator(:tracked_word) do
-  name     "unset"
+  name     { RandomWord.nouns.next }
   searches 1
   picked   0
   favs     0

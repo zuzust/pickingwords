@@ -19,13 +19,6 @@ class TrackedWordsController < ApplicationController
   # GET /tracked_words/new.json
   def new
     @tracked_word = TrackedWord.new
-    @tracked_word.build_word
-    respond_with(@tracked_word)
-  end
-
-  # GET /tracked_words/1/edit
-  def edit
-    @tracked_word = TrackedWord.find(params[:id])
     respond_with(@tracked_word)
   end
 
@@ -34,14 +27,6 @@ class TrackedWordsController < ApplicationController
   def create
     @tracked_word = TrackedWord.new(params[:tracked_word])
     flash[:notice] = 'Tracked word was successfully created.' if @tracked_word.save
-    respond_with(@tracked_word)
-  end
-
-  # PUT /tracked_words/1
-  # PUT /tracked_words/1.json
-  def update
-    @tracked_word = TrackedWord.find(params[:id])
-    flash[:notice] = 'Tracked word was successfully updated.' if @tracked_word.update_attributes(params[:tracked_word])
     respond_with(@tracked_word)
   end
 

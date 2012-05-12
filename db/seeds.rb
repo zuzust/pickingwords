@@ -14,7 +14,7 @@ puts 'New user created: ' << user.name
 
 puts 'SETTING UP SAMPLE TRACKED WORDS'
 twords = []
-twords << TrackedWord.create!(:word_attributes => { :name => "awesome" })
-twords << TrackedWord.create!(:word_attributes => { :name => "cumbersome" })
-twords << TrackedWord.create!(:word_attributes => { :name => "wonderful" })
+twords << TrackedWord.create!(name: "awesome")
+twords << TrackedWord.create!(name: "cumbersome")
+twords << TrackedWord.create!(name: "wonderful")
 puts 'New tracked words created: ' << twords.map(&:name).to_sentence

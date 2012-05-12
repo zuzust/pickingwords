@@ -6,6 +6,9 @@
   %b Name:
   = @tracked_word.name
 %p
+  %b Translations:
+  = @tracked_word.translations
+%p
   %b Searches:
   = @tracked_word.searches
 %p
@@ -17,6 +20,4 @@
 
 %br
 
-= link_to 'Edit', edit_tracked_word_path(@tracked_word)
-\|
 = link_to 'Back', tracked_words_path

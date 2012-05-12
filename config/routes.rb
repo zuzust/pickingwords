@@ -1,5 +1,5 @@
 Pickingwords::Application.routes.draw do
-  resources :tracked_words
+  resources :tracked_words, :except => [:edit, :update]
 
   authenticated :user do
     root :to => 'home#index'

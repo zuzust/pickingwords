@@ -43,4 +43,12 @@ Pickingwords::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Bullet configuration
+  # See https://github.com/flyerhzm/bullet
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.rails_logger = true
+  end
 end

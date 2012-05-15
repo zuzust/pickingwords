@@ -13,6 +13,7 @@ gem "will_paginate_mongoid", ">= 1.0.5"
 gem "devise", ">= 2.1.0.rc"
 gem "mongoid", ">= 2.4.8"
 gem "bson_ext", ">= 1.6.2"
+gem "mongoid_magic_counter_cache", ">= 0.0.2"
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
@@ -49,6 +50,8 @@ group :development do
   gem "guard-cucumber", ">= 0.6.1"
   gem "guard-spork", ">= 0.6.1"
   gem "guard-coffeescript", ">= 0.6.0"
+  gem "bullet", "~> 4.0.0"
+  gem "pry-rails", ">= 0.1.6"
 end
 
 group :test do

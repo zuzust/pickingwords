@@ -8,13 +8,24 @@
 puts 'EMPTY THE MONGODB DATABASE'
 Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
 
+
 puts 'SETTING UP DEFAULT USER LOGIN'
 user = User.create! :name => 'devel', :email => 'devel@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc
 puts 'New user created: ' << user.name
 
+
 puts 'SETTING UP SAMPLE TRACKED WORDS'
 twords = []
-twords << TrackedWord.create!(name: "awesome")
-twords << TrackedWord.create!(name: "cumbersome")
-twords << TrackedWord.create!(name: "wonderful")
+tw_attrs = [
+  { name: "awesome" },
+  { name: "cumbersome" },
+  { name: "wonderful" }
+]
+
+tw_attrs.each do |attrs|
+  TrackedWord.find_or_create_by(name: attrs[:name]).tap do |tw|
+    twords << tw
+  end
+end
+
 puts 'New tracked words created: ' << twords.map(&:name).to_sentence

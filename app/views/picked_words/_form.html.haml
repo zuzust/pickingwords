@@ -2,9 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :from_lang, collection: [:en, :ca, :es], include_blank: false, disabled: @picked_word.persisted?
-    = f.input :name, disabled: @picked_word.persisted?
-    = f.input :to_lang, collection: [:en, :ca, :es], include_blank: false, disabled: @picked_word.persisted?
+    = f.input :from_lang, collection: [:en, :ca, :es], include_blank: false, required: @picked_word.new_record?, disabled: @picked_word.persisted?
+    = f.input :name, required: @picked_word.new_record?, disabled: @picked_word.persisted?
+    = f.input :to_lang, collection: [:en, :ca, :es], include_blank: false, required: @picked_word.new_record?, disabled: @picked_word.persisted?
     = f.input :translation
     = f.input :fav, as: :boolean, label: 'Favorite?'
     = f.input :tracked_id, as: :hidden

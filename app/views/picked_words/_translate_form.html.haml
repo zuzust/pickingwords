@@ -2,9 +2,9 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :fl, label: 'From', collection: [:en, :ca, :es], include_blank: false
+    = f.input :fl, label: 'From', collection: [:en, :ca, :es], include_blank: false, required: false
     = f.input :n, label: 'Name'
-    = f.input :tl, label: 'To', collection: [:en, :ca, :es], include_blank: false
+    = f.input :tl, label: 'To', collection: [:en, :ca, :es], include_blank: false, required: false
     = f.input :t, label: 'Translation', placeholder: 'provided by translation service'
 
   .form-actions

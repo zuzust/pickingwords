@@ -37,6 +37,7 @@ class PickedWord
       if criteria.exists?
         picked = criteria.first
         picked.inc(:searches, 1)
+        picked.tracked.inc(:searches, 1)
         return picked
       end
 

@@ -60,6 +60,13 @@ describe PickedWord do
         matched = PickedWord.search(params[:name], params[:from_lang], params[:to_lang])
         matched.searches.should == @picked.searches + 1
       end
+
+      it "should increment related tracked word searches counter by 1" do
+        expect {
+          matched = PickedWord.search(params[:name], params[:from_lang], params[:to_lang])
+          matched.should eql(@picked)
+        }.to change { @picked.tracked.searches }.by(1)
+      end
     end
 
     describe "of non-matching name word" do

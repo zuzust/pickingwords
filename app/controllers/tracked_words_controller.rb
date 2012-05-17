@@ -15,26 +15,14 @@ class TrackedWordsController < ApplicationController
     respond_with(@tracked_word)
   end
 
-  # GET /tracked_words/new
-  # GET /tracked_words/new.json
-  def new
-    @tracked_word = TrackedWord.new
-    respond_with(@tracked_word)
-  end
-
-  # POST /tracked_words
-  # POST /tracked_words.json
-  def create
-    @tracked_word = TrackedWord.new(params[:tracked_word])
-    flash[:notice] = 'Tracked word was successfully created.' if @tracked_word.save
-    respond_with(@tracked_word)
-  end
-
   # DELETE /tracked_words/1
   # DELETE /tracked_words/1.json
   def destroy
     @tracked_word = TrackedWord.find(params[:id])
-    @tracked_word.destroy
-    respond_with(@tracked_word)
+
+    respond_with(@tracked_word) do |format|
+      flash[:error] = @tracked_word.errors[:base].to_sentence if !@tracked_word.destroy
+      format.html { redirect_to tracked_words_path }
+    end
   end
 end

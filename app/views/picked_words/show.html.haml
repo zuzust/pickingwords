@@ -1,0 +1,29 @@
+%h3 Picked Word
+
+%br
+
+%p
+  %b From lang:
+  = @picked_word.from_lang
+%p
+  %b Name:
+  = @picked_word.name
+%p
+  %b To lang:
+  = @picked_word.to_lang
+%p
+  %b Translation:
+  = @picked_word.translation
+%p
+  %b Searches:
+  = @picked_word.searches
+%p
+  %b Fav:
+  = @picked_word.fav
+%p
+  %b Last edited:
+  = time_ago_in_words @picked_word.updated_at
+
+= link_to 'Edit', edit_picked_word_path(@picked_word)
+\|
+= link_to 'Back', picked_words_path

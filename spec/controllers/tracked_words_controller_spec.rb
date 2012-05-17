@@ -27,10 +27,6 @@ describe TrackedWordsController do
     { name: "word" }
   end
   
-  def invalid_attributes
-    { name: "" }
-  end
-  
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # TrackedWordsController. Be sure to keep this updated too.
@@ -56,61 +52,27 @@ describe TrackedWordsController do
     end
   end
 
-  describe "GET new" do
-    it "assigns a new tracked_word as @tracked_word" do
-      get :new, {}, valid_session
-      assigns(:tracked_word).should be_a_new(TrackedWord)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new TrackedWord" do
-        expect {
-          post :create, {:tracked_word => valid_attributes}, valid_session
-        }.to change(TrackedWord, :count).by(1)
-      end
-
-      it "assigns a newly created tracked_word as @tracked_word" do
-        post :create, {:tracked_word => valid_attributes}, valid_session
-        assigns(:tracked_word).should be_a(TrackedWord)
-        assigns(:tracked_word).should be_persisted
-      end
-
-      it "redirects to the created tracked_word" do
-        post :create, {:tracked_word => valid_attributes}, valid_session
-        response.should redirect_to(TrackedWord.unscoped.last)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved tracked_word as @tracked_word" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        TrackedWord.any_instance.stub(:save).and_return(false)
-        post :create, {:tracked_word => invalid_attributes}, valid_session
-        assigns(:tracked_word).should be_a_new(TrackedWord)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        # TrackedWord.any_instance.stub(:save).and_return(false)
-        # post :create, {:tracked_word => {}}, valid_session
-        post :create, {:tracked_word => invalid_attributes}, valid_session
-        response.should render_template("new")
-      end
-    end
-  end
-
   describe "DELETE destroy" do
-    it "destroys the requested tracked_word" do
-      expect {
+    describe "with no picks associated" do
+      it "destroys the requested tracked_word" do
+        expect {
+          delete :destroy, {:id => @tracked.to_param}, valid_session
+        }.to change(TrackedWord, :count).by(-1)
+      end
+
+      it "redirects to the tracked_words list" do
         delete :destroy, {:id => @tracked.to_param}, valid_session
-      }.to change(TrackedWord, :count).by(-1)
+        response.should redirect_to(tracked_words_url)
+      end
     end
 
-    it "redirects to the tracked_words list" do
-      delete :destroy, {:id => @tracked.to_param}, valid_session
-      response.should redirect_to(tracked_words_url)
+    describe "with associated picks" do
+      it "should not destroy the requested tracked_word" do
+        expect {
+          TrackedWord.any_instance.stub(:destroy).and_return(false)
+          delete :destroy, {:id => @tracked.to_param}, valid_session
+        }.to change(TrackedWord, :count).by(0)
+      end
     end
   end
 

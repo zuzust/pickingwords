@@ -1,5 +1,8 @@
 Pickingwords::Application.routes.draw do
-  resources :tracked_words, :except => [:edit, :update]
+  match 'translate' => 'translation#translate', :via => :get
+
+  resources :picked_words, :except => [:new]
+  resources :tracked_words, :only => [:index, :show, :destroy]
 
   authenticated :user do
     root :to => 'home#index'

@@ -7,7 +7,9 @@ class TrackedWord
   field :picked,   type: Integer, default: 0
   field :favs,     type: Integer, default: 0
 
-  attr_protected :searches, :picked, :favs
+  has_many :picks, class_name: "PickedWord", inverse_of: :tracked, validate: false
+
+  attr_accessible :name
   
   validates :name, presence: true
 
@@ -26,8 +28,46 @@ class TrackedWord
   scope :top_picked,     ->(limit = nil) { desc(:picked).limit(limit) }
   scope :top_faved,      ->(limit = nil) { desc(:favs).limit(limit) }
 
+  before_destroy :ensure_not_picked
+
+  class << self
+
+    def search(name, from_lang)
+      criteria = named(name, from_lang)
+
+      if criteria.exists?
+        tracked = criteria.first
+        tracked.inc(:searches, 1)
+        return tracked
+      end
+
+      return nil
+    end
+
+    def update_or_create(from_lang, name, to_lang, translation)
+      tracked = search(name, from_lang)
+
+      if tracked
+        tracked.localize(to_lang, translation) if tracked.translate(to_lang).blank?
+      else
+        tracked = TrackedWord.new
+        tracked.localize(from_lang, name)
+        tracked.localize(to_lang, translation)
+      end
+
+      tracked.save
+      tracked
+    end
+
+  end
+
   def localize(locale, translation)
-    self.name_translations[locale] = translation
+    previous_locale = I18n.locale
+
+    I18n.locale = locale
+    self.name = translation
+    I18n.locale = previous_locale
+
     self
   end
 
@@ -39,21 +79,11 @@ class TrackedWord
     name_translations
   end
 
-  class << self
+  private
 
-    def search(from_lang, name, to_lang, translation)
-      tracked = named(name, from_lang).first
-
-      if tracked
-        tracked.localize(to_lang, translation) if tracked.translate(to_lang).blank?
-      else
-        tracked = TrackedWord.new
-        tracked.localize(from_lang, name)
-        tracked.localize(to_lang, translation)
-      end
-
-      tracked
-    end
-
+  def ensure_not_picked
+    not_picked = picked == 0
+    self.errors[:base] << 'Unable to destroy the requested word. Dependent picked words exist.' unless not_picked
+    not_picked
   end
 end

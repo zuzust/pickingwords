@@ -1,0 +1,19 @@
+%h3 Picked Words
+
+%br
+
+= render 'translate_form'
+
+%br
+
+%table.table.table-bordered.table-striped
+  %tr
+    %th From lang
+    %th Name
+    %th To lang
+    %th Translation
+    %th Fav
+    %th Searches
+    %th
+
+  = render @picked_words

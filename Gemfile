@@ -24,6 +24,7 @@ end
 
 gem "rspec-rails", ">= 2.9.0.rc2", :group => [:development, :test]
 gem "fabrication", "~> 1.3.2", :group => [:development, :test]
+gem "pry-rails", ">= 0.1.6", :group => [:development, :test]
 
 group :development do
   gem "haml-rails", ">= 0.3.4"
@@ -51,7 +52,6 @@ group :development do
   gem "guard-spork", ">= 0.6.1"
   gem "guard-coffeescript", ">= 0.6.0"
   gem "bullet", "~> 4.0.0"
-  gem "pry-rails", ">= 0.1.6"
 end
 
 group :test do

@@ -33,7 +33,11 @@ describe TranslationController do
         }.to change { @picked.reload.searches }.by(1)
       end
 
-      it "increments related tracked word searches counter by 1"
+      it "increments related tracked word searches counter by 1" do
+        expect {
+          get :translate, {:word => params}, valid_session
+        }.to change { @tracked.reload.searches }.by(1)
+      end
 
       it "renders the 'show' template" do
         get :translate, {:word => params}, valid_session

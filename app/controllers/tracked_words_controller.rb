@@ -22,7 +22,7 @@ class TrackedWordsController < ApplicationController
 
     respond_with(@tracked_word) do |format|
       flash[:error] = @tracked_word.errors[:base].to_sentence if !@tracked_word.destroy
-      format.html { redirect_to tracked_words_path }
+      format.html { redirect_to tracked_words_url }
     end
   end
 end

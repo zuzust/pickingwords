@@ -21,7 +21,7 @@ class TrackedWordsController < ApplicationController
     @tracked_word = TrackedWord.find(params[:id])
 
     respond_with(@tracked_word) do |format|
-      flash[:error] = @tracked_word.errors[:base].to_sentence if !@tracked_word.destroy
+      flash[:alert] = @tracked_word.errors[:base].to_sentence if !@tracked_word.destroy
       format.html { redirect_to tracked_words_url }
     end
   end

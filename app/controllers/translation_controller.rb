@@ -1,28 +1,26 @@
 class TranslationController < ApplicationController
-  respond_to :html, :json
-
-  # GET /translation/translate
-  # GET /translation/translate.json
+  # POST /translation/translate
+  # POST /translation/translate.json
   def translate
-    from_lang   = params[:word][:fl]
-    name        = params[:word][:n]
-    to_lang     = params[:word][:tl]
-    translation = params[:word][:t]
+    tf = TranslationForm.new(params[:translation_form])
 
-    @picked_word = PickedWord.search(name, from_lang, to_lang)
+    respond_to do |format|
+      if tf.valid?
+        @picked_word = PickedWord.search(tf.name, tf.from_lang, tf.to_lang)
 
-    respond_with(@picked_word) do |format|
-      if @picked_word
-        format.html { render 'picked_words/show' }
+        if @picked_word
+          format.html { render 'picked_words/show' }
+        else
+          tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
+          @picked_word = tracked.picks.build(from_lang: tf.from_lang, name: tf.name, to_lang: tf.to_lang, translation: tf.translation)
+          format.html { render 'picked_words/new' }
+        end
+
+        format.json { render json: @picked_word }
       else
-        @tracked = TrackedWord.update_or_create(from_lang, name, to_lang, translation)
-        @picked_word = @tracked.picks.build(from_lang: from_lang, name: name,
-                                            to_lang: to_lang, translation: translation)
-
-        format.html { render 'picked_words/new' }
+        format.html { redirect_to picked_words_url, alert: tf.errors.full_messages.to_sentence }
+        format.json { render json: tf }
       end
-
-      format.json { render json: @picked_word }
     end
   end
 end

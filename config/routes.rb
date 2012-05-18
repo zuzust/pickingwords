@@ -1,5 +1,5 @@
 Pickingwords::Application.routes.draw do
-  match 'translate' => 'translation#translate', :via => :get
+  match 'translate' => 'translation#translate', :via => :post
 
   resources :picked_words, :except => [:new]
   resources :tracked_words, :only => [:index, :show, :destroy]

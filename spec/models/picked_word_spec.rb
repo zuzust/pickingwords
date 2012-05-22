@@ -8,14 +8,18 @@ describe PickedWord do
       name: "word",
       to_lang: "ca",
       translation: "paraula",
-      fav: false
+      fav: false,
+      contexts_attributes:
+      [{
+        sentence: "this word is written in english",
+        translation: "aquesta paraula esta escrita en catala"
+      }]
     }
   end
 
   it "should create a new instance given valid attributes" do
-    picked = PickedWord.new valid_attributes
-    picked.tracked = Fabricate(:tracked_word, name: valid_attributes[:name])
-    picked.save
+    tracked = Fabricate(:tracked_word, name: valid_attributes[:name])
+    picked = tracked.picks.create! valid_attributes
   end
   
   it "should require the locale from which it is translated" do
@@ -39,8 +43,13 @@ describe PickedWord do
   end
 
   it "should require the related tracked word" do
-    no_tracked = PickedWord.new valid_attributes
-    no_tracked.should_not be_valid
+    no_tracked_picked = PickedWord.new valid_attributes
+    no_tracked_picked.should_not be_valid
+  end
+
+  it "should require validation of related word contexts" do
+    no_valid_ctxt_picked = PickedWord.new(valid_attributes.merge(contexts_attributes: [{sentence: "", translation: ""}]))
+    no_valid_ctxt_picked.should_not be_valid
   end
 
   describe "search" do

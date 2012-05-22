@@ -1,0 +1,15 @@
+= simple_form_for(:translation_form, :url => translate_path, :html => { :class => 'form-horizontal' }) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :from_lang, label: 'From', collection: [:en, :ca, :es], include_blank: false, required: false
+    = f.input :name, label: false, placeholder: 'word name'
+    = f.input :ctx_sentence, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' },
+                             placeholder: 'word context', required: false
+    = f.input :to_lang, label: 'To', collection: [:en, :ca, :es], include_blank: false, required: false
+    = f.input :translation, label: false, placeholder: 'translation provided by translation service', required: false
+    = f.input :ctx_translation, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' },
+                                placeholder: 'context translation provided by translation service', required: false
+
+  .form-actions
+    = f.button :submit, 'Translate'

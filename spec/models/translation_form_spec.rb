@@ -6,6 +6,7 @@ describe TranslationForm do
     {
       from_lang: "en",
       name: "word",
+      ctx_sentence: "This word is written in english",
       to_lang: "ca"
     }
   end
@@ -15,14 +16,14 @@ describe TranslationForm do
     no_from_lang_form.should_not be_valid
   end
   
-  it "should require a name" do
-    no_name_form = TranslationForm.new(valid_attributes.merge(name: ""))
-    no_name_form.should_not be_valid
-  end
-  
   it "should require the locale to which it is translated" do
     no_to_lang_form = TranslationForm.new(valid_attributes.merge(to_lang: ""))
     no_to_lang_form.should_not be_valid
+  end
+  
+  it "should require a name" do
+    no_name_form = TranslationForm.new(valid_attributes.merge(name: ""))
+    no_name_form.should_not be_valid
   end
   
   it "should require a well formed name" do
@@ -40,6 +41,12 @@ describe TranslationForm do
     form = TranslationForm.new(valid_attributes.merge(name: "Word"))
     form.should be_valid
     form.name.should == "word"
+  end
+
+  it "should remove context sentence trailing whitespaces before validation" do
+    form = TranslationForm.new(valid_attributes.merge(ctx_sentence: "  This    is the context "))
+    form.should be_valid
+    form.ctx_sentence.should == "This is the context"
   end
 
 end

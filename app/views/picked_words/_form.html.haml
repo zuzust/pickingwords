@@ -2,12 +2,15 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :from_lang, collection: [:en, :ca, :es], include_blank: false, required: false, disabled: @picked_word.persisted?
-    = f.input :name, required: @picked_word.new_record?, disabled: @picked_word.persisted?
-    = f.input :to_lang, collection: [:en, :ca, :es], include_blank: false, required: false, disabled: @picked_word.persisted?
-    = f.input :translation
-    = f.input :fav, as: :boolean, label: 'Favorite?'
     = f.input :tracked_id, as: :hidden
+    = f.input :from_lang, label: 'From', collection: [:en, :ca, :es], include_blank: false, required: false, readonly: true
+    = f.input :name, label: false, required: false, readonly: true
+    = f.input :to_lang, label: 'To', collection: [:en, :ca, :es], include_blank: false, required: false, readonly: true
+    = f.input :translation, label: false
+    = f.input :fav, as: :boolean, label: 'Favorite?'
+    = f.simple_fields_for :contexts do |fc|
+      = fc.input :sentence, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false, readonly: true
+      = fc.input :translation, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false
 
   .form-actions
     = f.button :submit

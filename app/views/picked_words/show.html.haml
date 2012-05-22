@@ -15,14 +15,23 @@
   %b Translation:
   = @picked_word.translation
 %p
-  %b Searches:
-  = @picked_word.searches
-%p
   %b Fav:
   = @picked_word.fav
 %p
+  %b Contexts:
+  - @picked_word.contexts.each do |ctxt|
+    %br
+    = ctxt.sentence
+    %br
+    = ctxt.translation
+%p
+  %b Searches:
+  = @picked_word.searches
+%p
   %b Last edited:
   = time_ago_in_words @picked_word.updated_at
+
+%br
 
 = link_to 'Edit', edit_picked_word_path(@picked_word)
 \|

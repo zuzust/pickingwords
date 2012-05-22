@@ -24,11 +24,23 @@ describe PickedWordsController do
   # PickedWord. As you add validations to PickedWord, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { from_lang: "en", name: "word", to_lang: "ca", translation: "paraula", fav: false }
+    {
+      "from_lang" => "en",
+      "name" => "word",
+      "to_lang" => "ca",
+      "translation" => "paraula",
+      "fav" => "0",
+      "contexts_attributes" => {
+        "0" => {
+          sentence: "this word is written in english",
+          translation: "aquesta paraula esta escrita en catala"
+        }
+      }
+    }
   end
   
   def invalid_attributes
-    { from_lang: "", name: "", to_lang: "", translation: "" }
+    { "from_lang" => "", "name" => "", "to_lang" => "", "translation" => "" }
   end
   
   # This should return the minimal set of values that should be in the session
@@ -116,8 +128,8 @@ describe PickedWordsController do
         # specifies that the PickedWord created
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        PickedWord.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => @picked.to_param, :picked_word => {'these' => 'params'}}, valid_session
+        PickedWord.any_instance.should_receive(:update_attributes).with({'contexts_attributes' => []})
+        put :update, {:id => @picked.to_param, :picked_word => {}}, valid_session
       end
 
       it "assigns the requested picked_word as @picked_word" do

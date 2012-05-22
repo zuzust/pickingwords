@@ -12,7 +12,7 @@ class TranslationController < ApplicationController
           format.html { render 'picked_words/show' }
         else
           tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
-          @picked_word = tracked.picks.build(from_lang: tf.from_lang, name: tf.name, to_lang: tf.to_lang, translation: tf.translation)
+          @picked_word = tracked.picks.build(tf.word_attributes)
           format.html { render 'picked_words/new' }
         end
 

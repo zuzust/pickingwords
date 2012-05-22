@@ -2,7 +2,11 @@ class PickedWordObserver < Mongoid::Observer
   
   def before_save(picked)
     if picked.fav_changed?
-      picked.fav ? picked.tracked.inc(:favs, 1) : picked.tracked.inc(:favs, -1)
+      if picked.fav
+        picked.tracked.inc(:favs, 1)
+      else
+        picked.tracked.inc(:favs, -1) unless picked.tracked.favs == 0
+      end
     end
   end
 

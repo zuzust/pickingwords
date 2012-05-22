@@ -1,5 +1,6 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
+  before_filter :format_params, only: [:create, :update]
 
   # GET /picked_words
   # GET /picked_words.json
@@ -44,5 +45,12 @@ class PickedWordsController < ApplicationController
     @picked_word = PickedWord.find(params[:id])
     @picked_word.destroy
     respond_with(@picked_word)
+  end
+
+  private
+
+  def format_params
+    params[:picked_word][:contexts_attributes] ||= {}
+    params[:picked_word].merge!(contexts_attributes: params[:picked_word][:contexts_attributes].values)
   end
 end

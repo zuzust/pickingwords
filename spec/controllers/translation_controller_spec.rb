@@ -7,7 +7,10 @@ describe TranslationController do
   end
 
   def params
-    { from_lang: "en", name: "word", to_lang: "ca", translation: "paraula" }
+    {
+      from_lang: "en", name: "word", ctx_sentence: "this is a word in english",
+      to_lang: "ca", translation: "paraula", ctx_translation: "aquesta es una paraula en catala"
+    }
   end
 
   describe "POST translate" do

@@ -13,14 +13,17 @@ class PickedWord
   belongs_to :tracked, class_name: "TrackedWord", inverse_of: :picks, index: true
   counter_cache :tracked, field: "picked"
 
-  attr_accessible :from_lang, :name, :to_lang, :translation, :fav
+  embeds_many :contexts, class_name: "WordContext", inverse_of: :pick
+  accepts_nested_attributes_for :contexts, reject_if: :all_blank
+
+  attr_accessible :from_lang, :name, :to_lang, :translation, :fav, :contexts_attributes
 
   validates :from_lang, :name, :to_lang, :translation, :tracked, presence: true
 
   index [[:name, Mongo::ASCENDING], [:from_lang, Mongo::ASCENDING], [:to_lang, Mongo::ASCENDING]], background: true
   index [[:searches, Mongo::DESCENDING]], background: true
   index :fav, background: true
-  
+
   default_scope asc(:name)
   scope :named,           ->(name) { where(name: name) }
   scope :beginning_with,  ->(letter) { where(:name => /^#{letter}/i) }

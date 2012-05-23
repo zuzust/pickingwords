@@ -1,7 +1,15 @@
 class PickedWordObserver < Mongoid::Observer
   
-  def before_save(picked)
-    if picked.fav_changed?
+  def around_save(picked)
+    changes = picked.changed
+
+    yield
+
+    if changes.include?("searches")
+      picked.tracked.inc(:searches, 1)
+    end
+
+    if changes.include?("fav")
       if picked.fav
         picked.tracked.inc(:favs, 1)
       else

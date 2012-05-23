@@ -1,12 +1,13 @@
 class PickedWordObserver < Mongoid::Observer
-  
+
   def around_save(picked)
-    changes = picked.changed
+    saving_new = picked.new_record?
+    changes    = picked.changed
 
     yield
 
     if changes.include?("searches")
-      picked.tracked.inc(:searches, 1)
+      picked.tracked.inc(:searches, 1) unless saving_new
     end
 
     if changes.include?("fav")
@@ -19,7 +20,9 @@ class PickedWordObserver < Mongoid::Observer
   end
 
   def after_destroy(picked)
-    picked.tracked.inc(:favs, -1) if picked.fav
+    if picked.fav
+      picked.tracked.inc(:favs, -1)
+    end
   end
 
 end

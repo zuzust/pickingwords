@@ -6,16 +6,7 @@ describe PickedWordObserver do
     { from_lang: I18n.default_locale, name: "word", to_lang: "ca", translation: "paraula", fav: false }
   end
 
-  describe "around save" do
-    describe "of searched existing picked word" do
-      it "should increment related tracked word searches counter by 1" do
-        picked = Fabricate(:picked_word, valid_attributes)
-        expect {
-          picked.update_attribute(:searches, picked.searches + 1)
-        }.to change { picked.tracked.searches }.by(1)
-      end
-    end
-
+  describe "before save" do
     describe "of faved picked word" do
       it "should increment related tracked word favs counter by 1" do
         picked = Fabricate(:picked_word, valid_attributes)
@@ -44,16 +35,13 @@ describe PickedWordObserver do
     end
   end
 
-  describe "around update" do
+  describe "before update" do
     describe "of searched picked word" do
       it "should increment related tracked word searches counter by 1" do
         picked = Fabricate(:picked_word, valid_attributes)
-        # expect {
-        #   picked.update_attribute(:searches, picked.searches + 1)
-        # }.to change { picked.tracked.searches }.by(1)
-        picked.tracked.searches.should == 1
-        picked.update_attribute(:searches, picked.searches + 1)
-        picked.tracked.searches.should == 2
+        expect {
+          picked.update_attribute(:searches, picked.searches + 1)
+        }.to change { picked.tracked.searches }.by(1)
       end
     end
   end

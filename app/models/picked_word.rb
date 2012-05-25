@@ -10,7 +10,7 @@ class PickedWord
   field :fav,         type: Boolean, default: false
   field :searches,    type: Integer, default: 1
 
-  belongs_to :user, class_name: "UserProfile", inverse_of: :picks, index: true
+  belongs_to :user, inverse_of: :picks, index: true
   belongs_to :tracked, class_name: "TrackedWord", inverse_of: :picks, index: true
   counter_cache :user, field: "picked"
   counter_cache :tracked, field: "picked"

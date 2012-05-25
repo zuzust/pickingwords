@@ -87,7 +87,7 @@ describe PickedWordsController do
         }.to change(PickedWord, :count).by(1)
       end
 
-      it "increments related UserProfile picks by 1" do
+      it "increments related User picks by 1" do
         expect {
           post :create, {:picked_word => create_valid_params}
         }.to change { @user.reload.picked }.by(1)
@@ -177,7 +177,7 @@ describe PickedWordsController do
       }.to change(PickedWord, :count).by(-1)
     end
 
-    it "decrements related UserProfile picks by 1" do
+    it "decrements related User picks by 1" do
       expect {
         delete :destroy, {:id => @picked.to_param}
       }.to change { @user.reload.picked }.by(-1)

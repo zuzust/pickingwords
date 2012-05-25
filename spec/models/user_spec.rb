@@ -115,7 +115,7 @@ describe User do
         describe "of matching name word" do
           before(:each) do
             @picked = PickedWord.new(word_attributes)
-            @picked.user = user.profile
+            @picked.user = user
             @picked.tracked = tracked
             @picked.save
           end

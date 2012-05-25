@@ -41,9 +41,25 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
-  field :name
 
-  embeds_one :profile, class_name: "UserProfile", cascade_callbacks: true
+  field :name
+  field :picked, type: Integer, default: 0
+
+  has_many :picks, class_name: "PickedWord", validate: false, dependent: :destroy do
+    def search(name, from_lang, to_lang)
+      criteria = named(name).localized_in(from_lang).translated_into(to_lang)
+
+      if criteria.exists?
+        picked = criteria.first
+        picked.timeless.update_attribute(:searches, picked.searches + 1)
+        return picked
+      end
+
+      return nil
+    end
+  end
+
+  embeds_one :profile, class_name: "UserProfile"
 
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
@@ -54,5 +70,5 @@ class User
 
   before_create  { |user| user.build_profile }
 
-  delegate :trans_chars, :searches, :picked, :favs, :picks, :update_counter, to: :profile
+  delegate :trans_chars, :searches, :favs, :update_counter, to: :profile
 end

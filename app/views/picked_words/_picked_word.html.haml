@@ -6,8 +6,8 @@
   %td= picked_word.fav
   %td= picked_word.searches
   %td
-    = link_to 'Show', picked_word
+    = link_to 'Show', [current_user, picked_word]
     \|
-    = link_to 'Edit', edit_picked_word_path(picked_word)
+    = link_to 'Edit', edit_user_picked_word_path(current_user, picked_word)
     \|
-    = link_to 'Destroy', picked_word, :confirm => 'Are you sure?', :method => :delete
+    = link_to 'Destroy', [current_user, picked_word], :confirm => 'Are you sure?', :method => :delete

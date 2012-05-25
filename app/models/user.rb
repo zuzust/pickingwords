@@ -43,15 +43,16 @@ class User
   # field :authentication_token, :type => String
   field :name
 
-  embeds_one :profile, class_name: "UserProfile"
+  embeds_one :profile, class_name: "UserProfile", cascade_callbacks: true
 
-  index :name, unique: true
-
-  before_create { |user| user.build_profile }
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false
 
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
-end
+  index :name, unique: true
 
+  before_create  { |user| user.build_profile }
+
+  delegate :trans_chars, :searches, :picked, :favs, :picks, :update_counter, to: :profile
+end

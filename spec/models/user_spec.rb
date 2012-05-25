@@ -50,7 +50,6 @@ describe User do
   end
   
   describe "passwords" do
-  
     let(:user) { Fabricate.build(:user, valid_attributes) }
 
     it "should have a password attribute" do
@@ -60,11 +59,9 @@ describe User do
     it "should have a password confirmation attribute" do
       user.should respond_to(:password_confirmation)
     end
-
   end
   
   describe "password validations" do
-
     it "should require a password" do
       User.new(valid_attributes.merge(:password => "", :password_confirmation => "")).
         should_not be_valid
@@ -80,11 +77,9 @@ describe User do
       hash = valid_attributes.merge(:password => short, :password_confirmation => short)
       User.new(hash).should_not be_valid
     end
-    
   end
   
   describe "password encryption" do
-    
     let(:user) { Fabricate(:user, valid_attributes) }
     
     it "should have an encrypted password attribute" do
@@ -94,19 +89,56 @@ describe User do
     it "should set the encrypted password attribute" do
       user.encrypted_password.should_not be_blank
     end
-
   end
   
   describe "profile" do
-  
-    let(:user) { Fabricate.build(:user, valid_attributes) }
-
     it "should be created on instance creation" do
-      user.profile.should be_nil
-      user.save
-      user.profile.should_not be_nil
+      new_user = Fabricate.build(:user, valid_attributes)
+      new_user.profile.should be_nil
+      new_user.save
+      new_user.profile.should_not be_nil
     end
 
+    describe "picks" do
+      describe "search" do
+        def word_attributes
+          { from_lang: "en", name: "word", to_lang: "ca", translation: "paraula", fav: false }
+        end
+
+        def params
+          word_attributes
+        end
+
+        let(:user) { Fabricate(:user, valid_attributes) }
+        let(:tracked) { Fabricate(:tracked_word, name: word_attributes[:name]) }
+
+        describe "of matching name word" do
+          before(:each) do
+            @picked = PickedWord.new(word_attributes)
+            @picked.user = user.profile
+            @picked.tracked = tracked
+            @picked.save
+          end
+
+          it "should return the existing picked word" do
+            matched = user.picks.search(params[:name], params[:from_lang], params[:to_lang])
+            matched.id.should == @picked.id
+          end
+
+          it "should increment existing picked word searches counter by 1" do
+            matched = user.picks.search(params[:name], params[:from_lang], params[:to_lang])
+            matched.searches.should == @picked.searches + 1
+          end
+        end
+
+        describe "of non-matching name word" do
+          it "should return nil" do
+            not_matched = user.picks.search("unmatched", params[:from_lang], params[:to_lang])
+            not_matched.should be_nil
+          end
+        end
+      end
+    end
   end
 
 end

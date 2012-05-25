@@ -1,4 +1,4 @@
-= simple_form_for(@picked_word, :html => { :class => 'form-horizontal' }) do |f|
+= simple_form_for([current_user, @picked_word], :html => { :class => 'form-horizontal' }) do |f|
   = f.error_notification
 
   .form-inputs

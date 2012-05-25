@@ -10,7 +10,9 @@ class PickedWord
   field :fav,         type: Boolean, default: false
   field :searches,    type: Integer, default: 1
 
+  belongs_to :user, class_name: "UserProfile", inverse_of: :picks, index: true
   belongs_to :tracked, class_name: "TrackedWord", inverse_of: :picks, index: true
+  counter_cache :user, field: "picked"
   counter_cache :tracked, field: "picked"
 
   embeds_many :contexts, class_name: "WordContext", inverse_of: :pick
@@ -18,7 +20,7 @@ class PickedWord
 
   attr_accessible :from_lang, :name, :to_lang, :translation, :fav, :contexts_attributes
 
-  validates :from_lang, :name, :to_lang, :translation, :tracked, presence: true
+  validates :from_lang, :name, :to_lang, :translation, :user, :tracked, presence: true
 
   index [[:name, Mongo::ASCENDING], [:from_lang, Mongo::ASCENDING], [:to_lang, Mongo::ASCENDING]], background: true
   index [[:searches, Mongo::DESCENDING]], background: true
@@ -31,22 +33,6 @@ class PickedWord
   scope :translated_into, ->(locale) { where(to_lang: locale) }
   scope :top_searched,    ->(limit = nil) { desc(:searches).limit(limit) }
   scope :faved,           where(fav: true)
-
-  class << self
-    
-    def search(name, from_lang, to_lang)
-      criteria = named(name).localized_in(from_lang).translated_into(to_lang)
-
-      if criteria.exists?
-        picked = criteria.first
-        picked.timeless.update_attribute(:searches, picked.searches + 1)
-        return picked
-      end
-
-      return nil
-    end
-
-  end
 
   def base_translation
     tracked.translate(to_lang)

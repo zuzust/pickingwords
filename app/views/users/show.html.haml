@@ -3,6 +3,16 @@
 %p
   Email: #{@user.email if @user.email}
 %p
-  Translated chars: #{@user.profile.trans_chars}
+  Translated chars: #{@user.trans_chars}
+%p
+  Searches: #{@user.searches}
+%p
+  Picks: #{@user.picked}
+%p
+  Favs: #{@user.favs}
+
 %br/
-= link_to 'Back', root_path
+
+= link_to 'Back', users_path
+\|
+= link_to 'Picks', user_picked_words_path(@user)

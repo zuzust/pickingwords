@@ -79,6 +79,10 @@ class TrackedWord
     name_translations
   end
 
+  def update_counter(counter, value)
+    inc(counter, value)
+  end
+
   private
 
   def ensure_not_picked

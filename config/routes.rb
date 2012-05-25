@@ -1,15 +1,12 @@
 Pickingwords::Application.routes.draw do
-  match 'translate' => 'translation#translate', :via => :post
+  post 'translate' => 'translation#translate'
 
-  resources :picked_words, :except => [:new]
   resources :tracked_words, :only => [:index, :show, :destroy]
-
-  authenticated :user do
-    root :to => 'home#index'
+  resources :users, :only => [:show, :index] do
+    resources :picked_words, :except => [:new]
   end
 
-  root :to => "home#index"
-
   devise_for :users
-  resources :users, :only => [:show, :index]
+
+  root :to => 'home#index'
 end

@@ -26,28 +26,24 @@ describe TrackedWordsController do
   def valid_attributes
     { name: "word" }
   end
-  
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # TrackedWordsController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
 
   before(:each) do
+    @user = Fabricate(:user)
+    sign_in @user
+
     @tracked = Fabricate(:tracked_word, valid_attributes)
   end
 
   describe "GET index" do
     it "assigns all tracked_words as @tracked_words" do
-      get :index, {}, valid_session
+      get :index, {}
       assigns(:tracked_words).should eq([@tracked])
     end
   end
 
   describe "GET show" do
     it "assigns the requested tracked_word as @tracked_word" do
-      get :show, {:id => @tracked.to_param}, valid_session
+      get :show, {:id => @tracked.to_param}
       assigns(:tracked_word).should eq(@tracked)
     end
   end
@@ -56,12 +52,12 @@ describe TrackedWordsController do
     describe "with no picks associated" do
       it "destroys the requested tracked_word" do
         expect {
-          delete :destroy, {:id => @tracked.to_param}, valid_session
+          delete :destroy, {:id => @tracked.to_param}
         }.to change(TrackedWord, :count).by(-1)
       end
 
       it "redirects to the tracked_words list" do
-        delete :destroy, {:id => @tracked.to_param}, valid_session
+        delete :destroy, {:id => @tracked.to_param}
         response.should redirect_to(tracked_words_url)
       end
     end
@@ -70,7 +66,7 @@ describe TrackedWordsController do
       it "should not destroy the requested tracked_word" do
         expect {
           TrackedWord.any_instance.stub(:destroy).and_return(false)
-          delete :destroy, {:id => @tracked.to_param}, valid_session
+          delete :destroy, {:id => @tracked.to_param}
         }.to change(TrackedWord, :count).by(0)
       end
     end

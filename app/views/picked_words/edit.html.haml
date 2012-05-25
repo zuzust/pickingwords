@@ -4,6 +4,6 @@
 
 = render 'form'
 
-= link_to 'Show', @picked_word
+= link_to 'Show', [current_user, @picked_word]
 \|
-= link_to 'Back', picked_words_path
+= link_to 'Back', user_picked_words_path(current_user)

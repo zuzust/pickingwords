@@ -10,8 +10,10 @@ Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
 
 
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'devel', :email => 'devel@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc
-puts 'New user created: ' << user.name
+users = []
+users << User.create!(:name => 'admin', :email => 'admin@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc)
+users << User.create!(:name => 'devel', :email => 'devel@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc)
+puts 'New users created: ' << users.map(&:name).to_sentence
 
 
 puts 'SETTING UP SAMPLE TRACKED WORDS'

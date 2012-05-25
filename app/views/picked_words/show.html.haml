@@ -33,6 +33,6 @@
 
 %br
 
-= link_to 'Edit', edit_picked_word_path(@picked_word)
+= link_to 'Edit', edit_user_picked_word_path(current_user, @picked_word)
 \|
-= link_to 'Back', picked_words_path
+= link_to 'Back', user_picked_words_path(current_user)

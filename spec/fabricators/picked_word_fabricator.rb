@@ -5,5 +5,6 @@ Fabricator(:picked_word) do
   translation { |pw| "#{pw.name}_#{pw.to_lang}" }
   fav         false
   searches    1
+  user        { Fabricate(:user_profile) }
   tracked     { |pw| Fabricate(:tracked_word, name: pw.name) }
 end

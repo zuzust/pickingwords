@@ -12,7 +12,14 @@ describe PickedWordObserver do
         picked = Fabricate(:picked_word, valid_attributes)
         expect {
           picked.update_attribute(:fav, true)
-        }.to change { picked.tracked.favs }.by(1)
+        }.to change { picked.tracked.reload.favs }.by(1)
+      end
+
+      it "should increment related user favs counter by 1" do
+        picked = Fabricate(:picked_word, valid_attributes)
+        expect {
+          picked.update_attribute(:fav, true)
+        }.to change { picked.user.reload.favs }.by(1)
       end
     end
 
@@ -21,7 +28,14 @@ describe PickedWordObserver do
         picked = Fabricate(:picked_word, valid_attributes.merge(fav: true))
         expect {
           picked.update_attribute(:fav, false)
-        }.to change { picked.tracked.favs }.by(-1)
+        }.to change { picked.tracked.reload.favs }.by(-1)
+      end
+
+      it "should decrement related user favs counter by 1" do
+        picked = Fabricate(:picked_word, valid_attributes.merge(fav: true))
+        expect {
+          picked.update_attribute(:fav, false)
+        }.to change { picked.user.reload.favs }.by(-1)
       end
     end
 
@@ -30,7 +44,14 @@ describe PickedWordObserver do
         picked = Fabricate.build(:picked_word, valid_attributes)
         expect {
           picked.save
-        }.to change { picked.tracked.favs }.by(0)
+        }.to change { picked.tracked.reload.favs }.by(0)
+      end
+
+      it "should not decrement related user favs counter by 1" do
+        picked = Fabricate.build(:picked_word, valid_attributes)
+        expect {
+          picked.save
+        }.to change { picked.user.reload.favs }.by(0)
       end
     end
   end
@@ -41,18 +62,25 @@ describe PickedWordObserver do
         picked = Fabricate(:picked_word, valid_attributes)
         expect {
           picked.update_attribute(:searches, picked.searches + 1)
-        }.to change { picked.tracked.searches }.by(1)
+        }.to change { picked.tracked.reload.searches }.by(1)
       end
     end
   end
 
-  describe "after destroy" do
+  describe "before destroy" do
     describe "of faved picked word" do
       it "should decrement related tracked word favs counter by 1" do
         picked = Fabricate(:picked_word, valid_attributes.merge(fav: true))
         expect {
           picked.destroy
-        }.to change { picked.tracked.favs }.by(-1)
+        }.to change { picked.tracked.reload.favs }.by(-1)
+      end
+
+      it "should decrement related user favs counter by 1" do
+        picked = Fabricate(:picked_word, valid_attributes.merge(fav: true))
+        expect {
+          picked.destroy
+        }.to change { picked.user.reload.favs }.by(-1)
       end
     end
   end

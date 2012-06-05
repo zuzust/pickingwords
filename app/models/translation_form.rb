@@ -32,4 +32,8 @@ class TranslationForm
       contexts_attributes: [{ sentence: ctx_sentence, translation: ctx_translation }]
     }
   end
+
+  def error_messages
+    errors.full_messages.to_sentence
+  end
 end

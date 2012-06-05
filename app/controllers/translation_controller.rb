@@ -20,7 +20,7 @@ class TranslationController < ApplicationController
 
         format.json { render json: [current_user, @picked_word] }
       else
-        format.html { redirect_to user_picked_words_url(current_user), alert: tf.errors.full_messages.to_sentence }
+        format.html { redirect_to user_picked_words_url(current_user), alert: tf.error_messages }
         format.json { render json: tf }
       end
     end

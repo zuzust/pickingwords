@@ -42,7 +42,7 @@ class User
   ## Token authenticatable
   # field :authentication_token, :type => String
 
-  field :name
+  field :name,   type: String
   field :picked, type: Integer, default: 0
 
   has_many :picks, class_name: "PickedWord", validate: false, dependent: :destroy do
@@ -63,12 +63,49 @@ class User
 
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
-  validates_presence_of :name
+  validates :name, presence: true
   validates_uniqueness_of :name, :email, :case_sensitive => false
 
-  index :name, unique: true
+  index :name, unique: true, background: true
+  index [["profile.searches", Mongo::DESCENDING]], background: true
+  index [[:picked,   Mongo::DESCENDING]], background: true
+
+  default_scope asc(:name)
+  scope :top_searchers, ->(limit = nil) { desc("profile.searches").limit(limit) }
+  scope :top_pickers,   ->(limit = nil) { desc(:picked).limit(limit) }
 
   before_create  { |user| user.build_profile }
+
+  class << self
+    # See:
+    # http://kylebanker.com/blog/2009/12/mongodb-map-reduce-basics/
+    # https://github.com/mongoid/echo/blob/master/app/models/following.rb
+    # http://www.mongodb.org/display/DOCS/MapReduce#MapReduce-Examples
+    # http://api.mongodb.org/ruby/current/Mongo/Collection.html#map_reduce-instance_method
+    # http://api.mongodb.org/ruby/current/Mongo/Collection.html#find-instance_method
+    def top_active(limit = nil)
+      m = %Q{
+        function() {
+          emit(this._id, {name: this.name, activity: (this.picked + this.profile.searches)});
+        }
+      }
+
+      r = %Q{
+        function(key, values) {
+          var result = {name: '', activity: 0};
+          values.forEach(function(value) {
+            result.name     = value.name;
+            result.activity = value.activity;
+          });
+          return result;
+        }
+      }
+
+      collection.map_reduce(m, r, out: "active_users")
+                .find({}, {limit: limit, sort: [["value.activity", :desc]]})
+                .map { |u| [u["_id"], u["value"]["name"], u["value"]["activity"]] }
+    end
+  end
 
   delegate :trans_chars, :searches, :favs, :update_counter, to: :profile
 end

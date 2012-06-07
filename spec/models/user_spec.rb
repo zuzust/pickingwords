@@ -141,4 +141,42 @@ describe User do
     end
   end
 
+  describe "scope" do
+    describe "top_active" do
+      def word_attributes
+        { from_lang: "en", name: "word", to_lang: "ca", translation: "paraula", fav: false }
+      end
+
+      def params
+        word_attributes
+      end
+
+      before(:each) do
+        @tracked = Fabricate(:tracked_word, name: word_attributes[:name])
+        @user1 = Fabricate(:user, valid_attributes.merge(name: "user1", email: "user1@example.com"))
+        @user2 = Fabricate(:user, valid_attributes.merge(name: "user2", email: "user2@example.com"))
+
+        @picked1 = PickedWord.new(word_attributes)
+        @picked1.user = @user1
+        @picked1.tracked = @tracked
+        @picked1.save
+
+        @picked2 = PickedWord.new(word_attributes)
+        @picked2.user = @user2
+        @picked2.tracked = @tracked
+        @picked2.save
+
+        @user1.profile.inc(:searches, 1)
+        @user2.profile.inc(:searches, 2)
+      end
+
+      it "should return an array of the top searchers and pickers users" do
+        active_users = [
+          [@user2.id, @user2.name, @user2.searches + @user2.picked],
+          [@user1.id, @user1.name, @user1.searches + @user1.picked]
+        ]
+        User.top_active.should == active_users
+      end
+    end
+  end
 end

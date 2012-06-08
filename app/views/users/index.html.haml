@@ -1,6 +1,6 @@
 %h2 Users
 - @users.each do |user|
   %br/
-  #{user.email} signed up #{user.created_at.to_date} #{link_to 'details', user}
+  #{user.name} [#{user.email}] signed up #{user.created_at.to_date} #{link_to 'details', user}
 
 = will_paginate

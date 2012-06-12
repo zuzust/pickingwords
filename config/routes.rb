@@ -1,4 +1,6 @@
 Pickingwords::Application.routes.draw do
+  get "static_pages/home"
+  get "static_pages/help"
   post 'translate' => 'translation#translate'
 
   resources :tracked_words, :only => [:index, :show, :destroy]

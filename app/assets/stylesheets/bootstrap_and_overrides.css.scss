@@ -1,0 +1,29 @@
+// Set the correct sprite paths
+$iconSpritePath: image-url('glyphicons-halflings.png');
+$iconWhiteSpritePath: image-url('glyphicons-halflings-white.png');
+
+@import "bootstrap";
+body { padding-top: 60px; }
+
+@import "bootstrap-responsive";
+
+// Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
+//$fontAwesomeEotPath: font-path('fontawesome-webfont.eot');
+//$fontAwesomeWoffPath: font-path('fontawesome-webfont.woff');
+//$fontAwesomeTtfPath: font-path('fontawesome-webfont.ttf');
+//$fontAwesomeSvgzPath: font-path('fontawesome-webfont.svgz');
+//$fontAwesomeSvgPath: font-path('fontawesome-webfont.svg');
+
+// Font Awesome
+//@import "fontawesome";
+
+// Your custom SASS stylesheets goes here
+//
+// Since bootstrap was imported above you have access to its mixins which
+// you may use and inherit here
+//
+// If you'd like to override bootstrap's own variables, you can do so here as well
+// See http://twitter.github.com/bootstrap/less.html for their names and documentation
+//
+// Example:
+// $linkColor: #ff0000;

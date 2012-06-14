@@ -6,19 +6,20 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.3'
 
 gem 'jquery-rails'
+gem 'bootstrap-sass', '>= 2.0.0'
 gem "haml", ">= 3.1.4"
 gem "simple_form"
 gem "will_paginate", ">= 3.0.3"
 gem "will_paginate_mongoid", ">= 1.0.5"
+gem "bootstrap-will_paginate", ">= 0.0.6"
 gem "devise", ">= 2.1.0.rc"
 gem "mongoid", ">= 2.4.8"
-gem "bson_ext", ">= 1.6.2"
 gem "mongoid_magic_counter_cache", ">= 0.0.2"
+gem "bson_ext", ">= 1.6.2"
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'sass-rails',   '~> 3.2.3'
-  gem "twitter-bootstrap-rails", ">= 2.0.3"
   gem 'uglifier', '>= 1.0.3'
 end
 

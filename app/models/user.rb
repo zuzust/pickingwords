@@ -64,7 +64,6 @@ class User
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :confirmed_at
 
   validates :name, presence: true
-  validates_uniqueness_of :name, :email, :case_sensitive => false
 
   index :name, unique: true, background: true
   index [["profile.searches", Mongo::DESCENDING]], background: true

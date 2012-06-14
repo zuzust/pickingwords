@@ -66,6 +66,7 @@ class User
   validates :name, presence: true
 
   index :name, unique: true, background: true
+  index :email, unique: true, background: true
   index [["profile.searches", Mongo::DESCENDING]], background: true
   index [[:picked,   Mongo::DESCENDING]], background: true
 

@@ -7,7 +7,7 @@ Pickingwords::Application.routes.draw do
 
   resources :tracked_words, :only => [:index, :show, :destroy]
 
-  root :to => 'home#index'
+  root :to => 'static_pages#home'
 
   devise_for :users
   resources :users, :only => [:show, :index] do

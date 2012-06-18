@@ -8,4 +8,4 @@
   %td
     = link_to 'Show', tracked_word
     \|
-    = link_to 'Destroy', tracked_word, :confirm => 'Are you sure?', :method => :delete
+    = link_to 'Destroy', tracked_word, :method => :delete, :data => {:confirm => 'Are you sure?'}

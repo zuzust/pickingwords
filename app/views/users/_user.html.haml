@@ -1,0 +1,8 @@
+%tr
+  %td= user.name
+  %td= user.email
+  %td= user.trans_chars
+  %td= user.searches
+  %td= user.picked
+  %td= user.favs
+  %td= time_ago_in_words user.created_at.to_date

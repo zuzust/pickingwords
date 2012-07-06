@@ -1,21 +1,9 @@
-%h3 Picked Words
+- title 'Picked Words'
 
-%br
+%section.pw-trans_form
+  = render 'translation_form'
 
-= render 'translation_form'
+%hr
 
-%br
-
-%table.table.table-bordered.table-striped
-  %tr
-    %th From lang
-    %th Name
-    %th To lang
-    %th Translation
-    %th Fav
-    %th Searches
-    %th
-
+%section.pw-word_list
   = render @picked_words
-
-= link_to 'Back', current_user

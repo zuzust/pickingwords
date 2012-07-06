@@ -1,15 +1,10 @@
-= simple_form_for(:translation_form, :url => translate_path, :html => { :class => 'form-horizontal' }) do |f|
-  = f.error_notification
+.row
+  .span8.offset2
+    = simple_form_for(:tf, url: translate_path, wrapper: :basic, html: {class: 'form-inline'}) do |f|
 
-  .form-inputs
-    = f.input :from_lang, label: 'From', collection: [:en, :ca, :es], include_blank: false, required: false
-    = f.input :name, label: false, placeholder: 'word name'
-    = f.input :ctx_sentence, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' },
-                             placeholder: 'word context', required: false
-    = f.input :to_lang, label: 'To', collection: [:en, :ca, :es], include_blank: false, required: false
-    = f.input :translation, label: false, placeholder: 'translation provided by translation service', required: false
-    = f.input :ctx_translation, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' },
-                                placeholder: 'context translation provided by translation service', required: false
-
-  .form-actions
-    = f.button :submit, 'Translate'
+      = f.input :from_lang, label: false, collection: [:en, :ca, :es], prompt: 'from', include_blank: false, input_html: {class: 'input-mini'}
+      = f.input :to_lang, label: false, collection: [:en, :ca, :es], prompt: 'to', include_blank: false, input_html: {class: 'input-mini'}
+      = f.input :name, label: false, placeholder: 'word name', input_html: {class: 'input-medium'}
+      = f.input :ctx_sentence, label: false, as: :text, placeholder: 'word context', input_html: {cols: 50, rows: 5, class: 'span4'}
+                                  
+      = f.button :submit, 'Translate', class: 'btn-primary'

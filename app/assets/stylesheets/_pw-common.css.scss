@@ -1,0 +1,172 @@
+// Base
+// -------------------------
+body {
+  font-family: ubuntu, $baseFontFamily;
+}
+
+div {
+  &.field, &.actions {
+    margin-bottom: 10px; } }
+
+textarea {
+  resize: none; }
+
+small {
+  font-size: $baseLineHeight * .75;
+  color: $grayLight; }
+
+#notice {
+  color: $green; }
+
+.field_with_errors {
+  padding: 2px;
+  background-color: $red;
+  display: table; }
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid $red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: $white; }
+  ul li {
+    font-size: 12px;
+    list-style: square; } }
+
+
+// Layouts
+// -------------------------
+.pw-content {
+  background-color: $white;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  @include border-radius(0 0 6px 6px);
+  @include box-shadow(0 1px 2px rgba(0,0,0,.15));
+}
+
+.pw-center {
+  text-align: center;
+}
+
+.pw-main_header {
+  $marginBottom: $baseLineHeight * 1.5;
+  $fontSize: $baseFontSize * 3;
+  $lineHeight: $baseLineHeight * 2;
+
+  @include pwm-header($marginBottom, $fontSize, $lineHeight);
+}
+
+.pw-header {
+  $marginBottom: $baseLineHeight * .25;
+  $fontSize: $baseFontSize * 1.5;
+  $lineHeight: $baseLineHeight * 1.5;
+
+  @include pwm-header($marginBottom, $fontSize, $lineHeight);
+}
+
+.pw-trans_form {
+  background-color: $grayLighter;
+  padding: 20px;
+  @include border-radius(6px);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+}
+
+.pw-word {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 10px;
+  background-color: $white;
+  border: 1px solid $grayLighter;
+  border: 1px solid rgba(0,0,0,.05);
+  @include border-radius(6px);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+}
+
+.pw-word_details, .pw-user_profile {
+  font-size: $baseFontSize * 1.5;
+}
+
+.pw-word_name, .pw-user_name {
+  font-size: $baseFontSize * 3;
+  .badge {
+    position: relative;
+    top: -0.45em;
+  }
+}
+
+.pw-word_trans, .pw-user_profile_field {
+  color: $gray;
+  font: {
+    size: $baseFontSize * 2;
+    style: italic;
+  }
+  .badge {
+    position: relative;
+    top: -0.45em;
+  }
+}
+
+.pw-view_buttons, .pw-action_buttons {
+  margin-top: 20px;
+}
+
+.pw-action_buttons {
+  padding-top: 5px;
+  border-top: 1px solid $grayLighter;
+}
+
+
+// Footer
+// -------------------------
+.pw-footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $grayLighter;
+  color: $grayLight;
+  a {
+    color: $gray;
+    &:hover {
+      color: $grayDarker;
+      text-decoration: none;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+}
+
+
+// Miscellaneous
+// -------------------------
+.pw-help {
+  cursor: help;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box-sizing(border-box);
+}

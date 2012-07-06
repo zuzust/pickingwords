@@ -1,21 +1,19 @@
-%h3 Word
+- title 'Tracked Details'
 
-%br
+.page-header
+  %h1= @tracked_word.name
 
 %p
-  %b Name:
-  = @tracked_word.name
-%p
-  %b Translations:
+  %strong Translations:
   = @tracked_word.translations
 %p
-  %b Searches:
+  %strong Searches:
   = @tracked_word.searches
 %p
-  %b Picks:
+  %strong Picks:
   = @tracked_word.picked
 %p
-  %b Favs:
+  %strong Favs:
   = @tracked_word.favs
 
 %br

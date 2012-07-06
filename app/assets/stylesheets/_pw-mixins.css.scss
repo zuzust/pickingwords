@@ -1,0 +1,10 @@
+@mixin pwm-header($marginBottom, $fontSize, $lineHeight) {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: $marginBottom;
+  font-size: $fontSize;
+  line-height: $lineHeight;
+  border: 0;
+  border-bottom: 1px solid $grayLighter;
+}

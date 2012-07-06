@@ -17,6 +17,10 @@ class TranslationForm
     attributes.each do |name, value|
       send("#{name}=", value)
     end
+
+    # Devel purposes only
+    self.translation     = "translation provided"
+    self.ctx_translation = "context translation provided by translation service"
   end
 
   def persisted?

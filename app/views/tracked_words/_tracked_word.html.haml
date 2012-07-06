@@ -6,6 +6,4 @@
   %td= tracked_word.favs
   %td= time_ago_in_words tracked_word.updated_at
   %td
-    = link_to 'Show', tracked_word
-    \|
     = link_to 'Destroy', tracked_word, :method => :delete, :data => {:confirm => 'Are you sure?'}

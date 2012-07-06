@@ -1,6 +1,7 @@
-%h3 Words
+- title 'Tracked Words'
 
-%br
+.pw-main_header
+  %h1 Words
 
 %table.table.table-bordered.table-striped
   %tr
@@ -13,3 +14,5 @@
     %th
 
   = render @tracked_words
+
+= will_paginate

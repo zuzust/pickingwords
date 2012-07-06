@@ -1,18 +1,24 @@
-%p
-  User: #{@user.name}
-%p
-  Email: #{@user.email if @user.email}
-%p
-  Translated chars: #{@user.trans_chars}
-%p
-  Searches: #{@user.searches}
-%p
-  Picks: #{@user.picked}
-%p
-  Favs: #{@user.favs}
+- title 'Profile'
 
-%br/
+.row
+  .span8.offset2
+    .pw-user_profile
+      .pw-main_header
+        %span.pw-user_name= @user.name
 
-= link_to 'Back', users_path
-\|
-= link_to 'Picks', user_picked_words_path(@user)
+      .row
+        .offset1
+          translated chars:
+          %span.pw-user_profile_field  #{@user.trans_chars}
+          %br
+          %br
+          searches:
+          %span.pw-user_profile_field #{@user.searches}
+          %br
+          %br
+          picks:
+          %span.pw-user_profile_field #{@user.picked}
+          %br
+          %br
+          favs:
+          %span.pw-user_profile_field #{@user.favs}

@@ -82,6 +82,17 @@ SimpleForm.setup do |config|
     end
   end
 
+  config.wrappers :basic, :tag => false, :class => :input, :error_class => 'error' do |b|
+    ## Extensions enabled by default
+    b.use :html5
+    b.use :placeholder
+
+    ## Inputs
+    b.use :label_input
+    b.use :hint,  :wrap_with => { :tag => :span, :class => 'help-block' }
+    b.use :error, :wrap_with => { :tag => :span, :class => 'help-inline' }
+  end
+
   # Wrappers for forms and inputs using the Twitter Bootstrap toolkit.
   # Check the Bootstrap docs (http://twitter.github.com/bootstrap)
   # to learn about the different styles for forms and inputs,

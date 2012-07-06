@@ -1,16 +1,21 @@
-= simple_form_for([current_user, @picked_word], :html => { :class => 'form-horizontal' }) do |f|
+= simple_form_for([current_user, @picked_word], wrapper: :basic, html: {class: 'form-vertical'}) do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :tracked_id, as: :hidden
-    = f.input :from_lang, label: 'From', collection: [:en, :ca, :es], include_blank: false, required: false, readonly: true
-    = f.input :name, label: false, required: false, readonly: true
-    = f.input :to_lang, label: 'To', collection: [:en, :ca, :es], include_blank: false, required: false, readonly: true
-    = f.input :translation, label: false
-    = f.input :fav, as: :boolean, label: 'Favorite?'
-    = f.simple_fields_for :contexts do |fc|
-      = fc.input :sentence, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false, readonly: true
-      = fc.input :translation, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false
+  = f.input :tracked_id, wrapper: :basic, as: :hidden
 
-  .form-actions
-    = f.button :submit
+  = f.input :name, wrapper: :prepend, label: false do
+    = f.text_field :from_lang, readonly: true, size: 2, class: 'add-on'
+    = f.text_field :name, readonly: true, class: 'input-medium'
+
+  = f.input :translation, wrapper: :prepend, label: false, autofocus: true do
+    = f.text_field :to_lang, readonly: true, size: 2, class: 'add-on'
+    = f.text_field :translation, class: 'input-medium'
+
+  = f.simple_fields_for :contexts do |fc|
+    = fc.input :sentence, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false, readonly: true
+    = fc.input :translation, label: false, as: :text, input_html: { cols: 50, rows: 5, class: 'span4' }, required: false
+
+  = f.input :fav, as: :boolean, label: 'Fav?'
+
+  .pw-action_buttons
+    = f.button :submit, class: 'btn-primary'

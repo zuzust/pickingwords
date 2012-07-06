@@ -1,9 +1,8 @@
-%h3 Picked Word
+.row
+  .span8.offset2
+    = render 'form'
 
-%br
-
-= render 'form'
-
-= link_to 'Show', [current_user, @picked_word]
-\|
-= link_to 'Back', user_picked_words_path(current_user)
+    .pw-view_buttons
+      = link_to 'Picks', user_picked_words_path(current_user)
+      \|
+      = link_to 'Show', [current_user, @picked_word]

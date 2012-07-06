@@ -1,10 +1,11 @@
-- provide(:title, 'Home')
+.pw-center
+  %h1 Welcome to Pickingwords
+  %p.lead Store and manage your tiny translations in a simple and funny way
 
-%h1 Welcome to Pickingwords
+  .row
+    .span6.offset4
+      %blockquote.pull-right
+        %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis.
+        %small Mario Vaquerizo
 
-%h2
-  This is the home page for the
-  %a{:href => "https://github.com/zuzust/pickingwords#pickingwords--"}Pickingwords
-  application.
-
-= link_to "Sign up now!", new_user_registration_path, class: "btn btn-primary btn-large"
+  = link_to "Sign up now!", new_user_registration_path, class: "btn btn-primary btn-large"

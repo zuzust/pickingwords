@@ -6,7 +6,7 @@ Pickingwords::Application.routes.draw do
 
   post 'translate' => 'translation#translate'
 
-  resources :tracked_words, :only => [:index, :show, :destroy]
+  resources :tracked_words, :only => [:index, :destroy]
 
   authenticated :user do
     root :to => 'picked_words#index'

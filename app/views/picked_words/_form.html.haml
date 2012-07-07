@@ -1,7 +1,7 @@
 = simple_form_for([current_user, @picked_word], wrapper: :basic, html: {class: 'form-vertical'}) do |f|
   = f.error_notification
 
-  = f.input :tracked_id, wrapper: :basic, as: :hidden
+  = f.input :tracked_id, as: :hidden
 
   = f.input :name, wrapper: :prepend, label: false do
     = f.text_field :from_lang, readonly: true, size: 2, class: 'add-on'

@@ -8,13 +8,6 @@ class TrackedWordsController < ApplicationController
     respond_with(@tracked_words)
   end
 
-  # GET /tracked_words/1
-  # GET /tracked_words/1.json
-  def show
-    @tracked_word = TrackedWord.find(params[:id])
-    respond_with(@tracked_word)
-  end
-
   # DELETE /tracked_words/1
   # DELETE /tracked_words/1.json
   def destroy

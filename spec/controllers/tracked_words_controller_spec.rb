@@ -41,13 +41,6 @@ describe TrackedWordsController do
     end
   end
 
-  describe "GET show" do
-    it "assigns the requested tracked_word as @tracked_word" do
-      get :show, {:id => @tracked.to_param}
-      assigns(:tracked_word).should eq(@tracked)
-    end
-  end
-
   describe "DELETE destroy" do
     describe "with no picks associated" do
       it "destroys the requested tracked_word" do

@@ -5,5 +5,14 @@
 
 %hr
 
+%section.pw-letter_filter
+  = render 'letter_filter'
+
+%hr
+
 %section.pw-word_list
-  = render @picked_words
+  - if @picked_words.size == 0
+    .pw-center
+      %span.pw-mesg No picks found
+  - else
+    = render @picked_words

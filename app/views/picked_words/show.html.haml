@@ -32,7 +32,7 @@
             = header 'contexts'
             .row
               .offset1
-                = render partial: 'context', collection: @picked_word.contexts, as: :context
+                = render partial: 'picked_words/context', collection: @picked_word.contexts, as: :context
 
     -# view buttons
     .pw-view_buttons

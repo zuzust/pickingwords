@@ -5,7 +5,7 @@ class PickedWordsController < ApplicationController
   # GET /users/:user_id/picked_words
   # GET /users/:user_id/picked_words.json
   def index
-    @picked_words = current_user.picks
+    @picked_words = params[:letter] ? current_user.picks.beginning_with(params[:letter]) : current_user.picks
     respond_with(current_user, @picked_words)
   end
 

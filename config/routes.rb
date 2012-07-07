@@ -15,7 +15,8 @@ Pickingwords::Application.routes.draw do
   root :to => 'static_pages#home'
 
   devise_for :users
-  resources :users, :only => [:show, :index] do
+  resources :users, :only => [:index, :show] do
+    get 'picked_words/:letter' => 'picked_words#index', letter: /[a-z]{1}/, on: :member, as: :picks_by_letter_of
     resources :picked_words, :except => [:new]
   end
 end

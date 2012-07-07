@@ -81,6 +81,16 @@ small {
   @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
 }
 
+.pw-letter_filter {
+  font-size: $baseFontSize * 2.5;
+  a {
+    color: $gray;
+    &:hover {
+      @include scale(1.5);
+    }
+  }
+}
+
 .pw-word {
   min-height: 20px;
   padding: 19px;
@@ -92,7 +102,7 @@ small {
   @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
 }
 
-.pw-word_details, .pw-user_profile {
+.pw-word_details, .pw-user_profile, .pw-mesg {
   font-size: $baseFontSize * 1.5;
 }
 

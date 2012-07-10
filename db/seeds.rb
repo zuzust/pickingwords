@@ -11,8 +11,19 @@ Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
 
 puts 'SETTING UP DEFAULT USER LOGIN'
 users = []
-users << User.create!(:name => 'admin', :email => 'admin@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc)
-users << User.create!(:name => 'devel', :email => 'devel@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc)
+u_attrs = [
+  {roles: ['admin'],  user: {name: 'admin', email: 'admin@example.com', :password => 'admin', :password_confirmation => 'admin', :confirmed_at => Time.now.utc}},
+  {roles: ['devel'],  user: {name: 'devel', email: 'devel@example.com', :password => 'devel', :password_confirmation => 'devel', :confirmed_at => Time.now.utc}},
+  {roles: ['picker'], user: {name: 'user',  email: 'user@example.com',  :password => 'user',  :password_confirmation => 'user',  :confirmed_at => Time.now.utc}}
+]
+
+u_attrs.each do |attrs|
+  User.create!(attrs[:user]).tap do |user|
+    attrs[:roles].each { |role| user.add_role role }
+    users << user
+  end
+end
+
 puts 'New users created: ' << users.map(&:name).to_sentence
 
 

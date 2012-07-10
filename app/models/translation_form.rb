@@ -19,8 +19,8 @@ class TranslationForm
     end
 
     # Devel purposes only
-    self.translation     = "translation provided"
-    self.ctx_translation = "context translation provided by translation service"
+    self.translation     = "translated"
+    self.ctx_translation = "context translation provided by translation service" unless ctx_sentence.empty?
   end
 
   def persisted?

@@ -2,6 +2,8 @@ class TranslationController < ApplicationController
   # POST /translation/translate
   # POST /translation/translate.json
   def translate
+    authorize! :translate, :word
+
     tf = TranslationForm.new(params[:tf])
 
     respond_to do |format|

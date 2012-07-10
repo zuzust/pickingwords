@@ -121,15 +121,15 @@ When /^I sign in with a wrong password$/ do
   sign_in
 end
 
-When /^I edit my account details$/ do
+When /^I edit my account settings$/ do
   click_link "Settings"
   fill_in "Name", :with => "newname"
   fill_in "Current password", :with => @visitor[:password]
   click_button "Update"
 end
 
-When /^I look at the list of users$/ do
-  visit '/users'
+When /^I see my account profile$/ do
+  click_link "Profile"
 end
 
 ### THEN ###
@@ -184,6 +184,9 @@ Then /^I should see an account edited message$/ do
   page.should have_content "You updated your account successfully."
 end
 
-Then /^I should see my name$/ do
-  page.should have_content @user[:name]
+Then /^I should see my usage stats$/ do
+  page.should have_content "translated chars"
+  page.should have_content "searches"
+  page.should have_content "picks"
+  page.should have_content "favs"
 end

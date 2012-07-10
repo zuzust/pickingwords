@@ -17,7 +17,7 @@ describe PickedWord do
     }
   end
 
-  let(:user) { Fabricate(:user) }
+  let(:user)    { Fabricate(:user) }
   let(:tracked) { Fabricate(:tracked_word, name: valid_attributes[:name]) }
 
   it "should create a new instance given valid attributes" do

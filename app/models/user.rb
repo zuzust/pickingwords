@@ -2,6 +2,10 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  # Enables User role management
+  extend Rolify
+	rolify
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -71,7 +75,8 @@ class User
   scope :top_searchers, ->(limit = nil) { desc("profile.searches").limit(limit) }
   scope :top_pickers,   ->(limit = nil) { desc(:picked).limit(limit) }
 
-  before_create  { |user| user.build_profile }
+  before_create { |user| user.build_profile }
+  after_create  { |user| user.add_role :picker }
 
   class << self
     # See:

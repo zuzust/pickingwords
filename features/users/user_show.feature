@@ -1,10 +1,9 @@
-Feature: Show Users
-  As a visitor to the website
-  I want to see registered users listed on the homepage
-  so I can know if the site has users
+Feature: Show User
+  As a registered user of the website
+  I want to see my account profile
+  so I can know my usage stats
 
-    Scenario: Viewing users
-      Given I exist as a user
-        And I am logged in
-       When I look at the list of users
-       Then I should see my name
+    Scenario: I sign in and see my account profile
+      Given I am logged in
+       When I see my account profile
+       Then I should see my usage stats

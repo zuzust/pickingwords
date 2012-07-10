@@ -12,10 +12,12 @@ gem 'simple_form', '>= 2.0.2'
 gem 'will_paginate', '>= 3.0.3'
 gem 'will_paginate_mongoid', '>= 1.0.5'
 gem 'bootstrap-will_paginate', '>= 0.0.7'
-gem 'devise', '>= 2.1.0'
+gem 'bson_ext', '>= 1.6.4'
 gem 'mongoid', '>= 2.4.11'
 gem 'mongoid_magic_counter_cache', '>= 0.0.2'
-gem 'bson_ext', '>= 1.6.4'
+gem 'devise', '>= 2.1.0'
+gem 'cancan', '>= 1.6.8'
+gem 'rolify', '>= 3.1.0'
 
 group :assets do
   gem 'coffee-rails', '>= 3.2.2'
@@ -24,7 +26,7 @@ group :assets do
 end
 
 gem 'rspec-rails', '>= 2.10.1', :group => [:development, :test]
-gem 'fabrication', '>= 2.0.2', :group => [:development, :test]
+gem 'fabrication', '>= 2.1.0', :group => [:development, :test]
 gem 'pry-rails', '>= 0.1.6', :group => [:development, :test]
 
 group :development do
@@ -44,7 +46,7 @@ group :development do
       gem 'rb-notifu'
   end
 
-  gem 'guard-bundler', '>= 0.1.3'
+  gem 'guard-bundler', '>= 1.0.0'
   gem 'guard-rails', '>= 0.1.0'
   gem 'guard-livereload', '>= 1.0.0'
   gem 'rack-livereload', '>= 0.3.6'

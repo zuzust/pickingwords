@@ -15,7 +15,7 @@ gem 'bootstrap-will_paginate', '>= 0.0.7'
 gem 'bson_ext', '>= 1.6.4'
 gem 'mongoid', '>= 2.4.11'
 gem 'mongoid_magic_counter_cache', '>= 0.0.2'
-gem 'devise', '>= 2.1.0'
+gem 'devise', '>= 2.1.2'
 gem 'cancan', '>= 1.6.8'
 gem 'rolify', '>= 3.1.0'
 
@@ -31,7 +31,7 @@ gem 'pry-rails', '>= 0.1.6', :group => [:development, :test]
 
 group :development do
   gem 'haml-rails', '>= 0.3.4'
-  gem 'guard', '>= 1.1.1'
+  gem 'guard', '>= 1.2.3'
 
   case HOST_OS
     when /darwin/i
@@ -50,7 +50,7 @@ group :development do
   gem 'guard-rails', '>= 0.1.0'
   gem 'guard-livereload', '>= 1.0.0'
   gem 'rack-livereload', '>= 0.3.6'
-  gem 'guard-rspec', '>= 1.0.1'
+  gem 'guard-rspec', '>= 1.1.0'
   gem 'guard-cucumber', '>= 1.1.0'
   gem 'guard-spork', '>= 1.0.0'
   gem 'guard-coffeescript', '>= 1.0.0'

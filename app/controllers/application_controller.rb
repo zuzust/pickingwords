@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   private
 
   def current_ability
-    @current_ability ||= admin_signed_in? ? Ability.new(current_admin) : Ability.new(current_user)
+    @current_ability ||= signed_in?(:admin) ? Ability.new(current_admin) : Ability.new(current_user)
   end
 end

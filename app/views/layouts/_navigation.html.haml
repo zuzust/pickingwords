@@ -4,10 +4,10 @@
   %li= link_to 'Help', help_path
 
   - if logged_in?
-    - if user.has_role? :admin
+    - if curr_user.has_role? :admin
       = render 'layouts/navigation_admin'
 
-    - if user.has_role? :picker
+    - if curr_user.has_role? :picker
       = render 'layouts/navigation_user'
 
   - else

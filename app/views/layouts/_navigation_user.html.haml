@@ -1,13 +1,13 @@
 %li.dropdown
   = menu_header 'My Words'
   %ul.dropdown-menu
-    = menu_entry 'Picks', user_picked_words_path(user), 'icon-bookmark'
-    = menu_entry 'Favs', user_picked_words_path(user), 'icon-heart'
+    = menu_entry 'Picks', user_picked_words_path(curr_user), 'icon-bookmark'
+    = menu_entry 'Favs', user_picked_words_path(curr_user), 'icon-heart'
 
 %li.dropdown
   = menu_header 'Account'
   %ul.dropdown-menu
-    = menu_entry 'Profile', user, 'icon-user'
+    = menu_entry 'Profile', curr_user, 'icon-user'
     = menu_entry 'Settings', edit_user_registration_path, 'icon-cog'
     = menu_divider
     = logout_entry 'Logout', destroy_user_session_path

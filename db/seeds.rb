@@ -9,22 +9,15 @@ puts 'EMPTY THE MONGODB DATABASE'
 Mongoid.master.collections.reject { |c| c.name =~ /^system/}.each(&:drop)
 
 
-puts 'SETTING UP DEFAULT USER LOGIN'
-users = []
-u_attrs = [
-  {roles: ['admin'],  user: {name: 'admin', email: 'admin@example.com', :password => 'admin', :password_confirmation => 'admin', :confirmed_at => Time.now.utc}},
-  {roles: ['devel'],  user: {name: 'devel', email: 'devel@example.com', :password => 'devel', :password_confirmation => 'devel', :confirmed_at => Time.now.utc}},
-  {roles: ['picker'], user: {name: 'user',  email: 'user@example.com',  :password => 'user',  :password_confirmation => 'user',  :confirmed_at => Time.now.utc}}
-]
+puts 'SETTING UP DEFAULT ADMIN'
+admin = Admin.create!(email: 'admin@example.com', password: 'secret')
+puts "New admin created: #{admin.email}"
 
-u_attrs.each do |attrs|
-  User.create!(attrs[:user]).tap do |user|
-    attrs[:roles].each { |role| user.add_role role }
-    users << user
-  end
-end
 
-puts 'New users created: ' << users.map(&:name).to_sentence
+puts 'SETTING UP DEFAULT USER'
+attrs = { name: 'user',  email: 'user@example.com',  :password => 'secret',  :password_confirmation => 'secret',  :confirmed_at => Time.now.utc }
+user = User.create! attrs
+puts "New user created: #{user.name}"
 
 
 puts 'SETTING UP SAMPLE TRACKED WORDS'

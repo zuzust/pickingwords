@@ -27,4 +27,12 @@ module ApplicationHelper
     provide(:keywords, keywords)
   end
 
+  def logged_in?
+    signed_in?(:user) || signed_in?(:admin)
+  end
+
+  def user
+    @sin_user ||= (current_user || current_admin)
+  end
+
 end

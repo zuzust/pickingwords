@@ -1,5 +1,6 @@
 class TrackedWordsController < ApplicationController
   respond_to :html, :json
+  before_filter :authenticate_admin!
   load_and_authorize_resource
 
   # GET /tracked_words

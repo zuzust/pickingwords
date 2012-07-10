@@ -1,5 +1,6 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
+  before_filter :authenticate_user!
   before_filter :format_params, only: [:create, :update]
   load_and_authorize_resource
 

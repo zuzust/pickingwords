@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_admin!, only: :index
+  before_filter :authenticate_user!, only: :show
   load_and_authorize_resource
 
   def index
@@ -7,5 +9,4 @@ class UsersController < ApplicationController
 
   def show
   end
-
 end

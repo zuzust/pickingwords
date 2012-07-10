@@ -7,8 +7,8 @@ describe "User" do
     let(:ability) { Ability.new(user) }
 
     context "when is an admin" do
-      let(:user)    { Fabricate(:user, role: 'admin') }
-      let(:picker)  { Fabricate.build(:user, role: 'picker') }
+      let(:user)    { Fabricate(:admin) }
+      let(:picker)  { Fabricate.build(:user) }
       let(:tracked) { Fabricate.build(:tracked_word) }
 
       it { should be_able_to(:read, picker) }
@@ -25,7 +25,7 @@ describe "User" do
     end
 
     context "when is a user" do
-      let(:user)   { Fabricate(:user, role: 'picker') }
+      let(:user)   { Fabricate(:user) }
       let(:picked) { Fabricate(:picked_word, user: user) }
 
       it { should be_able_to(:manage, user) }

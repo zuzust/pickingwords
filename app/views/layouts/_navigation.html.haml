@@ -1,32 +1,14 @@
 = link_to "Pickingwords", root_path, class: 'brand'
 
-- if user_signed_in?
-  %ul.nav.pull-right
-    %li= link_to 'Help', help_path
+%ul.nav.pull-right
+  %li= link_to 'Help', help_path
 
-    - if current_user.has_role? :admin
-      %li.dropdown
-        = menu_header 'Dashboard'
-        %ul.dropdown-menu
-          = menu_entry 'Users', users_path
-          = menu_entry 'Tracked Words', tracked_words_path
+  - if logged_in?
+    - if user.has_role? :admin
+      = render 'layouts/navigation_admin'
 
-    - if current_user.has_role? :picker
-      %li.dropdown
-        = menu_header 'My Words'
-        %ul.dropdown-menu
-          = menu_entry 'Picks', user_picked_words_path(current_user), 'icon-bookmark'
-          = menu_entry 'Favs', user_picked_words_path(current_user), 'icon-heart'
+    - if user.has_role? :picker
+      = render 'layouts/navigation_user'
 
-    %li.dropdown
-      = menu_header 'Account'
-      %ul.dropdown-menu
-        = menu_entry 'Profile', current_user, 'icon-user'
-        = menu_entry 'Settings', edit_user_registration_path, 'icon-cog'
-        = menu_divider
-        = logout_entry 'Logout', destroy_user_session_path
-
-- else
-  %ul.nav.pull-right
-    %li= link_to 'Help', help_path
+  - else
     %li= link_to 'Login', new_user_session_path

@@ -28,9 +28,8 @@ describe TrackedWordsController do
   end
 
   before(:each) do
-    @user = Fabricate(:user)
-    @user.add_role :admin
-    sign_in @user
+    @admin = Fabricate(:admin)
+    sign_in :admin, @admin
 
     @tracked = Fabricate(:tracked_word, valid_attributes)
   end

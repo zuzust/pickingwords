@@ -1,4 +1,6 @@
 class TranslationController < ApplicationController
+  before_filter :authenticate_user!
+
   # POST /translation/translate
   # POST /translation/translate.json
   def translate

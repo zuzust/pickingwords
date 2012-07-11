@@ -1,31 +1,21 @@
-%h2
-  Edit #{resource_name.to_s.humanize}
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
-  = devise_error_messages!
-  %p
-    = f.label :name
-    %br/
-    = f.text_field :name
-  %p
-    = f.label :email
-    %br/
-    = f.email_field :email
-  %p
-    = f.label :password
-    %i (leave blank if you don't want to change it)
-    %br/
-    = f.password_field :password
-  %p
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation
-  %p
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br/
-    = f.password_field :current_password
-  %p= f.submit "Update"
-%h3 Cancel my account
-%p
-  Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :method => :delete, :data => { :confirm => "Are you sure?" }}.
-= link_to "Back", :back
+- title 'Settings'
+
+.row
+  .span8.offset2
+    .pw-main_header
+      %h1 Settings
+
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {class: 'form-horizontal', :method => :put}) do |f|
+      = f.error_notification
+
+      = f.input :name, required: false, autofocus: true, input_html: {class: 'input-medium'}
+      = f.input :email, input_html: {class: 'input-medium'}
+      = f.input :password, hint: "(leave blank if you don't want to change it)", input_html: {class: 'input-medium'}
+      = f.input :password_confirmation, input_html: {class: 'input-medium'}
+      = f.input :current_password, hint: "(we need your current password to confirm your changes)", input_html: {class: 'input-medium'}
+
+      .form-actions
+        = f.button :submit, 'Update', class: 'btn-primary'
+
+    %h3 Cancel my account
+    %p Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :method => :delete, :data => { :confirm => "Are you sure?" }}.

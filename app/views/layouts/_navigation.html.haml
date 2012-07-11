@@ -1,4 +1,7 @@
-= link_to "Pickingwords", root_path, class: 'brand'
+-# = link_to "Pickingwords", root_path, class: 'brand'
+= link_to root_path, class: 'brand' do
+  Pickingwords
+  %span.pw-beta beta
 
 %ul.nav.pull-right
   %li= link_to 'Help', help_path

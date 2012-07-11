@@ -35,4 +35,9 @@ module ApplicationHelper
     @curr_user ||= (current_user || current_admin)
   end
 
+  def emphasize(word, sentence, klass)
+    pattern = word.sub(/\s+/, '.*')
+    raw(sentence.gsub(/#{pattern}/i) { |s| "<span class='#{klass}'>#{s}</span>" })
+  end
+
 end

@@ -1,5 +1,7 @@
 module ApplicationHelper
 
+  # Layout Header
+  # -------------------
   def full_title(title)
     base_title = "Pickingwords"
     title.empty? ? base_title : "#{base_title} | #{title}"
@@ -27,17 +29,25 @@ module ApplicationHelper
     provide(:keywords, keywords)
   end
 
+  # Authentication & Authorization
+  # -------------------------------------
   def logged_in?
-    signed_in?(:user) || signed_in?(:admin)
+    @logged_in ||= signed_in?(:user) || signed_in?(:admin)
   end
 
   def curr_user
     @curr_user ||= (current_user || current_admin)
   end
+  
+  def curr_user_roles
+    @curr_user_roles = session[:curr_user_roles] ||= curr_user.roles.map(&:name)
+  end
 
-  def emphasize(word, sentence, klass)
+  # Frontend Styling
+  # ---------------------
+  def emphasize(word, sentence)
     pattern = word.sub(/\s+/, '.*')
-    raw(sentence.gsub(/#{pattern}/i) { |s| "<span class='#{klass}'>#{s}</span>" })
+    raw(sentence.gsub(/#{pattern}/i) { |s| "<strong>#{s}</strong>" })
   end
 
 end

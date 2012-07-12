@@ -7,7 +7,7 @@
       .pw-main_header
         %span.pw-word_name
           = @picked_word.name
-          = badge @picked_word.from_lang, 'info'
+          = badge @picked_word.from_lang.upcase, 'info'
 
         %small.pull-right
           - if @picked_word.fav
@@ -24,7 +24,7 @@
           translation:
           %span.pw-word_trans
             = @picked_word.translation
-            = badge @picked_word.to_lang, 'info'
+            = badge @picked_word.to_lang.upcase, 'info'
 
           - if @picked_word.contexts.size > 0
             %br

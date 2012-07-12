@@ -26,15 +26,14 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    if user.has_role? :picker
-      can :manage, User, id: user.id
-      can :manage, PickedWord, user_id: user.id
-      can :translate, :word
-    end
-
     if user.has_role? :admin
       can :read, User
       can [:read, :destroy], TrackedWord
+    else
+      # user has role :picker
+      can :manage, User, id: user.id
+      can :manage, PickedWord, user_id: user.id
+      can :translate, :word
     end
   end
 end

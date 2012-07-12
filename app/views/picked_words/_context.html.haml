@@ -1,3 +1,4 @@
-= emphasize(word, context.sentence, 'pw-strong')
-%br
-%em= emphasize(translation, context.translation, 'pw-em')
+.pw-word_context
+  = emphasize(word, context.sentence)
+  %br
+  %em= emphasize(translation, context.translation)

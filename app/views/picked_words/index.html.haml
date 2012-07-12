@@ -3,12 +3,12 @@
 %section.pw-trans_form
   = render 'translation_form'
 
-%hr
+%section#pw-filters
+  .pw-lang_filter
+    = render 'lang_filter'
 
-%section.pw-letter_filter
-  = render 'letter_filter'
-
-%hr
+  .pw-letter_filter
+    = render 'letter_filter'
 
 %section.pw-word_list
   - if @picked_words.size == 0

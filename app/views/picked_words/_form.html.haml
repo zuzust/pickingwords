@@ -18,5 +18,5 @@
   = f.input :fav, as: :boolean, label: 'Fav?'
 
   .pw-action_buttons
-    - text = @picked_word.new_record? ? 'Pick it' : 'Update'
+    - text = @picked_word.persisted? ? 'Update' : 'Pick it'
     = f.button :submit, text, class: 'btn-primary'

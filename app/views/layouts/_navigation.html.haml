@@ -10,7 +10,7 @@
     - if curr_user.has_role? :admin
       = render 'layouts/navigation_admin'
 
-    - if curr_user.has_role? :picker
+    -else
       = render 'layouts/navigation_user'
 
   - else

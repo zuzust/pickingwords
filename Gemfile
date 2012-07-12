@@ -54,7 +54,7 @@ group :development do
   gem 'guard-cucumber', '>= 1.1.0'
   gem 'guard-spork', '>= 1.0.0'
   gem 'guard-coffeescript', '>= 1.0.0'
-  gem 'bullet', '>= 4.1.3'
+  gem 'bullet', '>= 4.1.4'
 end
 
 group :test do

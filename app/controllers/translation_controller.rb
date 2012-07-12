@@ -11,7 +11,8 @@ class TranslationController < ApplicationController
     respond_to do |format|
       if tf.valid?
         current_user.update_counter(:searches, 1)
-        
+        set_session_filters(tf)
+
         @picked_word = current_user.picks.search(tf.name, tf.from_lang, tf.to_lang)
 
         if @picked_word
@@ -29,4 +30,12 @@ class TranslationController < ApplicationController
       end
     end
   end
+
+  private
+
+  def set_session_filters(tf)
+    session[:locale_filter] = tf.from_lang
+    session[:letter_filter] = tf.name.chr
+  end
+
 end

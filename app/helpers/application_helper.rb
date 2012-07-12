@@ -43,11 +43,15 @@ module ApplicationHelper
     @curr_user_roles = session[:curr_user_roles] ||= curr_user.roles.map(&:name)
   end
 
-  # Frontend Styling
+  # Frontend
   # ---------------------
+  def locales
+    [:en, :ca, :es]
+  end
+
   def emphasize(word, sentence)
     pattern = word.sub(/\s+/, '.*')
-    raw(sentence.gsub(/#{pattern}/i) { |s| "<strong>#{s}</strong>" })
+    raw(sentence.gsub(/#{pattern}\w*/i) { |s| "<strong>#{s}</strong>" })
   end
 
 end

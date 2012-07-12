@@ -1,8 +1,10 @@
 Pickingwords::Application.routes.draw do
-  get 'playground' => 'static_pages#playground'
-  get 'help'       => 'static_pages#help'
-  get 'about'      => 'static_pages#about'
-  get 'contact'    => 'static_pages#contact'
+  controller :static_pages do
+    get 'playground' => :playground
+    get 'help'       => :help
+    get 'about'      => :about
+    get 'contact'    => :contact
+  end
 
   post 'translate' => 'translation#translate'
 
@@ -22,7 +24,10 @@ Pickingwords::Application.routes.draw do
   devise_for :users
 
   resources :users, :only => [:index, :show] do
-    get 'picked_words/:letter' => 'picked_words#index', letter: /[a-z]{1}/, on: :member, as: :picks_by_letter_of
+    controller :picked_words do
+      get 'picked_words/:letter' => :index, letter: /[@a-z]{1}/, on: :member, as: :picks_by_letter_of
+      get 'picked_words/:locale' => :index, locale: /[a-z]{2}/, on: :member, as: :picks_by_locale_of
+    end
     resources :picked_words, :except => [:new]
   end
 end

@@ -7,7 +7,8 @@ class PickedWordsController < ApplicationController
   # GET /users/:user_id/picked_words
   # GET /users/:user_id/picked_words.json
   def index
-    @picked_words = @picked_words.beginning_with(params[:letter]) if params[:letter]
+    @picked_words = @picked_words.localized_in(locale_filter)
+    @picked_words = @picked_words.beginning_with(letter_filter) if letter_filter
     respond_with(current_user, @picked_words)
   end
 
@@ -50,4 +51,22 @@ class PickedWordsController < ApplicationController
     params[:picked_word][:contexts_attributes] ||= {}
     params[:picked_word].merge!(contexts_attributes: params[:picked_word][:contexts_attributes].values)
   end
+
+  def locale_filter
+    if params[:locale]
+      session[:locale_filter] = params[:locale]
+      session[:letter_filter] = nil
+    end
+
+    session[:locale_filter] ||= I18n.locale
+  end
+
+  def letter_filter
+    if params[:letter]
+      session[:letter_filter] = params[:letter] == '@' ? nil : params[:letter]
+    end
+
+    session[:letter_filter]
+  end
+
 end

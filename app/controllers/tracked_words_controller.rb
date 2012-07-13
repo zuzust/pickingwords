@@ -1,5 +1,6 @@
 class TrackedWordsController < ApplicationController
   respond_to :html, :json
+
   before_filter :authenticate_admin!
   load_and_authorize_resource
 
@@ -7,7 +8,7 @@ class TrackedWordsController < ApplicationController
   # GET /tracked_words.json
   def index
     @tracked_words = @tracked_words.by_asc_name.paginate(:page => params[:page])
-    respond_with(@tracked_words)
+    fresh_when(etag: @tracked_words)
   end
 
   # DELETE /tracked_words/1

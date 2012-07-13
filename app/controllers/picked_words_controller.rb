@@ -1,14 +1,17 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
+
   before_filter :authenticate_user!
   before_filter :format_params, only: [:create, :update]
+  before_filter :manage_session_filters, only: :index
   load_and_authorize_resource
+
+  after_filter :expire_cached_content, only: [:create, :update, :destroy]
 
   # GET /users/:user_id/picked_words
   # GET /users/:user_id/picked_words.json
   def index
-    @picked_words = @picked_words.localized_in(locale_filter)
-    @picked_words = @picked_words.beginning_with(letter_filter) if letter_filter
+    @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
     respond_with(current_user, @picked_words)
   end
 
@@ -45,27 +48,43 @@ class PickedWordsController < ApplicationController
     respond_with(current_user, @picked_word)
   end
 
-  private
+  protected
 
   def format_params
     params[:picked_word][:contexts_attributes] ||= {}
     params[:picked_word].merge!(contexts_attributes: params[:picked_word][:contexts_attributes].values)
   end
 
-  def locale_filter
-    if params[:locale]
-      session[:locale_filter] = params[:locale]
+  def manage_session_filters
+    locale_filter = params[:locale]
+    letter_filter = params[:letter]
+
+    session[:locale_filter] ||= I18n.locale
+
+    if locale_filter
+      session[:locale_filter] = locale_filter
       session[:letter_filter] = nil
     end
 
-    session[:locale_filter] ||= I18n.locale
-  end
-
-  def letter_filter
-    if params[:letter]
-      session[:letter_filter] = params[:letter] == '@' ? nil : params[:letter]
+    if letter_filter
+      session[:letter_filter] = letter_filter == '@' ? nil : letter_filter
     end
 
+    return true
+  end
+
+  def expire_cached_content
+    expire_fragment(fragment: "#{locale}_#{letter}_picks")
+    expire_fragment(fragment: "#{@picked_word.id}")
+  end
+
+  private
+
+  def locale
+    session[:locale_filter]
+  end
+
+  def letter
     session[:letter_filter]
   end
 

@@ -29,29 +29,8 @@ module ApplicationHelper
     provide(:keywords, keywords)
   end
 
-  # Authentication & Authorization
-  # -------------------------------------
-  def logged_in?
-    @logged_in ||= signed_in?(:user) || signed_in?(:admin)
-  end
-
-  def curr_user
-    @curr_user ||= (current_user || current_admin)
-  end
-  
-  def curr_user_roles
-    @curr_user_roles = session[:curr_user_roles] ||= curr_user.roles.map(&:name)
-  end
-
-  # Frontend
-  # ---------------------
   def locales
     [:en, :ca, :es]
-  end
-
-  def emphasize(word, sentence)
-    pattern = word.sub(/\s+/, '.*')
-    raw(sentence.gsub(/#{pattern}\w*/i) { |s| "<strong>#{s}</strong>" })
   end
 
 end

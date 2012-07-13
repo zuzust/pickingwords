@@ -8,8 +8,9 @@
     %meta{name: "description", content: "#{page_description(yield(:description))}"}
     %meta{name: "keywords", content: "#{page_keywords(yield(:keywords))}"}
     %meta{name: "author", content: "zuzu"}
-    = stylesheet_link_tag    "application", media: "all"
+    = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
+
   %body
     = render 'layouts/header'
     #main{:role => "main"}
@@ -19,9 +20,13 @@
             .span12
               = render 'layouts/messages'
               = yield
-        = render 'layouts/footer'
+
+        - cache("footer") do
+          = render 'layouts/footer'
+
         - if Rails.env.development?
           .pw-debug
             = debug(params)
             = debug(session)
+
     = javascript_include_tag "application"

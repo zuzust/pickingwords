@@ -7,11 +7,13 @@
   %li= link_to 'Help', help_path
 
   - if logged_in?
-    - if curr_user.has_role? :admin
-      = render 'layouts/navigation_admin'
+    - if curr_user_roles.include? 'admin'
+      - cache("admin_nav") do
+        = render 'layouts/navigation_admin'
 
     -else
-      = render 'layouts/navigation_user'
+      - cache("#{curr_user.name}_nav") do
+        = render 'layouts/navigation_user'
 
   - else
-    %li= link_to 'Login', new_user_session_path
+    %li= link_to 'Sign in', new_user_session_path

@@ -1,1 +1,7 @@
 include ApplicationHelper
+include BootstrapHelper
+include PickedWordsHelper
+include StaticPagesHelper
+include TrackedWordsHelper
+include TranslationHelper
+include UsersHelper

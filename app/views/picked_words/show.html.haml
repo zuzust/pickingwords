@@ -1,43 +1,44 @@
 - title 'Picked Details'
 
-.row
-  .span8.offset2
-    .pw-word_details
-      -# picked word name & stats
-      .pw-main_header
-        %span.pw-word_name
-          = @picked_word.name
-          = badge @picked_word.from_lang.upcase, 'info'
+- cache(fragment: "#{@picked_word.id}") do
+  .row
+    .span8.offset2
+      .pw-word_details
+        -# picked word name & stats
+        .pw-main_header
+          %span.pw-word_name
+            = @picked_word.name
+            = badge @picked_word.from_lang.upcase, 'info'
 
-        %small.pull-right
-          - if @picked_word.fav
-            = tooltip 'Fav' do
-              - badge 'f'
-          = tooltip 'Searches' do
-            - badge @picked_word.searches
-          &nbsp;&nbsp;
-          last edited #{time_ago_in_words @picked_word.updated_at} ago
+          %small.pull-right
+            - if @picked_word.fav
+              = tooltip 'Fav' do
+                - badge 'f'
+            = tooltip 'Searches' do
+              - badge @picked_word.searches
+            &nbsp;&nbsp;
+            last edited #{time_ago_in_words @picked_word.updated_at} ago
 
-      -# picked word translation & contexts
-      .row
-        .offset1
-          translation:
-          %span.pw-word_trans
-            = @picked_word.translation
-            = badge @picked_word.to_lang.upcase, 'info'
+        -# picked word translation & contexts
+        .row
+          .offset1
+            translation:
+            %span.pw-word_trans
+              = @picked_word.translation
+              = badge @picked_word.to_lang.upcase, 'info'
 
-          - if @picked_word.contexts.size > 0
-            %br
-            %br
-            = header 'contexts'
-            .row
-              .offset1
-                = render partial: 'picked_words/context',
-                  collection: @picked_word.contexts, as: :context,
-                  locals: { word: @picked_word.name, translation: @picked_word.translation }
+            - if @picked_word.contexts.size > 0
+              %br
+              %br
+              = header 'contexts'
+              .row
+                .offset1
+                  = render partial: 'picked_words/context',
+                    collection: @picked_word.contexts, as: :context,
+                    locals: { word: @picked_word.name, translation: @picked_word.translation }
 
-    -# view buttons
-    .pw-view_buttons
-      = link_to 'Picks', user_picked_words_path(current_user)
-      \|
-      = link_to 'Edit', edit_user_picked_word_path(current_user, @picked_word)
+      -# view buttons
+      .pw-view_buttons
+        = link_to 'Picks', user_picked_words_path(current_user)
+        \|
+        = link_to 'Edit', edit_user_picked_word_path(current_user, @picked_word)

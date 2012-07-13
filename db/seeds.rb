@@ -14,10 +14,20 @@ admin = Admin.create!(email: 'admin@example.com', password: 'secret')
 puts "New admin created: #{admin.email}"
 
 
-puts 'SETTING UP DEFAULT USER'
-attrs = { name: 'user',  email: 'user@example.com',  :password => 'secret',  :password_confirmation => 'secret',  :confirmed_at => Time.now.utc }
-user = User.create! attrs
-puts "New user created: #{user.name}"
+puts 'SETTING UP SAMPLE USERS'
+users = []
+u_attrs = [
+  { name: 'user',  email: 'user@example.com',  :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc },
+  { name: 'guest', email: 'guest@example.com', :password => 'secret', :password_confirmation => 'secret', :confirmed_at => Time.now.utc }
+]
+
+u_attrs.each do |attrs|
+  User.create!(attrs).tap do |user|
+    users << user
+  end
+end
+
+puts "New users created: " << users.map(&:name).to_sentence
 
 
 puts 'SETTING UP SAMPLE TRACKED WORDS'

@@ -10,7 +10,15 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def curr_user
+    @curr_user ||= (current_user || current_admin)
+  end
+
+  def curr_user_roles
+    session[:curr_user_roles] ||= curr_user.roles.map(&:name)
+  end
+
   def current_ability
-    @current_ability ||= signed_in?(:admin) ? Ability.new(current_admin) : Ability.new(current_user)
+    @current_ability ||= Ability.new(curr_user, curr_user_roles)
   end
 end

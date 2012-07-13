@@ -4,15 +4,18 @@
   = render 'translation_form'
 
 %section#pw-filters
-  .pw-lang_filter
-    = render 'lang_filter'
+  - cache("#{curr_user.name}_lang_filter") do
+    .pw-lang_filter
+      = render 'lang_filter'
 
-  .pw-letter_filter
-    = render 'letter_filter'
+  - cache("#{curr_user.name}_letter_filter") do
+    .pw-letter_filter
+      = render 'letter_filter'
 
 %section.pw-word_list
   - if @picked_words.size == 0
     .pw-center
       %span.pw-mesg No picks found
   - else
-    = render @picked_words
+    - cache(fragment: "#{locale}_#{letter}_picks") do
+      = render @picked_words

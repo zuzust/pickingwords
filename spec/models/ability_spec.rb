@@ -4,10 +4,11 @@ require 'cancan/matchers'
 describe "User" do
   describe "abilities" do
     subject { ability }
-    let(:ability) { Ability.new(user) }
+    let(:ability) { Ability.new(user, roles) }
 
     context "when is an admin" do
       let(:user)    { Fabricate(:admin) }
+      let(:roles)   { ['admin'] }
       let(:picker)  { Fabricate.build(:user) }
       let(:tracked) { Fabricate.build(:tracked_word) }
 
@@ -26,6 +27,7 @@ describe "User" do
 
     context "when is a user" do
       let(:user)   { Fabricate(:user) }
+      let(:roles)  { ['picker'] }
       let(:picked) { Fabricate(:picked_word, user: user) }
 
       it { should be_able_to(:manage, user) }

@@ -134,22 +134,18 @@ end
 
 ### THEN ###
 Then /^I should be signed in$/ do
-  page.should have_content "Logout"
-  page.should_not have_content "Login"
+  page.should have_content "Sign out"
+  page.should_not have_content "Sign in"
 end
 
 Then /^I should be signed out$/ do
   page.should have_content "Sign up"
-  page.should have_content "Login"
-  page.should_not have_content "Logout"
+  page.should have_content "Sign in"
+  page.should_not have_content "Sign out"
 end
 
 Then /^I see an unconfirmed account message$/ do
   page.should have_content "You have to confirm your account before continuing."
-end
-
-Then /^I see a successful sign in message$/ do
-  page.should have_content "Signed in successfully."
 end
 
 Then /^I should see a successful sign up message$/ do
@@ -170,10 +166,6 @@ end
 
 Then /^I should see a mismatched password message$/ do
   page.should have_content "Passworddoesn't match confirmation"
-end
-
-Then /^I should see a signed out message$/ do
-  page.should have_content "Signed out successfully."
 end
 
 Then /^I see an invalid login message$/ do

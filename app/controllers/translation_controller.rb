@@ -10,8 +10,8 @@ class TranslationController < ApplicationController
 
     respond_to do |format|
       if tf.valid?
-        current_user.update_counter(:searches, 1)
         set_session_filters(tf)
+        current_user.update_counter(:searches, 1)
 
         @picked_word = current_user.picks.search(tf.name, tf.from_lang, tf.to_lang)
 

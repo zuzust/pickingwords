@@ -41,4 +41,4 @@
       .pw-view_buttons
         = link_to 'Picks', user_picked_words_path(current_user)
         \|
-        = link_to 'Edit', edit_user_picked_word_path(current_user, @picked_word)
+        = link_to 'Edit', [:edit, current_user, @picked_word]

@@ -3,6 +3,15 @@ Pickingwords::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
+  config.cache_store = :dalli_store
+
+  # Rack::Cache configuration
+  # See https://devcenter.heroku.com/articles/rack-cache-memcached-static-assets-rails31
+  config.action_dispatch.rack_cache = {
+    metastore:    Dalli::Client.new,
+    entitystore:  'file:tmp/cache/rack/body',
+    allow_reload: false
+  }
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -11,8 +20,14 @@ Pickingwords::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Specify how long an item should stay cached by setting the Cache-Control headers.
+  # Without a Cache-Control header static files will not be stored by Rack::Cache
+  config.static_cache_control = "public, max-age=2592000"
+
+  # Allow Rails to properly serve, invalidate and refresh static assets 
+  config.serve_static_assets = true
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  # config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -75,5 +90,4 @@ Pickingwords::Application.configure do
     user_name: ENV["SENDGRID_USERNAME"],
     password: ENV["SENDGRID_PASSWORD"]
   }
-
 end

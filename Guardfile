@@ -2,7 +2,7 @@
 # More info at https://github.com/guard/guard#readme
 
 
-guard 'bundler' do
+guard 'bundler', :cli => "--without production" do
   watch('Gemfile')
   # Uncomment next line if Gemfile contain `gemspec' command
   # watch(/^.+\.gemspec/)

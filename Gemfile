@@ -68,3 +68,7 @@ group :test do
   gem 'faker', '>= 1.0.1'
   gem 'random-word', '>= 1.3.0'
 end
+
+group :production do
+  gem 'thin'
+end

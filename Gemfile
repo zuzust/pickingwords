@@ -2,6 +2,7 @@ require 'rbconfig'
 HOST_OS = RbConfig::CONFIG['host_os']
 
 source 'https://rubygems.org'
+ruby "1.9.3"
 
 gem 'rails', '3.2.6'
 
@@ -14,7 +15,7 @@ gem 'will_paginate_mongoid', '>= 1.0.5'
 gem 'bootstrap-will_paginate', '>= 0.0.7'
 gem 'bson_ext', '>= 1.6.4'
 gem 'mongoid', '>= 2.4.11'
-gem 'mongoid_magic_counter_cache', '>= 0.0.2'
+gem 'mongoid_magic_counter_cache', '>= 0.1.1'
 gem 'devise', '>= 2.1.2'
 gem 'cancan', '>= 1.6.8'
 gem 'rolify', '>= 3.1.0'

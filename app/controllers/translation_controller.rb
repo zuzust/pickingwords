@@ -10,12 +10,13 @@ class TranslationController < ApplicationController
 
     respond_to do |format|
       if tf.valid?
-        set_session_filters(tf)
         user.update_counter(:searches, 1)
 
         @picked_word = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
 
         if @picked_word
+          expire_cached_content(@picked_word)
+          set_session_filters(locale_filter: tf.from_lang, letter_filter: tf.name.chr)
           format.html { render 'picked_words/show' }
         else
           tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
@@ -31,11 +32,15 @@ class TranslationController < ApplicationController
     end
   end
 
-  private
+private
 
-  def set_session_filters(tf)
-    session[:locale_filter] = tf.from_lang
-    session[:letter_filter] = tf.name.chr
+  def expire_cached_content(picked)
+    expire_action controller: 'picked_words', action: 'show', id: picked.id
   end
+
+  # def set_session_filters(tf)
+  #   session[:locale_filter] = tf.from_lang
+  #   session[:letter_filter] = tf.name.chr
+  # end
 
 end

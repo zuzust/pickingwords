@@ -25,7 +25,10 @@ class PickedWordsController < ApplicationController
 
   def create
     @picked_word.tracked = TrackedWord.find(params[:picked_word][:tracked_id])
-    flash[:notice] = 'Picked word was successfully created.' if @picked_word.save
+    if @picked_word.save
+      set_session_filters(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr)
+      flash[:notice] = 'Picked word was successfully created.'
+    end
     respond_with(user, @picked_word)
   end
 

@@ -22,7 +22,15 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, alert: exception.message
   end
 
-  private
+protected
+
+  def set_session_filters(filters)
+    filters.each do |name, value|
+      session[name] = value
+    end
+  end
+
+private
 
   def current_ability
     @current_ability ||= Ability.new(user, user_roles)

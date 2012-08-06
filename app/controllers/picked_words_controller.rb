@@ -9,6 +9,8 @@ class PickedWordsController < ApplicationController
 
   after_filter :expire_cached_content, only: [:create, :update, :destroy]
 
+  caches_action :show, layout: false
+
   def index
     @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
     respond_with(user, @picked_words)
@@ -67,8 +69,8 @@ protected
   end
 
   def expire_cached_content
-    expire_fragment(fragment: "#{locale}_#{letter}_picks")
-    expire_fragment(fragment: "#{@picked_word.id}")
+    expire_fragment(@picked_word)
+    expire_action action: :show
   end
 
   def locale

@@ -15,5 +15,4 @@
     .pw-center
       %span.pw-mesg No picks found
   - else
-    - cache(fragment: "#{locale}_#{letter}_picks") do
-      = render @picked_words
+    = render @picked_words

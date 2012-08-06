@@ -4,15 +4,11 @@ class TrackedWordsController < ApplicationController
   before_filter :authenticate_admin!
   load_and_authorize_resource
 
-  # GET /tracked_words
-  # GET /tracked_words.json
   def index
     @tracked_words = @tracked_words.by_asc_name.paginate(:page => params[:page])
-    fresh_when(etag: @tracked_words)
+    fresh_when(etag: @tracked_words, public: true)
   end
 
-  # DELETE /tracked_words/1
-  # DELETE /tracked_words/1.json
   def destroy
     respond_with(@tracked_word) do |format|
       flash[:alert] = @tracked_word.errors[:base].to_sentence if !@tracked_word.destroy

@@ -1,32 +1,33 @@
-/ start of word
-.row
-  .span6.offset3
-    .pw-word
-      %span.pw-word_name= picked_word.name
-      &nbsp;&nbsp;
-      %span.pw-word_trans= picked_word.translation
-      %small.pull-right
-        - if picked_word.fav
-          = tooltip 'Fav' do
-            - badge 'f'
-        = tooltip 'Searches' do
-          - badge picked_word.searches
-      
-      %br
-      %br
-      
-      = badge picked_word.from_lang.upcase, 'info'
-      = badge picked_word.to_lang.upcase, 'info'
-      &nbsp;&nbsp;
-      %small last edited #{time_ago_in_words picked_word.updated_at} ago
-      
-      %br
-      %br
+- cache(picked_word) do
+  / start of word
+  .row
+    .span6.offset3
+      .pw-word
+        %span.pw-word_name= picked_word.name
+        &nbsp;&nbsp;
+        %span.pw-word_trans= picked_word.translation
+        %small.pull-right
+          - if picked_word.fav
+            = tooltip 'Fav' do
+              - badge 'f'
+          = tooltip 'Searches' do
+            - badge picked_word.searches
+        
+        %br
+        %br
+        
+        = badge picked_word.from_lang.upcase, 'info'
+        = badge picked_word.to_lang.upcase, 'info'
+        &nbsp;&nbsp;
+        %small last edited #{time_ago_in_words picked_word.updated_at} ago
+        
+        %br
+        %br
 
-      %span.pull-right
-        = link_to 'Show', [user, picked_word]
-        \|
-        = link_to 'Edit', [:edit, user, picked_word]
-        \|
-        = link_to 'Destroy', [user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
-/ end of word
+        %span.pull-right
+          = link_to 'Show', [user, picked_word]
+          \|
+          = link_to 'Edit', [:edit, user, picked_word]
+          \|
+          = link_to 'Destroy', [user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
+  / end of word

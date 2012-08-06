@@ -35,7 +35,7 @@ class TranslationController < ApplicationController
 private
 
   def expire_cached_content(picked)
-    expire_action controller: 'picked_words', action: 'show', id: picked.id
+    expire_action controller: 'picked_words', action: 'show', id: picked.to_param
   end
 
   # def set_session_filters(tf)

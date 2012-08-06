@@ -3,6 +3,6 @@
     = render 'form'
 
     .pw-view_buttons
-      = link_to 'Picks', user_picked_words_path(current_user)
+      = link_to 'Picks', user_picked_words_path(user)
       \|
-      = link_to 'Show', [current_user, @picked_word]
+      = link_to 'Show', [user, @picked_word]

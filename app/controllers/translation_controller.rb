@@ -11,9 +11,9 @@ class TranslationController < ApplicationController
     respond_to do |format|
       if tf.valid?
         set_session_filters(tf)
-        current_user.update_counter(:searches, 1)
+        user.update_counter(:searches, 1)
 
-        @picked_word = current_user.picks.search(tf.name, tf.from_lang, tf.to_lang)
+        @picked_word = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
 
         if @picked_word
           format.html { render 'picked_words/show' }
@@ -23,9 +23,9 @@ class TranslationController < ApplicationController
           format.html { render 'picked_words/new' }
         end
 
-        format.json { render json: [current_user, @picked_word] }
+        format.json { render json: [user, @picked_word] }
       else
-        format.html { redirect_to user_picked_words_url(current_user), alert: tf.error_messages }
+        format.html { redirect_to user_picked_words_url(user), alert: tf.error_messages }
         format.json { render json: tf }
       end
     end

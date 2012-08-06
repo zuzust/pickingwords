@@ -12,18 +12,18 @@ class PickedWordsController < ApplicationController
   # GET /users/:user_id/picked_words.json
   def index
     @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
-    respond_with(current_user, @picked_words)
+    respond_with(user, @picked_words)
   end
 
   # GET /users/:user_id/picked_words/1
   # GET /users/:user_id/picked_words/1.json
   def show
-    respond_with(current_user, @picked_word)
+    respond_with(user, @picked_word)
   end
 
   # GET /users/:user_id/picked_words/1/edit
   def edit
-    respond_with(current_user, @picked_word)
+    respond_with(user, @picked_word)
   end
 
   # POST /users/:user_id/picked_words
@@ -31,21 +31,21 @@ class PickedWordsController < ApplicationController
   def create
     @picked_word.tracked = TrackedWord.find(params[:picked_word][:tracked_id])
     flash[:notice] = 'Picked word was successfully created.' if @picked_word.save
-    respond_with(current_user, @picked_word)
+    respond_with(user, @picked_word)
   end
 
   # PUT /users/:user_id/picked_words/1
   # PUT /users/:user_id/picked_words/1.json
   def update
     flash[:notice] = 'Picked word was successfully updated.' if @picked_word.update_attributes(params[:picked_word])
-    respond_with(current_user, @picked_word)
+    respond_with(user, @picked_word)
   end
 
   # DELETE /users/:user_id/picked_words/1
   # DELETE /users/:user_id/picked_words/1.json
   def destroy
     @picked_word.destroy
-    respond_with(current_user, @picked_word)
+    respond_with(user, @picked_word)
   end
 
   protected
@@ -78,7 +78,7 @@ class PickedWordsController < ApplicationController
     expire_fragment(fragment: "#{@picked_word.id}")
   end
 
-  private
+  public
 
   def locale
     session[:locale_filter]
@@ -87,5 +87,7 @@ class PickedWordsController < ApplicationController
   def letter
     session[:letter_filter]
   end
+
+  helper_method :locale, :letter
 
 end

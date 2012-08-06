@@ -24,9 +24,9 @@
       %br
 
       %span.pull-right
-        = link_to 'Show', [current_user, picked_word]
+        = link_to 'Show', [user, picked_word]
         \|
-        = link_to 'Edit', [:edit, current_user, picked_word]
+        = link_to 'Edit', [:edit, user, picked_word]
         \|
-        = link_to 'Destroy', [current_user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
+        = link_to 'Destroy', [user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
 / end of word

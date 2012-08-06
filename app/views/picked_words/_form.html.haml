@@ -1,4 +1,4 @@
-= simple_form_for([current_user, @picked_word], wrapper: :basic, html: {class: 'form-vertical'}) do |f|
+= simple_form_for([user, @picked_word], wrapper: :basic, html: {class: 'form-vertical'}) do |f|
   = f.error_notification
 
   = f.input :tracked_id, as: :hidden

@@ -69,8 +69,8 @@ protected
   end
 
   def expire_cached_content
-    expire_fragment(@picked_word)
-    expire_action action: :show, cache_path: @picked_word
+    expire_fragment @picked_word
+    expire_action action: :show, id: @picked_word.id
   end
 
   def locale

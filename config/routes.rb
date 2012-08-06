@@ -24,10 +24,6 @@ Pickingwords::Application.routes.draw do
   devise_for :users
 
   resources :users, :only => [:index, :show] do
-    controller :picked_words do
-      get 'picked_words/:locale' => :index, locale: /[a-z]{2}/,  on: :member, as: :picks_by_locale_of
-      get 'picked_words/:letter' => :index, letter: /[@a-z]{1}/, on: :member, as: :picks_by_letter_of
-    end
     resources :picked_words, :except => [:new]
   end
 end

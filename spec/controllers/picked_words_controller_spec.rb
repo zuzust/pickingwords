@@ -52,7 +52,7 @@ describe PickedWordsController do
 
   describe "GET index" do
     it "assigns all picked_words as @picked_words" do
-      get :index, {}
+      get :index, { locale: @picked.from_lang }
       assigns(:picked_words).should eq([@picked])
     end
   end

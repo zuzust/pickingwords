@@ -1,5 +1,6 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
+  helper_method :locale, :letter
 
   before_filter :authenticate_user!
   before_filter :format_params, only: [:create, :update]
@@ -8,47 +9,35 @@ class PickedWordsController < ApplicationController
 
   after_filter :expire_cached_content, only: [:create, :update, :destroy]
 
-  # GET /users/:user_id/picked_words
-  # GET /users/:user_id/picked_words.json
   def index
     @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
     respond_with(user, @picked_words)
   end
 
-  # GET /users/:user_id/picked_words/1
-  # GET /users/:user_id/picked_words/1.json
   def show
     respond_with(user, @picked_word)
   end
 
-  # GET /users/:user_id/picked_words/1/edit
   def edit
-    respond_with(user, @picked_word)
   end
 
-  # POST /users/:user_id/picked_words
-  # POST /users/:user_id/picked_words.json
   def create
     @picked_word.tracked = TrackedWord.find(params[:picked_word][:tracked_id])
     flash[:notice] = 'Picked word was successfully created.' if @picked_word.save
     respond_with(user, @picked_word)
   end
 
-  # PUT /users/:user_id/picked_words/1
-  # PUT /users/:user_id/picked_words/1.json
   def update
     flash[:notice] = 'Picked word was successfully updated.' if @picked_word.update_attributes(params[:picked_word])
     respond_with(user, @picked_word)
   end
 
-  # DELETE /users/:user_id/picked_words/1
-  # DELETE /users/:user_id/picked_words/1.json
   def destroy
     @picked_word.destroy
     respond_with(user, @picked_word)
   end
 
-  protected
+protected
 
   def format_params
     params[:picked_word][:contexts_attributes] ||= {}
@@ -59,15 +48,19 @@ class PickedWordsController < ApplicationController
     locale_filter = params[:locale]
     letter_filter = params[:letter]
 
-    session[:locale_filter] ||= I18n.locale
+    if not locale_filter and not letter_filter
+      new_params = { locale: locale }
+      new_params.merge!(letter: letter) if letter
 
-    if locale_filter
-      session[:locale_filter] = locale_filter
-      session[:letter_filter] = nil
-    end
+      flash.keep
+      redirect_to user_picked_words_url(user, new_params)
+    else
+      if locale_filter
+        session[:locale_filter] = locale_filter
+        session[:letter_filter] = nil
+      end
 
-    if letter_filter
-      session[:letter_filter] = letter_filter == '@' ? nil : letter_filter
+      session[:letter_filter] = letter_filter if letter_filter
     end
 
     return true
@@ -78,16 +71,12 @@ class PickedWordsController < ApplicationController
     expire_fragment(fragment: "#{@picked_word.id}")
   end
 
-  public
-
   def locale
-    session[:locale_filter]
+    session[:locale_filter] ||= I18n.locale
   end
 
   def letter
     session[:letter_filter]
   end
-
-  helper_method :locale, :letter
 
 end

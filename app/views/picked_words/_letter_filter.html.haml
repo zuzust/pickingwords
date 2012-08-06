@@ -1,4 +1,4 @@
 %ul.nav.nav-pills
-  %li= link_to '@', picks_by_letter_of_user_path(current_user, '@')
+  %li= link_to '@', user_picked_words_path(user, locale: locale)
   - ('a'..'z').each do |letter|
-    %li= link_to letter, picks_by_letter_of_user_path(current_user, letter)
+    %li= link_to letter, user_picked_words_path(user, locale: locale, letter: letter)

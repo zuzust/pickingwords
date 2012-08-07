@@ -29,8 +29,8 @@ class PickedWord
   default_scope asc(:name)
   scope :named,           ->(name) { where(name: name) }
   scope :beginning_with,  ->(letter) { where(:name => /^#{letter}/i) }
-  scope :localized_in,    ->(locale) { where(from_lang: locale) }
-  scope :translated_into, ->(locale) { where(to_lang: locale) }
+  scope :localized_in,    ->(locale) { where(:from_lang => /^#{locale}/) }
+  scope :translated_into, ->(locale) { where(:to_lang => /^#{locale}/) }
   scope :top_searched,    ->(limit = nil) { desc(:searches).limit(limit) }
   scope :faved,           where(fav: true)
 

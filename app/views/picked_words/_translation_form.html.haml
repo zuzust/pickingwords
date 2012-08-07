@@ -1,10 +1,10 @@
 .row
-  .span8.offset2
-    = simple_form_for(:tf, url: translate_path, wrapper: :basic, html: {class: 'form-inline'}) do |f|
-
+  = simple_form_for(:tf, url: translate_path, wrapper: :basic) do |f|
+    .span4.offset3
+      = f.input :name, label: false, placeholder: 'word name', autofocus: true, input_html: {class: 'input-medium'}
       = f.input :from_lang, label: false, collection: locales, prompt: 'from', include_blank: false, input_html: {class: 'input-mini'}
       = f.input :to_lang, label: false, collection: locales, prompt: 'to', include_blank: false, input_html: {class: 'input-mini'}
-      = f.input :name, label: false, placeholder: 'word name', input_html: {class: 'input-medium'}
-      = f.input :ctx_sentence, label: false, as: :text, placeholder: 'word context', input_html: {cols: 50, rows: 5, class: 'span4'}
-                                  
+      %br
+      = f.input :ctx_sentence, label: false, as: :text, placeholder: 'word context', input_html: {cols: 50, rows: 3, class: 'span4'}
+    .span1
       = f.button :submit, 'Translate', class: 'btn-primary'

@@ -50,13 +50,11 @@ class User
     def search(name, from_lang, to_lang)
       criteria = named(name).localized_in(from_lang).translated_into(to_lang)
 
-      if criteria.exists?
-        picked = criteria.first
+      criteria.each do |picked|
         picked.timeless.update_attribute(:searches, picked.searches + 1)
-        return picked
       end
 
-      return nil
+      return criteria
     end
   end
 

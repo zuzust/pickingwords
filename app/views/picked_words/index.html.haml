@@ -1,14 +1,14 @@
 - title 'Picked Words'
 
 %section.pw-trans_form
-  = render 'translation_form'
+  = render 'picked_words/translation_form'
 
 %section#pw-filters
   .pw-lang_filter
-    = render 'lang_filter'
+    = render 'picked_words/lang_filter'
 
   .pw-letter_filter
-    = render 'letter_filter'
+    = render 'picked_words/letter_filter'
 
 %section.pw-word_list
   - if @picked_words.size == 0

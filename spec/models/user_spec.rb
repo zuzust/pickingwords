@@ -122,19 +122,20 @@ describe User do
 
           it "should return the existing picked word" do
             matched = user.picks.search(params[:name], params[:from_lang], params[:to_lang])
-            matched.id.should == @picked.id
+            matched.should_not be_empty
+            matched.first.id.should == @picked.id
           end
 
           it "should increment existing picked word searches counter by 1" do
             matched = user.picks.search(params[:name], params[:from_lang], params[:to_lang])
-            matched.searches.should == @picked.searches + 1
+            matched.first.searches.should == @picked.searches + 1
           end
         end
 
         describe "of non-matching name word" do
-          it "should return nil" do
-            not_matched = user.picks.search("unmatched", params[:from_lang], params[:to_lang])
-            not_matched.should be_nil
+          it "should return an empty collection" do
+            matched = user.picks.search("unmatched", params[:from_lang], params[:to_lang])
+            matched.should be_empty
           end
         end
       end

@@ -5,7 +5,7 @@ class TranslationForm
 
   attr_accessor :from_lang, :name, :ctx_sentence, :to_lang, :translation, :ctx_translation
 
-  validates :from_lang, :name, :to_lang, presence: true
+  validates :name, presence: true
   validates :name, format: { with: /\A[a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
   
   before_validation do |tf|

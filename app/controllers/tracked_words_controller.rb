@@ -6,7 +6,6 @@ class TrackedWordsController < ApplicationController
 
   def index
     @tracked_words = @tracked_words.by_asc_name.paginate(:page => params[:page])
-    fresh_when(etag: @tracked_words, public: true)
   end
 
   def destroy

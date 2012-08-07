@@ -5,10 +5,8 @@ class UsersController < ApplicationController
 
   def index
     @users = @users.paginate(:page => params[:page])
-    fresh_when(etag: @users, public: true)
   end
 
   def show
-    fresh_when(etag: @user, public: true)
   end
 end

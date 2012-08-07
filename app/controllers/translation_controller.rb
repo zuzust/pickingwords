@@ -1,8 +1,6 @@
 class TranslationController < ApplicationController
   before_filter :authenticate_user!
 
-  # POST /translation/translate
-  # POST /translation/translate.json
   def translate
     authorize! :translate, :word
 
@@ -16,7 +14,7 @@ class TranslationController < ApplicationController
 
         if @picked_word
           expire_cached_content(@picked_word)
-          set_session_filters(locale_filter: tf.from_lang, letter_filter: tf.name.chr)
+          store_in_session(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr)
           format.html { render 'picked_words/show' }
         else
           tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
@@ -34,14 +32,9 @@ class TranslationController < ApplicationController
 
 private
 
-  def expire_cached_content(picked)
-    expire_fragment picked
-    expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: picked.to_param
+  def expire_cached_content(pick)
+    expire_fragment pick
+    expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: pick.to_param
   end
-
-  # def set_session_filters(tf)
-  #   session[:locale_filter] = tf.from_lang
-  #   session[:letter_filter] = tf.name.chr
-  # end
 
 end

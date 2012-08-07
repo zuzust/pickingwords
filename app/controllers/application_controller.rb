@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
 
   helper_method :logged_in?, :user, :user_roles
 
+  rescue_from CanCan::AccessDenied do |exception|
+    # Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
+    # render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
+    redirect_to root_url, alert: exception.message
+  end
+
+protected
+
   def logged_in?
     @logged_in ||= (signed_in?(:user) || signed_in?(:admin))
   end
@@ -16,16 +24,8 @@ class ApplicationController < ActionController::Base
     session[:user_roles] ||= user.roles.map(&:name)
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    # Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-    # render file: "#{Rails.root}/public/403", formats: [:html], status: 403, layout: false
-    redirect_to root_url, alert: exception.message
-  end
-
-protected
-
-  def set_session_filters(filters)
-    filters.each do |name, value|
+  def store_in_session(entries)
+    entries.each do |name, value|
       session[name] = value
     end
   end

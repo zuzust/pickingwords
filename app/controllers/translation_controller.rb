@@ -16,9 +16,9 @@ class TranslationController < ApplicationController
           expire_cached_content(picks)
 
           if picks.size > 1
-            @picked_words = picks
             pick = picks.first
             store_in_session(locale_filter: pick.from_lang, letter_filter: pick.name.chr)
+            @picked_words = picks
             format.html { render 'picked_words/index' }
           else
             @picked_word = picks.first
@@ -26,9 +26,16 @@ class TranslationController < ApplicationController
             format.html { render 'picked_words/show' }
           end
         else
-          tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
-          @picked_word = tracked.picks.build(tf.word_attributes)
-          format.html { render 'picked_words/new' }
+          if tf.from_lang.blank? or tf.to_lang.blank?
+            store_in_session(letter_filter: tf.name.chr)
+            store_in_session(locale_filter: tf.from_lang) unless tf.from_lang.blank?
+            @picked_words = picks
+            format.html { render 'picked_words/index' }
+          else
+            tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
+            @picked_word = tracked.picks.build(tf.word_attributes)
+            format.html { render 'picked_words/new' }
+          end
         end
 
         format.json { render json: [user, picks] }

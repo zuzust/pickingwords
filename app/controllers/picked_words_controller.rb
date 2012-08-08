@@ -75,7 +75,7 @@ private
 
   def expire_cached_content(pick)
     expire_fragment pick
-    expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: pick.to_param
+    expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: pick
   end
 
   def locale

@@ -7,7 +7,7 @@ class PickedWordsController < ApplicationController
   before_filter :manage_filters, only: :index
   load_and_authorize_resource
 
-  caches_action :show, layout: false
+  caches_action :show, layout: false, expires_in: 24.hours
 
   def index
     @picked_words = @picked_words.localized_in(locale).beginning_with(letter)

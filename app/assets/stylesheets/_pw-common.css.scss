@@ -103,7 +103,13 @@ small {
 .pw-word_context {
   line-height: $baseLineHeight * 1.25;
   font-size: $baseFontSize * 1.4;
-  margin-bottom: 20px; }
+  margin-bottom: 30px; }
+
+.pw-ctx_sentence {
+  margin-bottom: 5px; }
+
+.pw-ctx_translation {
+  font-style: italic; }
 
 .pw-view_buttons, .pw-action_buttons {
   margin-top: 20px; }
@@ -116,6 +122,7 @@ small {
 // Footer
 // -------------------------
 .pw-footer {
+  @include size(75px, 100%);
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayLighter;
@@ -144,12 +151,11 @@ small {
 
 .pw-debug {
   @include clearfix();
-  width: 100%;
-  margin-top: 30px; }
+  width: 100%; }
 
 .debug_dump {
   float: left;
   width: 49%;
   padding: 5px;
-  margin: 10px 5px;
+  margin: 0 5px 30px;
   @include box-sizing(border-box); }

@@ -21,7 +21,7 @@
               = render 'layouts/messages'
               = yield
 
-        - cache("footer", expires_in: 1.hour) do
+        - cache("footer") do
           = render 'layouts/footer'
 
         - if Rails.env.development?

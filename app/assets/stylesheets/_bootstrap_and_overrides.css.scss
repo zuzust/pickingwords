@@ -6,6 +6,9 @@ body { padding-top: 60px; }
   &:hover {
     color: $white; } }
 
+.badge-fav {
+  background-color: darken($orange, 5%); }
+
 @import "bootstrap-responsive";
 
 // See http://fortawesome.github.com/Font-Awesome/

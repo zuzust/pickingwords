@@ -12,7 +12,7 @@
         %small.pull-right
           - if @picked_word.fav
             = tooltip 'Fav' do
-              - badge 'f'
+              - badge 'f', 'fav'
           = tooltip 'Searches' do
             - badge @picked_word.searches
           &nbsp;&nbsp;

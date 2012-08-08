@@ -1,4 +1,3 @@
 .pw-word_context
-  = emphasize(word, context.sentence)
-  %br
-  %em= emphasize(translation, context.translation)
+  .pw-ctx_sentence= emphasize(word, context.sentence)
+  .pw-ctx_translation= emphasize(translation, context.translation)

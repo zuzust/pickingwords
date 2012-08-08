@@ -1,8 +1,4 @@
-%li.dropdown
-  = menu_header 'My Words'
-  %ul.dropdown-menu
-    = menu_entry 'Picks', user_picked_words_path(user), 'icon-bookmark'
-    = menu_entry 'Favs', user_picked_words_path(user), 'icon-heart'
+%li= link_to 'My Picks', user_picked_words_path(user)
 
 %li.dropdown
   = menu_header 'Account'

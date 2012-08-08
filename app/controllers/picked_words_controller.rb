@@ -27,7 +27,7 @@ class PickedWordsController < ApplicationController
     if @picked_word.save
       expire_cached_content(@picked_word)
       store_in_session(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr)
-      flash[:notice] = 'Picked word was successfully created.'
+      flash[:notice] = 'Word successfully picked.'
     end
 
     respond_with(user, @picked_word)
@@ -36,7 +36,7 @@ class PickedWordsController < ApplicationController
   def update
     if @picked_word.update_attributes(params[:picked_word])
       expire_cached_content(@picked_word)
-      flash[:notice] = 'Picked word was successfully updated.'
+      flash[:notice] = 'Pick successfully updated.'
     end
 
     respond_with(user, @picked_word)

@@ -9,7 +9,7 @@
         %small.pull-right
           - if picked_word.fav
             = tooltip 'Fav' do
-              - badge 'f'
+              - badge 'f', 'fav'
           = tooltip 'Searches' do
             - badge picked_word.searches
         
@@ -29,5 +29,5 @@
           \|
           = link_to 'Edit', [:edit, user, picked_word]
           \|
-          = link_to 'Destroy', [user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
+          = link_to 'Delete', [user, picked_word], :method => :delete, :data => {:confirm => 'Are you sure?'}
   / end of word

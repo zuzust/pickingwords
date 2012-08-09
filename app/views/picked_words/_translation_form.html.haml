@@ -1,5 +1,5 @@
 .row
-  = simple_form_for(:tf, url: translate_path, wrapper: :basic) do |f|
+  = simple_form_for(:tf, url: user_translate_path, wrapper: :basic) do |f|
     .span4.offset3
       = f.input :name, label: false, placeholder: 'word name', autofocus: true, input_html: {class: 'input-medium'}
       = f.input :from_lang, label: false, collection: locales, prompt: 'from', include_blank: false, input_html: {class: 'input-mini'}

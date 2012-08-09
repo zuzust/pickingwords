@@ -6,8 +6,6 @@ Pickingwords::Application.routes.draw do
     get 'contact'    => :contact
   end
 
-  post 'translate' => 'translation#translate'
-
   resources :tracked_words, :only => [:index, :destroy]
 
   authenticated :admin do
@@ -25,5 +23,6 @@ Pickingwords::Application.routes.draw do
 
   resources :users, :only => [:index, :show] do
     resources :picked_words, :except => [:new]
+    post 'translate' => 'translation#translate'
   end
 end

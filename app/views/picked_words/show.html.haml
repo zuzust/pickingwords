@@ -10,11 +10,8 @@
           = badge @picked_word.from_lang.upcase, 'info'
 
         %small.pull-right
-          - if @picked_word.fav
-            = tooltip 'Fav' do
-              - badge 'f', 'fav'
-          = tooltip 'Searches' do
-            - badge @picked_word.searches
+          = tooltip('Fav') { badge 'f', 'fav' } if @picked_word.fav
+          = tooltip('Searches') { badge @picked_word.searches }
           &nbsp;&nbsp;
           last edited #{time_ago_in_words @picked_word.updated_at} ago
 

@@ -1,5 +1,4 @@
-- req_params = { locale: locale }
-- req_params.merge!(favs: favs) if favs
+- req_params = { locale: locale, favs: favs }
 
 %ul.nav.nav-pills
   %li= link_to '@', user_picked_words_path(user, req_params)

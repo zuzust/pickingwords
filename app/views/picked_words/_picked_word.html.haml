@@ -7,11 +7,8 @@
         &nbsp;&nbsp;
         %span.pw-word_trans= picked_word.translation
         %small.pull-right
-          - if picked_word.fav
-            = tooltip 'Fav' do
-              - badge 'f', 'fav'
-          = tooltip 'Searches' do
-            - badge picked_word.searches
+          = tooltip('Fav') { badge 'f', 'fav' } if picked_word.fav
+          = tooltip('Searches') { badge picked_word.searches }
         
         %br
         %br

@@ -4,10 +4,10 @@ describe TranslationForm do
 
   def valid_attributes
     {
-      from_lang: "en",
       name: "word",
-      ctx_sentence: "This word is written in english",
-      to_lang: "ca"
+      from: "en",
+      to: "ca",
+      ctxt: "This word is written in english"
     }
   end
   
@@ -34,9 +34,9 @@ describe TranslationForm do
   end
 
   it "should remove context sentence trailing whitespaces before validation" do
-    form = TranslationForm.new(valid_attributes.merge(ctx_sentence: "  This    is the context "))
+    form = TranslationForm.new(valid_attributes.merge(ctxt: "  This    is the context "))
     form.should be_valid
-    form.ctx_sentence.should == "This is the context"
+    form.ctxt.should == "This is the context"
   end
 
 end

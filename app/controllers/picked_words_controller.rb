@@ -1,6 +1,6 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
-  helper_method :locale, :letter
+  helper_method :locale, :letter, :favs
 
   before_filter :authenticate_user!
   before_filter :format_request_params, only: [:create, :update]
@@ -11,6 +11,8 @@ class PickedWordsController < ApplicationController
 
   def index
     @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
+    @picked_words = @picked_words.faved if favs
+
     respond_with(user, @picked_words)
   end
 
@@ -57,17 +59,20 @@ private
   end
 
   def manage_filters
-    locale_filter, letter_filter = params[:locale], params[:letter]
+    locale_filter = params[:locale]
 
-    if not locale_filter and not letter_filter
-      new_params = { locale: locale }
-      new_params.merge!(letter: letter) if letter
+    if locale_filter
+      letter_filter, favs_filter = params[:letter], params[:favs]
+      store_in_session(locale_filter: locale_filter, letter_filter: nil, favs_filter: nil)
+      store_in_session(letter_filter: letter_filter) if letter_filter
+      store_in_session(favs_filter: favs_filter) if favs_filter
+    else
+      req_params = { locale: locale }
+      req_params.merge!(letter: letter) if letter
+      req_params.merge!(favs: favs) if favs
 
       flash.keep
-      redirect_to user_picked_words_url(user, new_params)
-    else
-      store_in_session(locale_filter: locale_filter, letter_filter: nil) if locale_filter
-      store_in_session(letter_filter: letter_filter) if letter_filter
+      redirect_to user_picked_words_url(user, req_params)
     end
 
     return true
@@ -84,5 +89,9 @@ private
 
   def letter
     session[:letter_filter]
+  end
+
+  def favs
+    session[:favs_filter]
   end
 end

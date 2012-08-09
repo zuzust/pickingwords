@@ -1,4 +1,7 @@
+- req_params = { locale: locale }
+- req_params.merge!(favs: favs) if favs
+
 %ul.nav.nav-pills
-  %li= link_to '@', user_picked_words_path(user, locale: locale)
+  %li= link_to '@', user_picked_words_path(user, req_params)
   - ('a'..'z').each do |letter|
-    %li= link_to letter, user_picked_words_path(user, locale: locale, letter: letter)
+    %li= link_to letter, user_picked_words_path(user, req_params.merge(letter: letter))

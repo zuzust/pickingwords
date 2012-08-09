@@ -57,11 +57,10 @@ describe TranslationController do
           }.to change { @tracked.reload.searches }.by(1)
         end
 
-        it "redirects to the index template"
-        # it "redirects to the index template" do
-        #   post :translate, {:tf => params}
-        #   response.should redirect_to(user_picked_words_url(@user, name: @picked.name, from: @picked.from_lang, :to => @picked.to_lang))
-        # end
+        it "redirects to the index template" do
+          post :translate, {:tf => params}
+          response.should redirect_to(user_picked_words_url(@user, name: tf.name, from: tf.from_lang, to: tf.to_lang))
+        end
       end
 
       describe "of non-existing picked word" do

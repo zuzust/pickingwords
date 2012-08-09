@@ -16,7 +16,8 @@ class TranslationController < ApplicationController
           req_params.merge!(from: tf.from_lang) unless tf.from_lang.blank?
           req_params.merge!(to: tf.to_lang) unless tf.to_lang.blank?
 
-          redirect_to user_picked_words_url(user, req_params)
+          format.html { redirect_to user_picked_words_url(user, req_params) }
+          format.json { head :ok }
         else
           resources = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
 
@@ -26,7 +27,8 @@ class TranslationController < ApplicationController
             pick = resources.first
             req_params = { name: pick.name, from: pick.from_lang, to: pick.to_lang }
 
-            redirect_to user_picked_words_url(user, req_params)
+            format.html { redirect_to user_picked_words_url(user, req_params) }
+            format.json { render json: pick, location: pick }
           else
             tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
             @picked_word = tracked.picks.build(tf.word_attributes)

@@ -3,14 +3,16 @@ class TranslationForm
   include ActiveModel::Validations::Callbacks
   include ActiveModel::Conversion
 
-  attr_accessor :from_lang, :name, :ctx_sentence, :to_lang, :translation, :ctx_translation
+  attr_accessor :name, :from, :to, :ctxt
+  attr_accessor :translation, :ctx_translation
 
   validates :name, presence: true
   validates :name, format: { with: /\A[a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
+  validate  :from_to_langs_are_different, unless: ->(tf) { tf.name.blank? }
   
   before_validation do |tf|
     tf.name = tf.name.squish.downcase
-    tf.ctx_sentence = tf.ctx_sentence.squish
+    tf.ctxt = tf.ctxt.squish
   end
 
   def initialize(attributes = {})
@@ -20,7 +22,7 @@ class TranslationForm
 
     # Devel purposes only
     self.translation     = "translated"
-    self.ctx_translation = "context translation provided by translation service" unless ctx_sentence.empty?
+    self.ctx_translation = "context translation provided by translation service" unless ctxt.empty?
   end
 
   def persisted?
@@ -29,15 +31,23 @@ class TranslationForm
 
   def word_attributes
     {
-      from_lang: from_lang,
       name: name,
-      to_lang: to_lang,
+      from_lang: from,
+      to_lang: to,
       translation: translation,
-      contexts_attributes: [{ sentence: ctx_sentence, translation: ctx_translation }]
+      contexts_attributes: [{ sentence: ctxt, translation: ctx_translation }]
     }
   end
 
   def error_messages
     errors.full_messages.to_sentence
+  end
+
+private
+
+  def from_to_langs_are_different
+    if not from.blank? and from == to
+      errors[:base] << "Make sure that source and target languages are different"
+    end
   end
 end

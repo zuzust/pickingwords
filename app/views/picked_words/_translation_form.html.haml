@@ -1,10 +1,10 @@
 .row
-  = simple_form_for(:tf, url: user_translate_path, wrapper: :basic) do |f|
+  = form_tag(user_translate_path, method: :get) do
     .span4.offset3
-      = f.input :name, label: false, placeholder: 'word name', autofocus: true, input_html: {class: 'input-medium'}
-      = f.input :from_lang, label: false, collection: locales, prompt: 'from', include_blank: false, input_html: {class: 'input-mini'}
-      = f.input :to_lang, label: false, collection: locales, prompt: 'to', include_blank: false, input_html: {class: 'input-mini'}
+      = text_field_tag :name, nil, placeholder: 'word name', autofocus: true, class: 'input-medium'
+      = select_tag :from, options_for_select(locales), prompt: 'from', include_blank: false, class: 'input-mini'
+      = select_tag :to, options_for_select(locales), prompt: 'to', include_blank: false, class: 'input-mini'
       %br
-      = f.input :ctx_sentence, label: false, as: :text, placeholder: 'word context', input_html: {cols: 50, rows: 3, class: 'span4'}
+      = text_area_tag :ctxt, nil, cols: 50, rows: 3, placeholder: 'word context', class: 'span4'
     .span1
-      = f.button :submit, 'Translate', class: 'btn-primary'
+      = submit_tag 'Translate', class: 'btn-primary'

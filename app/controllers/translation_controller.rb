@@ -1,6 +1,7 @@
 class TranslationController < ApplicationController
   respond_to :html, :json
   before_filter :authenticate_user!
+  before_filter :format_request_params
 
   def translate
     authorize! :translate, :word
@@ -11,15 +12,15 @@ class TranslationController < ApplicationController
       if tf.valid?
         user.update_counter(:searches, 1)
 
-        if tf.from_lang.blank? or tf.to_lang.blank?
+        if tf.from.blank? or tf.to.blank?
           req_params = { name: tf.name }
-          req_params.merge!(from: tf.from_lang) unless tf.from_lang.blank?
-          req_params.merge!(to: tf.to_lang) unless tf.to_lang.blank?
+          req_params.merge!(from: tf.from) unless tf.from.blank?
+          req_params.merge!(to: tf.to) unless tf.to.blank?
 
           format.html { redirect_to user_picked_words_url(user, req_params) }
           format.json { head :ok }
         else
-          resources = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
+          resources = user.picks.search(tf.name, tf.from, tf.to)
 
           if resources.exists?
             cache_resources(resources)
@@ -30,7 +31,7 @@ class TranslationController < ApplicationController
             format.html { redirect_to user_picked_words_url(user, req_params) }
             format.json { render json: pick, location: pick }
           else
-            tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
+            tracked = TrackedWord.update_or_create(tf.from, tf.name, tf.to, tf.translation)
             @picked_word = tracked.picks.build(tf.word_attributes)
 
             format.html { render 'picked_words/new' }
@@ -45,6 +46,15 @@ class TranslationController < ApplicationController
   end
 
 private
+
+  def format_request_params
+    params[:tf] = {
+      name: params[:name],
+      from: params[:from],
+      to:   params[:to],
+      ctxt: params[:ctxt]
+    }
+  end
 
   def cache_resources(resources)
     key = "#{user.to_param}/picked_words/search_results"

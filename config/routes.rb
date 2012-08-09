@@ -23,6 +23,6 @@ Pickingwords::Application.routes.draw do
 
   resources :users, :only => [:index, :show] do
     resources :picked_words, :except => [:new]
-    post 'translate' => 'translation#translate'
+    get 'translate' => 'translation#translate'
   end
 end

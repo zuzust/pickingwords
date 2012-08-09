@@ -5,13 +5,27 @@ class PickedWordsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :format_request_params, only: [:create, :update]
   before_filter :manage_filters, only: :index
+  before_filter :load_resources, only: :index
+  before_filter :load_cached_resource, except: [:index, :create]
   load_and_authorize_resource
 
   caches_action :show, layout: false, expires_in: 24.hours
 
   def index
-    @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
-    @picked_words = @picked_words.faved if favs
+    if params[:name]
+      # search mode
+      key = "#{user.to_param}/picked_words/search_results"
+      unless stored_in_cache?(key)
+        @picked_words = @picked_words.search(params[:name], params[:from], params[:to])
+      else
+        expire_from_cache key
+      end
+      @picked_words.each { |pick| expire_cached_content pick }
+    else
+      # filter mode
+      @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
+      @picked_words = @picked_words.faved if favs
+    end
 
     respond_with(user, @picked_words)
   end
@@ -59,13 +73,18 @@ private
   end
 
   def manage_filters
-    locale_filter = params[:locale]
+    locale_filter, name_filter = params[:locale], params[:name]
 
     if locale_filter
       letter_filter, favs_filter = params[:letter], params[:favs]
       store_in_session(locale_filter: locale_filter, letter_filter: nil, favs_filter: nil)
       store_in_session(letter_filter: letter_filter) if letter_filter
       store_in_session(favs_filter: favs_filter) if favs_filter
+    elsif name_filter
+      from_filter = params[:from]
+      store_in_session(locale_filter: locale_filter, letter_filter: nil, favs_filter: nil)
+      store_in_session(locale_filter: from_filter) if from_filter
+      store_in_session(letter_filter: name_filter.chr)
     else
       req_params = { locale: locale }
       req_params.merge!(letter: letter) if letter
@@ -78,7 +97,19 @@ private
     return true
   end
 
+  def load_resources
+    key = "#{user.to_param}/picked_words/search_results"
+    @picked_words = load_from_cache(key) if stored_in_cache?(key)
+    @picked_words ||= user.picks
+  end
+
+  def load_cached_resource
+    key = "picked_words/#{params[:id]}"
+    @picked_word = load_from_cache(key) { PickedWord.find(params[:id]) }
+  end
+
   def expire_cached_content(pick)
+    expire_from_cache "picked_words/#{pick.id.to_s}"
     expire_fragment pick
     expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: pick.id.to_s
   end

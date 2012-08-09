@@ -1,4 +1,5 @@
 class TranslationController < ApplicationController
+  respond_to :html, :json
   before_filter :authenticate_user!
 
   def translate
@@ -10,35 +11,30 @@ class TranslationController < ApplicationController
       if tf.valid?
         user.update_counter(:searches, 1)
 
-        picks = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
+        if tf.from_lang.blank? or tf.to_lang.blank?
+          req_params = { name: tf.name }
+          req_params.merge!(from: tf.from_lang) unless tf.from_lang.blank?
+          req_params.merge!(to: tf.to_lang) unless tf.to_lang.blank?
 
-        if picks.exists?
-          expire_cached_content(picks)
-
-          if picks.size > 1
-            pick = picks.first
-            store_in_session(locale_filter: pick.from_lang, letter_filter: pick.name.chr)
-            @picked_words = picks
-            format.html { render 'picked_words/index' }
-          else
-            @picked_word = picks.first
-            store_in_session(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr)
-            format.html { render 'picked_words/show' }
-          end
+          redirect_to user_picked_words_url(user, req_params)
         else
-          if tf.from_lang.blank? or tf.to_lang.blank?
-            store_in_session(letter_filter: tf.name.chr)
-            store_in_session(locale_filter: tf.from_lang) unless tf.from_lang.blank?
-            @picked_words = picks
-            format.html { render 'picked_words/index' }
+          resources = user.picks.search(tf.name, tf.from_lang, tf.to_lang)
+
+          if resources.exists?
+            cache_resources(resources)
+            # there aren't two resources with the same name, from_lang and to_lang 
+            pick = resources.first
+            req_params = { name: pick.name, from: pick.from_lang, to: pick.to_lang }
+
+            redirect_to user_picked_words_url(user, req_params)
           else
             tracked = TrackedWord.update_or_create(tf.from_lang, tf.name, tf.to_lang, tf.translation)
             @picked_word = tracked.picks.build(tf.word_attributes)
+
             format.html { render 'picked_words/new' }
+            format.json { render json: @picked_word }
           end
         end
-
-        format.json { render json: [user, picks] }
       else
         format.html { redirect_to user_picked_words_url(user), alert: tf.error_messages }
         format.json { render json: tf }
@@ -48,10 +44,8 @@ class TranslationController < ApplicationController
 
 private
 
-  def expire_cached_content(picks)
-    picks.each do |pick|
-      expire_fragment pick
-      expire_action controller: 'picked_words', action: 'show', user_id: user.to_param, id: pick.to_param
-    end
+  def cache_resources(resources)
+    key = "#{user.to_param}/picked_words/search_results"
+    store_in_cache(key => resources)
   end
 end

@@ -30,6 +30,29 @@ protected
     end
   end
 
+  def store_in_cache(resources)
+    resources.each do |key, resource|
+      Rails.cache.write(key, resource, expires_in: 5.minutes)
+    end
+  end
+
+  def stored_in_cache?(key)
+    Rails.cache.exist? key
+  end
+
+  def load_from_cache(key)
+    if block_given?
+      Rails.cache.fetch(key, expires_in: 5.minutes) { yield }
+    else
+      Rails.cache.fetch(key, expires_in: 5.minutes)
+    end
+  end
+
+  def expire_from_cache(key)
+    cache = Rails.cache
+    cache.delete(key) if cache.exist?(key)
+  end
+
 private
 
   def current_ability

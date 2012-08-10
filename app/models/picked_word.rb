@@ -37,4 +37,16 @@ class PickedWord
   def base_translation
     tracked.translate(to_lang)
   end
+
+  def cache_key
+    "#{super}-#{searches}"
+  end
+
+  class << self
+
+    def fetch(id)
+      Rails.cache.fetch("picked_words/#{id}", expires_in: 1.hour) { find(id) }
+    end
+
+  end
 end

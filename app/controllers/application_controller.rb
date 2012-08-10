@@ -32,7 +32,7 @@ protected
 
   def store_in_cache(resources)
     resources.each do |key, resource|
-      Rails.cache.write(key, resource, expires_in: 5.minutes)
+      Rails.cache.write(key, resource, expires_in: 1.hour)
     end
   end
 
@@ -42,9 +42,9 @@ protected
 
   def load_from_cache(key)
     if block_given?
-      Rails.cache.fetch(key, expires_in: 5.minutes) { yield }
+      Rails.cache.fetch(key, expires_in: 1.hour) { yield }
     else
-      Rails.cache.fetch(key, expires_in: 5.minutes)
+      Rails.cache.fetch(key, expires_in: 1.hour)
     end
   end
 

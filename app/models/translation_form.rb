@@ -40,7 +40,7 @@ class TranslationForm
   end
 
   def error_messages
-    errors.full_messages.to_sentence
+    errors.full_messages.to_sentence.humanize
   end
 
 private

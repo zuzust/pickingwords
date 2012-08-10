@@ -13,7 +13,7 @@
           = tooltip('Fav') { badge 'f', 'fav' } if @picked_word.fav
           = tooltip('Searches') { badge @picked_word.searches }
           &nbsp;&nbsp;
-          last edited #{time_ago_in_words @picked_word.updated_at} ago
+          last edited #{@picked_word.updated_at.to_s(:last_edited_long)}
 
       -# picked word translation & contexts
       .row

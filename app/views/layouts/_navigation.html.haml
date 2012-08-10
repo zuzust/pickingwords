@@ -7,11 +7,11 @@
 
   - if logged_in?
     - if user_roles.include? 'admin'
-      - cache("admin_nav") do
+      - cache("nav/admin-#{user.to_param}", expires_in: 1.hour) do
         = render 'layouts/navigation_admin'
 
     -else
-      - cache("#{user.name}_nav", expires_in: 24.hours) do
+      - cache("nav/user-#{user.to_param}", expires_in: 1.hour) do
         = render 'layouts/navigation_user'
 
   - else

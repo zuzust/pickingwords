@@ -17,6 +17,7 @@ class TranslationController < ApplicationController
           req_params.merge!(from: tf.from) unless tf.from.blank?
           req_params.merge!(to: tf.to) unless tf.to.blank?
 
+          flash.keep
           format.html { redirect_to user_picked_words_url(user, req_params) }
           format.json { head :ok }
         else
@@ -28,6 +29,7 @@ class TranslationController < ApplicationController
             pick = resources.first
             req_params = { name: pick.name, from: pick.from_lang, to: pick.to_lang }
 
+            flash.keep
             format.html { redirect_to user_picked_words_url(user, req_params) }
             format.json { render json: pick, location: pick }
           else

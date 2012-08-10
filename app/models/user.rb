@@ -4,7 +4,7 @@ class User
 
   # Enables User role management
   extend Rolify
-	rolify
+  rolify
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :lockable, :timeoutable and :omniauthable

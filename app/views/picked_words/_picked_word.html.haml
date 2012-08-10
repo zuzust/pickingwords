@@ -1,4 +1,4 @@
-- cache(picked_word, expires_in: 24.hours) do
+- cache(picked_word, expires_in: 1.hour) do
   / start of word
   .row
     .span6.offset3
@@ -16,7 +16,7 @@
         = badge picked_word.from_lang.upcase, 'info'
         = badge picked_word.to_lang.upcase, 'info'
         &nbsp;&nbsp;
-        %small last edited #{time_ago_in_words picked_word.updated_at} ago
+        %small last edited #{picked_word.updated_at.to_s(:last_edited_short)}
         
         %br
         %br

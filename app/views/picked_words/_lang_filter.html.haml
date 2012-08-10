@@ -4,6 +4,8 @@
 
 - locale_filter = locale.to_sym
 - locales.each do |locale|
-  - klass = locale_filter == locale ? 'info' : ''
-  = link_to user_picked_words_path(user, locale: locale) do
-    = badge locale.upcase, klass
+  - if locale_filter == locale
+    = badge locale.upcase, 'info'
+  - else
+    = link_to user_picked_words_path(user, locale: locale) do
+      = badge locale.upcase

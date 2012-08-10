@@ -34,6 +34,7 @@ class TranslationController < ApplicationController
             tracked = TrackedWord.update_or_create(tf.from, tf.name, tf.to, tf.translation)
             @picked_word = tracked.picks.build(tf.word_attributes)
 
+            flash.now[:info] = "Not among your picks yet, so we've borrowed it for you"
             format.html { render 'picked_words/new' }
             format.json { render json: @picked_word }
           end

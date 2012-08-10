@@ -1,4 +1,11 @@
 - flash.each do |name, msg|
-  %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+  - if name == :notice
+    - klass = 'success'
+  - elsif name == :info
+    - klass = 'info'
+  - else
+    - klass = 'error'
+
+  %div{:class => "alert alert-#{klass}"}
     %a.close{"data-dismiss" => "alert"} ×
     = msg

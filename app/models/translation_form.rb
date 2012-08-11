@@ -8,7 +8,7 @@ class TranslationForm
 
   validates :name, presence: true
   validates :name, format: { with: /\A[a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
-  validate  :from_to_langs_are_different, unless: ->(tf) { tf.name.blank? }
+  validate  :from_to_langs_are_different, unless: ->(tf) { tf.name.blank? or (tf.from.blank? and tf.to.blank?) }
   
   before_validation do |tf|
     tf.name = tf.name.squish.downcase
@@ -46,8 +46,6 @@ class TranslationForm
 private
 
   def from_to_langs_are_different
-    if not from.blank? and from == to
-      errors[:base] << "Make sure that source and target languages are different"
-    end
+    errors[:base] << "Make sure that source and target languages are different" unless from != to
   end
 end

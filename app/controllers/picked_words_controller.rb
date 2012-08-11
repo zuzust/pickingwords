@@ -14,7 +14,7 @@ class PickedWordsController < ApplicationController
   def index
     if params[:name]
       # search mode
-      @picked_words = index_matched_name(@picked_words, params[:name], params[:from], params[:to])
+      @picked_words = search_matching_picks(@picked_words, params[:name], params[:from], params[:to])
     else
       # filter mode
       @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
@@ -92,7 +92,7 @@ private
     @picked_word = PickedWord.fetch(params[:id])
   end
 
-  def index_matched_name(picks, name, from, to)
+  def search_matching_picks(picks, name, from, to)
     key = "#{user.to_param}/picked_words/search_results"
 
     unless stored_in_cache?(key)

@@ -25,9 +25,13 @@ class PickedWordObserver < Mongoid::Observer
     end
   end
 
-  def after_save(picked)
+  def after_create(picked)
     picked = picked.reload
     Rails.cache.write("picked_words/#{picked.id}", picked, expires_in: 1.hour)
+  end
+
+  def after_update(picked)
+    Rails.cache.delete("picked_words/#{picked.id}")
   end
 
   def after_destroy(picked)

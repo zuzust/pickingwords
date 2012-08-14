@@ -1,6 +1,5 @@
 class WordContext
   include Mongoid::Document
-  include Mongoid::Timestamps::Created
 
   field :sentence,    type: String
   field :translation, type: String

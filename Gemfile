@@ -68,6 +68,7 @@ group :test do
   gem 'spork-rails', '>= 3.2.0'
   gem 'faker', '>= 1.0.1'
   gem 'random-word', '>= 1.3.0'
+  gem 'simplecov', '>= 0.6.4', :require => false
 end
 
 group :production do

@@ -14,6 +14,12 @@ Spork.prefork do
   # if you change any configuration or code from libraries loaded here, you'll
   # need to restart spork for it take effect.
 
+  # See https://github.com/colszowka/simplecov#notes-on-specific-frameworks-and-test-utilities
+  unless ENV['DRB']
+    require 'simplecov'
+    SimpleCov.start 'rails'
+  end
+
   require 'cucumber/rails'
 
   # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
@@ -72,7 +78,10 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-
+  if ENV['DRB']
+    require 'simplecov'
+    SimpleCov.start 'rails'
+  end
 end
 
 # --- Instructions ---

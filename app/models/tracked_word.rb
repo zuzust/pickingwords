@@ -3,7 +3,7 @@ class TrackedWord
   include Mongoid::Timestamps
 
   field :name,     type: String,  default: "unset", localize: true
-  field :searches, type: Integer, default: 1
+  field :searches, type: Integer, default: 0
   field :picked,   type: Integer, default: 0
   field :favs,     type: Integer, default: 0
 
@@ -31,13 +31,11 @@ class TrackedWord
   before_destroy :ensure_not_picked
 
   class << self
-
     def search(name, from_lang)
       criteria = named(name, from_lang)
 
       if criteria.exists?
         tracked = criteria.first
-        tracked.inc(:searches, 1)
         return tracked
       end
 
@@ -58,7 +56,6 @@ class TrackedWord
       tracked.save
       tracked
     end
-
   end
 
   def localize(locale, translation)

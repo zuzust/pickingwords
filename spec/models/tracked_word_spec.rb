@@ -50,11 +50,6 @@ describe TrackedWord do
         matched = TrackedWord.search(params[:name], params[:from_lang])
         matched.id.should == @tracked.id
       end
-
-      it "should increment existing tracked word searches counter by 1" do
-        matched = TrackedWord.search(params[:name], params[:from_lang])
-        matched.searches.should == @tracked.searches + 1
-      end
     end
 
     describe "of non-matching name word" do

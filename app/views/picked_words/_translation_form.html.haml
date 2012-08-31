@@ -1,5 +1,5 @@
 .row
-  = form_tag(user_translate_path, method: :get) do
+  = form_tag(search_user_picked_words_path, method: :get) do
     .span4.offset3
       = text_field_tag :name, nil, placeholder: 'word name', autofocus: true, class: 'input-medium'
       = select_tag :from, options_for_select(locales), prompt: 'from', include_blank: false, class: 'input-mini'

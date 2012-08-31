@@ -1,5 +1,5 @@
-# A sample Guardfile
 # More info at https://github.com/guard/guard#readme
+# See https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers
 
 
 guard 'bundler', :cli => "--without production" do

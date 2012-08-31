@@ -195,4 +195,50 @@ describe PickedWordsController do
     end
   end
 
+  describe "searching" do
+    describe "with invalid params" do
+      before(:each) { get :search, { name: "" } }
+      it { response.should redirect_to(user_picked_words_path(@user, locale: I18n.locale)) }
+    end
+
+    describe "with valid params" do
+      let(:fake_results) { [mock(:picked_word, name: "word")] }
+
+      shared_examples_for "returning search results" do
+        it { response.should render_template(:index) }
+        it { assigns(:picked_words).should == results }
+      end
+
+      it "should look for word among user picks" do
+        controller.should_receive(:search_matching_picks).with(@user.picks, "word", "en", "ca").and_return(fake_results)
+        get :search, { name: "word", from: "en", to: "ca" }
+      end
+
+      describe "for picked word" do
+        let(:results) { fake_results }
+        before(:each) do
+          controller.stub(:search_matching_picks).and_return(results)
+          get :search, { name: "word" }
+        end
+
+        it_should_behave_like "returning search results"
+      end
+
+      describe "for not picked word" do
+        let(:params)  {{ name: "not picked", from: "en", to: "ca" }}
+        let(:results) { [] }
+        before(:each) { controller.stub(:search_matching_picks).and_return(results) }
+
+        context "with blank source or target locale" do
+          before(:each) { get :search, params.merge(to: "") }
+          it_should_behave_like "returning search results"
+        end
+
+        context "with non blank source and target locales" do
+          before(:each) { get :search, params }
+          it { response.should redirect_to(user_translate_path(@user, params)) }
+        end
+      end
+    end
+  end
 end

@@ -32,7 +32,7 @@ class Ability
     elsif user_roles.include? 'picker'
       can :manage, User, id: user.id
       can :manage, PickedWord, user_id: user.id
-      can :translate, :word
+      can [:search, :translate], :word
     end
   end
 end

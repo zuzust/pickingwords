@@ -4,7 +4,7 @@ Fabricator(:picked_word) do
   to_lang     "ca"
   translation { |pw| "#{pw[:name]}_#{pw[:to_lang]}" }
   fav         false
-  searches    1
+  searches    0
   user        { Fabricate(:user) }
   tracked     { |pw| Fabricate(:tracked_word, name: pw[:name]) }
 end

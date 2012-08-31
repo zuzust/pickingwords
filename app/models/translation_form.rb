@@ -4,10 +4,10 @@ class TranslationForm
   include ActiveModel::Conversion
 
   attr_accessor :name, :from, :to, :ctxt
-  attr_accessor :translation, :ctx_translation
+  attr_accessor :translation, :ctxt_translation
 
   validates :name, presence: true
-  validates :name, format: { with: /\A[a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
+  validates :name, format: { with: /\A[-a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
   validate  :from_to_langs_are_different, unless: ->(tf) { tf.name.blank? or (tf.from.blank? and tf.to.blank?) }
   
   before_validation do |tf|
@@ -21,8 +21,8 @@ class TranslationForm
     end
 
     # Devel purposes only
-    self.translation     = "translated"
-    self.ctx_translation = "context translation provided by translation service" unless ctxt.empty?
+    self.translation      = "translated"
+    self.ctxt_translation = "context translation provided by translation service" unless ctxt.empty?
   end
 
   def persisted?
@@ -35,7 +35,7 @@ class TranslationForm
       from_lang: from,
       to_lang: to,
       translation: translation,
-      contexts_attributes: [{ sentence: ctxt, translation: ctx_translation }]
+      contexts_attributes: [{ sentence: ctxt, translation: ctxt_translation }]
     }
   end
 

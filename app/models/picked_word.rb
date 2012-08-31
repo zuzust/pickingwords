@@ -8,7 +8,7 @@ class PickedWord
   field :to_lang,     type: String
   field :translation, type: String
   field :fav,         type: Boolean, default: false
-  field :searches,    type: Integer, default: 1
+  field :searches,    type: Integer, default: 0
 
   belongs_to :user, inverse_of: :picks, index: true
   belongs_to :tracked, class_name: "TrackedWord", inverse_of: :picks, index: true
@@ -43,10 +43,8 @@ class PickedWord
   end
 
   class << self
-
     def fetch(id)
       Rails.cache.fetch("picked_words/#{id}", expires_in: 1.hour) { find(id) }
     end
-
   end
 end

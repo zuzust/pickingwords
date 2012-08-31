@@ -8,7 +8,10 @@ class PickedWordObserver < Mongoid::Observer
   end
 
   def before_update(picked)
-    picked.tracked.update_counter(:searches, 1) if picked.searches_changed?
+    if picked.searches_changed?
+      picked.tracked.update_counter(:searches, 1)
+      picked.user.update_counter(:searches, 1)
+    end
 
     if picked.fav_changed?
       inc = picked.fav ? 1 : -1

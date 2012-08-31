@@ -22,7 +22,9 @@ Pickingwords::Application.routes.draw do
   devise_for :users
 
   resources :users, :only => [:index, :show] do
-    resources :picked_words, :except => [:new]
+    resources :picked_words, :except => [:new] do
+      get 'search', on: :collection
+    end
     get 'translate' => 'translation#translate'
   end
 end

@@ -3,23 +3,17 @@ class PickedWordsController < ApplicationController
   helper_method :locale, :letter, :favs
 
   before_filter :authenticate_user!
-  before_filter :format_request_params, only: [:create, :update]
   before_filter :manage_filters, only: :index
-  before_filter :load_resources, only: :index
-  before_filter :load_cached_resource, except: [:index, :create]
-  load_and_authorize_resource
+  before_filter :format_search_params, only: :search
+  before_filter :format_request_params, only: [:create, :update]
+  before_filter :load_cached_resource, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource except: :search
 
   caches_action :show, layout: false, expires_in: 1.hour
 
   def index
-    if params[:name]
-      # search mode
-      @picked_words = search_matching_picks(@picked_words, params[:name], params[:from], params[:to])
-    else
-      # filter mode
-      @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
-      @picked_words = @picked_words.faved if favs
-    end
+    @picked_words = @picked_words.localized_in(locale).beginning_with(letter)
+    @picked_words = @picked_words.faved if favs
 
     respond_with(user, @picked_words)
   end
@@ -36,7 +30,7 @@ class PickedWordsController < ApplicationController
 
     if @picked_word.save
       expire_cached_content(@picked_word)
-      store_in_session(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr)
+      store_in_session(locale_filter: @picked_word.from_lang, letter_filter: @picked_word.name.chr, favs_filter: nil)
       flash[:notice] = 'Word successfully picked'
     end
 
@@ -60,32 +54,54 @@ class PickedWordsController < ApplicationController
     respond_with(user, @picked_word)
   end
 
-private
+  def search
+    authorize! :search, :word
+    sf = SearchForm.new(params[:sf])
 
-  def format_request_params
-    params[:picked_word][:contexts_attributes] ||= {}
-    params[:picked_word].merge!(contexts_attributes: params[:picked_word][:contexts_attributes].values)
+    respond_to do |format|
+      if sf.valid?
+        @picked_words = search_matching_picks(user.picks, sf.name, sf.from, sf.to)
+
+        if @picked_words.size == 0 and not (sf.from.blank? or sf.to.blank?)
+          format.html { redirect_to user_translate_url(user, sf.to_params) }
+          format.json { head :temporary_redirect, location: user_translate_url(user, sf.to_params) }
+        else
+          store_in_session(letter_filter: nil, favs_filter: nil)
+
+          format.html { render :index }
+          format.json { render json: @picked_words }
+        end
+      else
+        format.html { redirect_to user_picked_words_url(user, locale: locale, letter: letter, favs: favs), alert: sf.error_messages }
+        format.json { render json: sf.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
-  def manage_filters
-    locale_filter, name_filter = params[:locale], params[:name]
+private
 
-    if locale_filter
-      store_in_session(locale_filter: locale_filter, letter_filter: params[:letter], favs_filter: params[:favs])
-    elsif name_filter
-      store_in_session(letter_filter: name_filter.chr, favs_filter: nil)
+  def manage_filters
+    if params[:locale]
+      store_in_session(locale_filter: params[:locale], letter_filter: params[:letter], favs_filter: params[:favs])
+      return true
     else
       flash.keep
       redirect_to user_picked_words_url(user, locale: locale, letter: letter, favs: favs) and return
     end
-
-    return true
   end
 
-  def load_resources
-    key = "#{user.to_param}/picked_words/search_results"
-    @picked_words = load_from_cache(key)
-    @picked_words ||= user.picks
+  def format_search_params
+    params[:sf] = {
+      name: params[:name],
+      from: params[:from],
+      to:   params[:to],
+      ctxt: params[:ctxt]
+    }
+  end
+
+  def format_request_params
+    params[:picked_word][:contexts_attributes] ||= {}
+    params[:picked_word].merge!(contexts_attributes: params[:picked_word][:contexts_attributes].values)
   end
 
   def load_cached_resource
@@ -93,17 +109,12 @@ private
   end
 
   def search_matching_picks(picks, name, from, to)
-    key = "#{user.to_param}/picked_words/search_results"
+    from = locale if from.blank?
+    picks = picks.search(name, from, to)
 
-    unless stored_in_cache?(key)
-      from ||= locale
-      picks = picks.search(name, from, to)
-      store_in_session(locale_filter: from) if picks.size > 0
-    else
-      expire_from_cache key
-    end
-
+    store_in_session(locale_filter: from) if picks.size > 0
     picks.each { |pick| expire_cached_content pick }
+
     picks
   end
 

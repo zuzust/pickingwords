@@ -16,10 +16,10 @@ class Translator
     end
 
     def translate(word, from_lang, to_lang, ctxt)
-      tracked,  t_trans_chars = track_translation(word, from_lang, to_lang)
-      pickable, p_trans_chars = build_pickable(tracked, word, from_lang, to_lang, ctxt)
+      tracked,  word_tchars = track_translation(word, from_lang, to_lang)
+      pickable, ctxt_tchars = build_pickable(tracked, word, from_lang, to_lang, ctxt)
 
-      [pickable, t_trans_chars + p_trans_chars]
+      [pickable, word_tchars + ctxt_tchars]
     end
 
   private

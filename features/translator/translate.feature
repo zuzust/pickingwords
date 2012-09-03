@@ -35,23 +35,23 @@ Scenario Outline: Translate existing pick
     | astounded | en            | ca            |
     | paraula   | ca            | en            |
 
-Scenario: Translate not yet picked word
-  Given the translation service provides the following translation:
-    | text      | from | to | translation |
-    | clutter   | en   | ca | desordre    |
-   When I translate 'clutter' from 'en' to 'ca'
-   Then I should be on the Translated Word page
-    And I should see the word 'clutter' and its translation 'desordre'
+# Scenario: Translate not yet picked word
+#   Given the translation service provides the following translation:
+#     | text      | from | to | translation |
+#     | clutter   | en   | ca | desordre    |
+#    When I translate 'clutter' from 'en' to 'ca'
+#    Then I should be on the Translated Word page
+#     And I should see the word 'clutter' and its translation 'desordre'
 
-Scenario: Translate not yet picked word with context
-  Given the translation service provides the following translations:
-    | text              | from | to | translation             |
-    | excerpt           | en   | ca | fragment                |
-    | read this excerpt | en   | ca | llegeix aquest fragment |
-   When I translate 'excerpt' from 'en' to 'ca' with context 'read this excerpt'
-   Then I should be on the Translated Word page
-    And I should see the word 'excerpt' and its translation 'fragment'
-    And I should see the context 'read this excerpt' and its translation 'llegeix aquest fragment'
+# Scenario: Translate not yet picked word with context
+#   Given the translation service provides the following translations:
+#     | text              | from | to | translation             |
+#     | excerpt           | en   | ca | fragment                |
+#     | read this excerpt | en   | ca | llegeix aquest fragment |
+#    When I translate 'excerpt' from 'en' to 'ca' with context 'read this excerpt'
+#    Then I should be on the Translated Word page
+#     And I should see the word 'excerpt' and its translation 'fragment'
+#     And I should see the context 'read this excerpt' and its translation 'llegeix aquest fragment'
 
 Scenario: Service provider not responding
   Given the translation service does not respond

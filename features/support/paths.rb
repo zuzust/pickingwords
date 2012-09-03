@@ -20,6 +20,9 @@ module NavigationHelpers
     when /my home page/
       user_picked_words_path(@user)
 
+    when /the Translated Word page/
+      user_translate_path(@user)
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

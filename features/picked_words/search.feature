@@ -51,3 +51,4 @@ Scenario Outline: Search for existing pick
     | clutter   |               | ca            |
     | excerpt   | en            | ca            |
     | paraula   | ca            |               |
+

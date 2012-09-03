@@ -4,7 +4,6 @@ class TranslationForm
   include ActiveModel::Conversion
 
   attr_accessor :name, :from, :to, :ctxt
-  attr_accessor :translation, :ctxt_translation
 
   validates :name, presence: true
   validates :name, format: { with: /\A[-a-zA-Z\s]+\z/, message: 'is not a dictionary word' }, unless: ->(tf) { tf.name.blank? }
@@ -19,24 +18,10 @@ class TranslationForm
     attributes.each do |name, value|
       send("#{name}=", value)
     end
-
-    # Devel purposes only
-    self.translation      = "translated"
-    self.ctxt_translation = "context translation provided by translation service" unless ctxt.empty?
   end
 
   def persisted?
     false
-  end
-
-  def word_attributes
-    {
-      name: name,
-      from_lang: from,
-      to_lang: to,
-      translation: translation,
-      contexts_attributes: [{ sentence: ctxt, translation: ctxt_translation }]
-    }
   end
 
   def error_messages

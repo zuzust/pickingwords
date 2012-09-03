@@ -41,21 +41,6 @@ class TrackedWord
 
       return nil
     end
-
-    def update_or_create(from_lang, name, to_lang, translation)
-      tracked = search(name, from_lang)
-
-      if tracked
-        tracked.localize(to_lang, translation) if tracked.translate(to_lang).blank?
-      else
-        tracked = TrackedWord.new
-        tracked.localize(from_lang, name)
-        tracked.localize(to_lang, translation)
-      end
-
-      tracked.save
-      tracked
-    end
   end
 
   def localize(locale, translation)
@@ -80,7 +65,7 @@ class TrackedWord
     inc(counter, value)
   end
 
-  private
+private
 
   def ensure_not_picked
     not_picked = picked == 0

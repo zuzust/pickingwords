@@ -25,6 +25,7 @@ group :assets do
   gem 'coffee-rails', '>= 3.2.2'
   gem 'sass-rails',   '>= 3.2.5'
   gem 'uglifier', '>= 1.2.4'
+  gem 'font-awesome-sass-rails', '>= 2.0.0.0'
 end
 
 gem 'rspec-rails', '>= 2.10.1', :group => [:development, :test]

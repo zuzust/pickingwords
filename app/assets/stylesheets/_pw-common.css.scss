@@ -1,7 +1,7 @@
 // Base
 // -------------------------
 body {
-  font-family: ubuntu, $baseFontFamily; }
+  font-family: 'Ubuntu', $baseFontFamily; }
 
 div {
   &.field, &.actions {
@@ -128,18 +128,17 @@ small {
   border-top: 1px solid $grayLighter;
   color: $grayLight;
   a {
+    display: inline-block;
+    margin-left: 20px;
     color: $gray;
     &:hover {
       color: $grayDarker;
       text-decoration: none; } }
   small {
-    float: left; }
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 10px; } } }
+    float: left; } }
+
+.pw-icon {
+  @include scale(1.5); }
 
 
 // Miscellaneous

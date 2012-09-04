@@ -10,6 +10,8 @@
     %meta{name: "author", content: "zuzu"}
     = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
+    /[if lt IE 9]
+      %script{src: "http://html5shim.googlecode.com/svn/trunk/html5.js"}
 
   %body
     = render 'layouts/header'

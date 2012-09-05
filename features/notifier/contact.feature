@@ -19,9 +19,9 @@ Scenario Outline: Contact with invalid params
     | user | in&valid@format  | foo     | bar  | email format not valid |
     | user | user@example.com | foo     |      | missing body           |
 
-Scenario: Contact with valid params
-   When I submit the Contact form with 'user', 'user@example.com', 'foo' and 'bar' values
-   Then a message from 'User <user@example.com>', with subject 'foo' and body 'bar' should be delivered
-    And I should remain on the Contact page
-    And I should see a message successfully delivered message
-    And the Contact form fields should be cleared
+# Scenario: Contact with valid params
+#    When I submit the Contact form with 'user', 'user@example.com', 'foo' and 'bar' values
+#    Then a message from 'User <user@example.com>', with subject 'foo' and body 'bar' should be delivered
+#     And I should remain on the Contact page
+#     And I should see a message successfully delivered message
+#     And the Contact form fields should be cleared

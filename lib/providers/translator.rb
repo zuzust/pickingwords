@@ -1,5 +1,4 @@
 class Translator
-
   class ServiceProviderError < StandardError ; end
 
   class << self
@@ -65,5 +64,4 @@ class Translator
       end
     end
   end
-
 end

@@ -1,8 +1,4 @@
-class SearchForm
-  include ActiveModel::Validations
-  include ActiveModel::Validations::Callbacks
-  include ActiveModel::Conversion
-
+class SearchForm < BaseForm
   attr_accessor :name, :from, :to, :ctxt
 
   validates :name, presence: true
@@ -11,27 +7,8 @@ class SearchForm
   
   before_validation { |sf| sf.name = sf.name.squish.downcase }
 
-  def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
-    end
-  end
-
-  def persisted?
-    false
-  end
-
   def to_params
-    {
-      name: name,
-      from: from,
-      to:   to,
-      ctxt: ctxt
-    }
-  end
-
-  def error_messages
-    errors.full_messages.to_sentence.humanize
+    { name: name, from: from, to: to, ctxt: ctxt }
   end
 
 private

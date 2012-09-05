@@ -1,6 +1,5 @@
 Pickingwords::Application.routes.draw do
   controller :static_pages do
-    get 'playground' => :playground
     get 'help'       => :help
     get 'about'      => :about
     match 'contact'  => :contact

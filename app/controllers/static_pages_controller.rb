@@ -22,8 +22,4 @@ class StaticPagesController < ApplicationController
       flash.now[:notice] = "Your message has been successfully delivered and will be considered"
     end
   end
-
-  # TODO Remove playground action
-  def playground
-  end
 end

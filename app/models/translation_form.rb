@@ -1,8 +1,4 @@
-class TranslationForm
-  include ActiveModel::Validations
-  include ActiveModel::Validations::Callbacks
-  include ActiveModel::Conversion
-
+class TranslationForm < BaseForm
   attr_accessor :name, :from, :to, :ctxt
 
   validates :name, presence: true
@@ -12,20 +8,6 @@ class TranslationForm
   before_validation do |tf|
     tf.name = tf.name.squish.downcase
     tf.ctxt = tf.ctxt.squish
-  end
-
-  def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
-    end
-  end
-
-  def persisted?
-    false
-  end
-
-  def error_messages
-    errors.full_messages.to_sentence.humanize
   end
 
 private

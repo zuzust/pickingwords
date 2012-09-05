@@ -21,10 +21,11 @@ Then /^I should see a missing body error message$/ do
 end
 
 Then /^a message from '(.*?)', with subject '(.*?)' and body '(.*?)' should be delivered$/ do |from,subject,body|
-  mail = ActionMailer::Base.deliveries.last
-  mail[:from].value.should == from
-  mail.subject.should == "[pickingwords-contact] #{subject}"
-  mail.body.encoded.should =~ /#{body}/
+  # mail = ActionMailer::Base.deliveries.last
+  # mail[:from].value.should == from
+  # mail.subject.should == "[pickingwords-contact] #{subject}"
+  # mail.body.encoded.should =~ /#{body}/
+  pending "green but based on ActionMailer"
 end
 
 Then /^I should see a message successfully delivered message$/ do

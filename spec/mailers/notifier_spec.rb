@@ -7,10 +7,8 @@ describe Notifier do
     let(:mail)    { Notifier.contacted(cf) }
 
     it "renders the headers" do
-      # mail.subject.should eq("[pickingwords-contact] #{message[:subject]}")
-      # mail.to.should eq([ENV["CONTACT_EMAIL"]])
-      # mail.from.should eq([message[:email]])
-      pending "green but based on env variable"
+      mail.subject.should eq("[pickingwords-contact] #{message[:subject]}")
+      mail.from.should eq([message[:email]])
     end
 
     it "renders the body" do

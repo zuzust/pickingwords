@@ -23,6 +23,9 @@ module NavigationHelpers
     when /the Translated Word page/
       user_translate_path(@user)
 
+    when /the Contact page/
+      '/contact'
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

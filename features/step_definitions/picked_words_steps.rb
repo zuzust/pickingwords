@@ -44,10 +44,6 @@ Then /^just the following filters should be applied:\s*(.*?)$/ do |filters|
   current_url.should =~ /\?#{url_params.sort.join("&")}$/
 end
 
-Then /^I should see a missing name error message$/ do
-  step "I should see the following error message: 'Name can't be blank'"
-end
-
 Then /^I should see a invalid name error message$/ do
   step "I should see the following error message: 'Name is not a dictionary word'"
 end

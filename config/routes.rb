@@ -3,7 +3,7 @@ Pickingwords::Application.routes.draw do
     get 'playground' => :playground
     get 'help'       => :help
     get 'about'      => :about
-    get 'contact'    => :contact
+    match 'contact'  => :contact
   end
 
   resources :tracked_words, :only => [:index, :destroy]

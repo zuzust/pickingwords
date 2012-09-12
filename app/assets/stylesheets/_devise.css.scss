@@ -1,0 +1,36 @@
+// Registrations/new
+// -------------------------
+section#signup {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; }
+  form {
+    @extend .form-horizontal; } }
+
+
+// Registrations/edit
+// -------------------------
+section#settings {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; }
+  form {
+    @extend .form-horizontal; } }
+
+
+// Sessions/new
+// -------------------------
+section#signin {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; }
+  form {
+    @extend .form-horizontal; }
+  footer {
+    @extend .pw-view_buttons; } }

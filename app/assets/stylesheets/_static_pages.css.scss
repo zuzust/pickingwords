@@ -1,7 +1,55 @@
-// Place all the styles related to the static_pages controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// Home
+// -------------------------
+article#welcome {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  text-align: center;
+  & > p {
+    @extend .lead; }
+  aside {
+    position: relative;
+    left: 30%;
+    width: 50%;
+    text-align: right;
+    blockquote {
+      @extend .pull-right; }
+  }
+  footer > a {
+    @extend .btn;
+    @extend .btn-primary;
+    @extend .btn-large; } }
 
-.pw-playground {
-  background-color: lighten($grayLight, 25%);
-}
+
+// Contact
+// -------------------------
+section#contact {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; }
+  form {
+    @extend .form-horizontal;
+    textarea {
+      @include size(150px, 370px); } } }
+
+
+// Help
+// -------------------------
+article#help {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; } }
+
+
+// About
+// -------------------------
+article#about {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  header {
+    @extend .pw-main_header; } }

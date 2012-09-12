@@ -1,3 +1,35 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// Index
+// -------------------------
+section#users {
+  @extend .row-fluid;
+  @extend .span12;
+  header {
+    @extend .pw-main_header; } }
+
+
+// Show
+// -------------------------
+article#profile {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  font-size: $pwFontM;
+  header {
+    @extend .pw-main_header;
+    p {
+      font-size: $pwFontXL; } }
+  #stats {
+    @extend .row-fluid;
+    @extend .span10;
+    @extend .offset1;
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      li {
+        margin-bottom: 20px;
+        &>span {
+          font: {
+            size: $pwFontL;
+            style: italic; }
+          color: $gray; } } } } }

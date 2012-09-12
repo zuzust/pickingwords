@@ -1,17 +1,16 @@
 - title 'Contact'
 
-.row
-  .span8.offset2
-    .pw-main_header
-      %h1 Contact me
+%section#contact
+  %header
+    %h1 Contact me
 
-    = simple_form_for(@cf, as: :cf, url: contact_path, html: {class: 'form-horizontal'}) do |f|
-      = f.error_notification
+  = simple_form_for(@cf, as: :cf, url: contact_path) do |f|
+    = f.error_notification
 
-      = f.input :name, autofocus: true, input_html: {class: 'input-medium'}, required: false
-      = f.input :email, input_html: {class: 'input-medium'}, required: false
-      = f.input :subject, input_html: {class: 'input-medium'}, required: false
-      = f.input :body, as: :text, placeholder: 'Your doubt, suggestion or whatever', input_html: { cols: 50, rows: 8, class: 'span4' }, required: false
+    = f.input :name, autofocus: true, required: false
+    = f.input :email, required: false
+    = f.input :subject, required: false
+    = f.input :body, as: :text, placeholder: 'Your doubt, suggestion or whatever', input_html: { cols: 50, rows: 8 }, required: false
 
-      .form-actions
-        = f.button :submit, 'Send', class: 'btn-primary'
+    .form-actions
+      = f.button :submit, 'Send'

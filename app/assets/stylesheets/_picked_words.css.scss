@@ -1,3 +1,143 @@
-// Place all the styles related to the picked_words controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// Base
+// -------------------------
+.pw-word_name {
+  font-size: $pwFontXL; }
+
+.pw-word_trans {
+  color: $gray;
+  font: {
+    size: $pwFontL;
+    style: italic; } }
+
+
+// Show
+// -------------------------
+section#pick {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  font-size: $pwFontM;
+  header {
+    @extend .pw-main_header;
+    &>span {
+      @extend .pw-word_name;
+      .badge {
+        position: relative;
+        top: -0.45em; } }
+    &>small {
+      @extend .pull-right;
+      &>span {
+        margin-left: 10px; } } }
+  section {
+    position: relative;
+    left: 12%;
+    width: 88%;
+    #translation {
+      margin-bottom: 20px;
+      &>span {
+        @extend .pw-word_trans;
+        .badge {
+          font-style: normal;
+          position: relative;
+          top: -0.30em; } } }
+    #contexts {
+      &>span {
+        @extend .pw-header; }
+      &>div {
+        position: relative;
+        left: 15%;
+        width: 85%; } } }
+  footer {
+    font-size: $baseFontSize;
+    @extend .pw-view_buttons; } }
+
+.pw-word_context {
+  line-height: $baseLineHeight * 1.25;
+  font-size: $baseFontSize * 1.4;
+  margin-bottom: 30px;
+  .pw-ctx_sentence {
+    margin-bottom: 5px; }
+  .pw-ctx_translation {
+    font-style: italic; } }
+
+
+// New / Edit
+// -------------------------
+section#edit, section#new {
+  @extend .row-fluid;
+  @extend .span8;
+  @extend .offset2;
+  form {
+    @extend .form-vertical; }
+  footer {
+    @extend .pw-view_buttons; } }
+
+
+// Index
+// -------------------------
+section#translation_form {
+  background-color: $grayLighter;
+  @include border-radius(6px);
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+  form {
+    @extend .row-fluid;
+    @extend .span4;
+    @extend .offset4;
+    padding-top: 10px;
+    position: relative;
+    #actions {
+      position: absolute;
+      top: 10px;
+      right: 10px; } } }
+
+section#filters {
+  #lang_filter {
+    a:hover {
+      text-decoration: none; } }
+  #letter_filter {
+    font-size: $baseFontSize * 2.5;
+    padding-top: 15px;
+    margin: 5px 0 20px;
+    border: {
+      top: 1px solid $grayLighter;
+      bottom: 1px solid $grayLighter; }
+    ul {
+      @extend .nav;
+      @extend .nav-pills;
+      li {
+        margin: 0 1px;
+        a {
+          color: $gray;
+          &:hover {
+            @include scale(1.5); } }
+        &.active>a, &.active>a:hover {
+          color: $gray;
+          background-color: $grayLighter;
+          @include scale(1.5); } } } } }
+
+section#picks {
+  &>p {
+    text-align: center;
+    font-size: $pwFontM; }
+  section {
+    @extend .row-fluid;
+    @extend .span5;
+    @extend .offset3;
+    min-height: 85px;
+    margin-top: 10px;
+    padding: 20px 20px 10px;
+    border: 1px solid $grayLighter;
+    @include border-radius(6px);
+    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+    div {
+      margin-bottom: 10px;
+      &:nth-child(1) {
+        &>span {
+          margin-right: 10px; }
+        &>small {
+          @extend .pull-right; } }
+      &:nth-child(2) {
+        &>small {
+          margin-left: 10px; } } }
+    footer {
+      @extend .pull-right; } } }

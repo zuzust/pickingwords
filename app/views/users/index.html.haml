@@ -1,18 +1,21 @@
 - title 'Users'
 
-.pw-main_header
-  %h1 Users
+%section#words
+  %header
+    %h1 Users
 
-%table.table.table-bordered.table-striped
-  %tr
-    %th Name
-    %th Email
-    %th Trans Chars
-    %th Searches
-    %th Picks
-    %th Favs
-    %th Signed up
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Email
+        %th Trans Chars
+        %th Searches
+        %th Picks
+        %th Favs
+        %th Signed up
+    %tbody
+      = render @users
 
-  = render @users
-
-= will_paginate
+  %footer
+    = will_paginate

@@ -1,18 +1,21 @@
-- title 'Tracked Words'
+- title 'Words'
 
-.pw-main_header
-  %h1 Words
+%section#words
+  %header
+    %h1 Words
 
-%table.table.table-bordered.table-striped
-  %tr
-    %th Name
-    %th Translations
-    %th Searches
-    %th Picks
-    %th Favs
-    %th Last edited
-    %th
+  %table
+    %thead
+      %tr
+        %th Name
+        %th Translations
+        %th Searches
+        %th Picks
+        %th Favs
+        %th Last edited
+        %th
+    %tbody
+      = render @tracked_words
 
-  = render @tracked_words
-
-= will_paginate
+  %footer
+    = will_paginate

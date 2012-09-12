@@ -4,31 +4,32 @@
     %meta{charset: "utf-8"}
     %meta{"http-equiv" => "X-UA-Compatible", content: "IE=edge,chrome=1"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0"}
-    %title= full_title(yield(:title))
     %meta{name: "description", content: "#{page_description(yield(:description))}"}
     %meta{name: "keywords", content: "#{page_keywords(yield(:keywords))}"}
     %meta{name: "author", content: "zuzu"}
-    = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
-    /[if lt IE 9]
-      %script{src: "http://html5shim.googlecode.com/svn/trunk/html5.js"}
+    = stylesheet_link_tag "application", media: "all"
+    %title= full_title(yield(:title))
 
-  %body
-    = render 'layouts/header'
-    #main{:role => "main"}
-      .container
-        .pw-content
-          .row
-            .span12
-              = render 'layouts/messages'
-              = yield
+  %body{:role => "application"}
+    %header#page_header
+      = render 'layouts/header_content'
 
-        - cache("footer", expires_in: 24.hours) do
-          = render 'layouts/footer'
+    %section#main{:role => "main"}
+      %section#messages
+        = render 'layouts/messages'
+      %section#content
+        = yield
 
-        - if Rails.env.development?
-          .pw-debug
-            = debug(params)
-            = debug(session)
+    - cache("footer", expires_in: 24.hours) do
+      %footer#page_footer{:role => "contentinfo"}
+        = render 'layouts/footer_content'
+
+    - if Rails.env.development?
+      .pw-debug
+        = debug(params)
+        = debug(session)
 
     = javascript_include_tag "application"
+    /[if lt IE 9]
+      %script{src: "http://html5shim.googlecode.com/svn/trunk/html5.js"}

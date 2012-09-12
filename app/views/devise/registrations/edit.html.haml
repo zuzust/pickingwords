@@ -1,21 +1,21 @@
 - title 'Settings'
 
-.row
-  .span8.offset2
-    .pw-main_header
-      %h1 Settings
+%section#settings
+  %header
+    %h1 Settings
 
-    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {class: 'form-horizontal', :method => :put}) do |f|
-      = f.error_notification
+  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: {method: :put}) do |f|
+    = f.error_notification
 
-      = f.input :name, required: false, autofocus: true, input_html: {class: 'input-medium'}
-      = f.input :email, input_html: {class: 'input-medium'}
-      = f.input :password, hint: "(leave blank if you don't want to change it)", input_html: {class: 'input-medium'}
-      = f.input :password_confirmation, input_html: {class: 'input-medium'}
-      = f.input :current_password, hint: "(we need your current password to confirm your changes)", input_html: {class: 'input-medium'}
+    = f.input :name, required: false, autofocus: true
+    = f.input :email
+    = f.input :password, hint: "(leave blank if you don't want to change it)"
+    = f.input :password_confirmation
+    = f.input :current_password, hint: "(we need your current password to confirm your changes)"
 
-      .form-actions
-        = f.button :submit, 'Update', class: 'btn-primary'
+    .form-actions
+      = f.button :submit, 'Update'
 
+  %footer
     %h3 Cancel my account
-    %p Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :method => :delete, :data => { :confirm => "Are you sure?" }}.
+    %p Unhappy? #{link_to "Cancel my account", registration_path(resource_name), method: :delete, data: { confirm: "Are you sure?" }}.

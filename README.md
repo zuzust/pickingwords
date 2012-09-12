@@ -1,7 +1,7 @@
 Pickingwords [![Build Status](https://secure.travis-ci.org/zuzust/pickingwords.png)](http://travis-ci.org/zuzust/pickingwords) [![Dependency Status](https://gemnasium.com/zuzust/pickingwords.png)](https://gemnasium.com/zuzust/pickingwords) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zuzust/pickingwords)
 ============
 
-Store and manage your tiny translations in a simple and funny way.  
+Store and manage your tiny translations in a simple way.  
 Created and maintained by Carles Muiños.
 
 

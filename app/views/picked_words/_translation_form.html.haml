@@ -1,10 +1,10 @@
-.row
-  = form_tag(search_user_picked_words_path, method: :get) do
-    .span4.offset3
-      = text_field_tag :name, nil, placeholder: 'word name', autofocus: true, class: 'input-medium'
-      = select_tag :from, options_for_select(locales), prompt: 'from', include_blank: false, class: 'input-mini'
-      = select_tag :to, options_for_select(locales), prompt: 'to', include_blank: false, class: 'input-mini'
-      %br
-      = text_area_tag :ctxt, nil, cols: 50, rows: 3, placeholder: 'word context', class: 'span4'
-    .span1
-      = submit_tag 'Translate', class: 'btn-primary'
+= form_tag(search_user_picked_words_path, method: :get) do
+
+  #fields
+    = text_field_tag :name, nil, placeholder: 'word name', autofocus: true
+    = select_tag :from, options_for_select(locales), prompt: 'from', include_blank: false
+    = select_tag :to, options_for_select(locales), prompt: 'to', include_blank: false
+    = text_area_tag :ctxt, nil, cols: 50, rows: 3, placeholder: 'word context'
+
+  #actions
+    = submit_tag 'Translate'

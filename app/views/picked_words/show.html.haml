@@ -1,40 +1,33 @@
-- title 'Picked Details'
+- title 'Pick Details'
 
-.row
-  .span8.offset2
-    .pw-word_details
-      -# picked word name & stats
-      .pw-main_header
-        %span.pw-word_name
-          = @picked_word.name
-          = badge @picked_word.from_lang.upcase, 'info'
+%section#pick
+  %header
+    %span
+      = @picked_word.name
+      = badge @picked_word.from_lang.upcase, 'info'
+    %small
+      = tooltip('Fav') { badge 'f', 'fav' } if @picked_word.fav
+      = tooltip('Searches') { badge @picked_word.searches }
+      %span
+        last edited
+        %time= @picked_word.updated_at.to_s(:last_edited_long)
 
-        %small.pull-right
-          = tooltip('Fav') { badge 'f', 'fav' } if @picked_word.fav
-          = tooltip('Searches') { badge @picked_word.searches }
-          &nbsp;&nbsp;
-          last edited #{@picked_word.updated_at.to_s(:last_edited_long)}
+  %section
+    #translation
+      translation:
+      %span
+        = @picked_word.translation
+        = badge @picked_word.to_lang.upcase, 'info'
 
-      -# picked word translation & contexts
-      .row
-        .offset1
-          translation:
-          %span.pw-word_trans
-            = @picked_word.translation
-            = badge @picked_word.to_lang.upcase, 'info'
+    - if @picked_word.contexts.size > 0
+      #contexts
+        %span contexts
+        %div
+          = render partial: 'picked_words/context',
+            collection: @picked_word.contexts, as: :context,
+            locals: { word: @picked_word.name, translation: @picked_word.translation }
 
-          - if @picked_word.contexts.size > 0
-            %br
-            %br
-            = header 'contexts'
-            .row
-              .offset1
-                = render partial: 'picked_words/context',
-                  collection: @picked_word.contexts, as: :context,
-                  locals: { word: @picked_word.name, translation: @picked_word.translation }
-
-    -# view buttons
-    .pw-view_buttons
-      = link_to 'Picks', user_picked_words_path(user)
-      \|
-      = link_to 'Edit', [:edit, user, @picked_word]
+  %footer
+    = link_to 'Picks', user_picked_words_path(user)
+    \|
+    = link_to 'Edit', [:edit, user, @picked_word]

@@ -1,25 +1,14 @@
 @import "bootstrap";
-
 body { padding-top: 60px; }
-
-.brand {
-  &:hover {
-    color: $white; } }
-
-.badge-fav {
-  background-color: darken($orange, 5%); }
-
 @import "bootstrap-responsive";
 
-// See http://fortawesome.github.com/Font-Awesome/
+// Font Awesome (http://fortawesome.github.com/Font-Awesome/)
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
 // $fontAwesomeEotPath: font-path('fontawesome-webfont.eot');
 // $fontAwesomeWoffPath: font-path('fontawesome-webfont.woff');
 // $fontAwesomeTtfPath: font-path('fontawesome-webfont.ttf');
 // $fontAwesomeSvgzPath: font-path('fontawesome-webfont.svgz');
 // $fontAwesomeSvgPath: font-path('fontawesome-webfont.svg');
-
-// Font Awesome
 @import "font-awesome";
 
 // Your custom SASS stylesheets goes here

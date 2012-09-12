@@ -1,24 +1,20 @@
 - title 'Profile'
 
-.row
-  .span8.offset2
-    .pw-user_profile
-      .pw-main_header
-        %span.pw-user_name= @user.name
+%article#profile
+  %header
+    %p= @user.name
 
-      .row
-        .offset1
-          translated chars:
-          %span.pw-user_profile_field  #{@user.trans_chars}
-          %br
-          %br
-          searches:
-          %span.pw-user_profile_field #{@user.searches}
-          %br
-          %br
-          picks:
-          %span.pw-user_profile_field #{@user.picked}
-          %br
-          %br
-          favs:
-          %span.pw-user_profile_field #{@user.favs}
+  #stats
+    %ul
+      %li
+        translated chars:
+        %span  #{@user.trans_chars}
+      %li
+        searches:
+        %span #{@user.searches}
+      %li
+        picks:
+        %span #{@user.picked}
+      %li
+        favs:
+        %span #{@user.favs}

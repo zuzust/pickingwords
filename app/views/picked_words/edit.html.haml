@@ -1,8 +1,9 @@
-.row
-  .span8.offset2
-    = render 'form'
+- title 'Pick Edition'
 
-    .pw-view_buttons
-      = link_to 'Picks', user_picked_words_path(user)
-      \|
-      = link_to 'Show', [user, @picked_word]
+%section#edit
+  = render 'form'
+
+  %footer
+    = link_to 'Picks', user_picked_words_path(user)
+    \|
+    = link_to 'Show', [user, @picked_word]

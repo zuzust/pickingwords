@@ -5,4 +5,4 @@
   %td= user.searches
   %td= user.picked
   %td= user.favs
-  %td= time_ago_in_words user.created_at.to_date
+  %td= user.created_at.to_s(:last_edited_short)

@@ -1,6 +1,7 @@
-.row
-  .span8.offset2
-    = render 'picked_words/form'
+- title 'Pick Creation'
 
-    .pw-view_buttons
-      = link_to 'Picks', user_picked_words_path(user)
+%section#new
+  = render 'picked_words/form'
+
+  %footer
+    = link_to 'Picks', user_picked_words_path(user)

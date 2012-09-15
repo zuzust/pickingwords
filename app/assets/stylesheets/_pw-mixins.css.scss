@@ -1,3 +1,27 @@
+@mixin pwm-respond_to($media) {
+  @if $media == small-screens {
+    @media only screen and (max-width: $pwBreakSmall - 1) { @content; }
+  }
+  @else if $media == medium-screens {
+    @media only screen and (min-width: $pwBreakSmall) and (max-width: $pwBreakLarge - 1) { @content; }
+  }
+  @else if $media == wide-screens {
+    @media only screen and (min-width: $pwBreakLarge) { @content; }
+  }
+}
+
+@mixin pwm-respond($bottom, $top) {
+  @media only screen and (min-width: $bottom) and (max-width: $top - 1) { @content; }
+}
+
+@mixin pwm-respond_from($bottom) {
+  @media only screen and (min-width: $bottom) { @content; }
+}
+
+@mixin pwm-respond_upto($top) {
+  @media only screen and (max-width: $top - 1) { @content; }
+}
+
 @mixin pwm-header($marginBottom, $fontSize, $lineHeight) {
   display: block;
   width: 100%;

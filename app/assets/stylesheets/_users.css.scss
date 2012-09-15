@@ -1,27 +1,27 @@
+
 // Index
 // -------------------------
 section#users {
-  @extend .row-fluid;
-  @extend .span12;
-  header {
-    @extend .pw-main_header; } }
+  header { @extend .pw-main_header; }
+}
 
 
 // Show
 // -------------------------
 article#profile {
-  @extend .row-fluid;
-  @extend .span8;
-  @extend .offset2;
+  width: pwf-cols(6);
+  @include pwm-respond_upto(980px) { width: pwf-cols(4); }
+  margin: auto;
   font-size: $pwFontM;
+
   header {
     @extend .pw-main_header;
-    p {
-      font-size: $pwFontXL; } }
+    p { font-size: $pwFontXL; } }
+
   #stats {
-    @extend .row-fluid;
-    @extend .span10;
-    @extend .offset1;
+    position: relative;
+    left: 25%;
+    width: 75%;
     ul {
       margin: 0;
       padding: 0;
@@ -29,7 +29,8 @@ article#profile {
       li {
         margin-bottom: 20px;
         &>span {
+          color: $gray;
           font: {
             size: $pwFontL;
-            style: italic; }
-          color: $gray; } } } } }
+            style: italic; } } } } }
+}

@@ -1,5 +1,12 @@
+// Responsive Breakpoints
+// ---------------------------
+$pwBreakSmall: 640px;
+$pwBreakLarge: 1024px;
+
+
 // Font-Size
 // ---------------------------
 $pwFontM: $baseFontSize * 1.5;
 $pwFontL: $baseFontSize * 2;
+$pwFontLL: $baseFontSize * 2.5;
 $pwFontXL: $baseFontSize * 3;

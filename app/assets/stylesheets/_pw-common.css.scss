@@ -1,35 +1,40 @@
 // Base
 // -------------------------
-body {
-  @extend .container-fluid; }
-
 body, p {
-  font-family: 'Ubuntu', $baseFontFamily; }
+  font-family: 'Ubuntu', $baseFontFamily;
+}
 
 table {
   @extend .table;
   @extend .table-bordered;
-  @extend .table-striped; }
+  @extend .table-striped;
+}
 
 input[type=text], input[type=email], input[type=password] {
-  @extend .input-medium; }
+  @extend .input-medium;
+}
 
 input[type=submit] {
-  @extend .btn-primary; }
+  @extend .btn-primary;
+}
 
 select {
-  @extend .input-mini; }
+  @extend .input-mini;
+}
 
 textarea {
-  @include size(75px, 370px);
-  resize: none; }
+  @include size(75px, 350px);
+  resize: none;
+}
 
 small {
   font-size: $baseLineHeight * .75;
-  color: $grayLight; }
+  color: $grayLight;
+}
 
 .alert:empty {
-  display: none; }
+  display: none;
+}
 
 
 // Layout
@@ -37,62 +42,59 @@ small {
 // Header
 // -------------------------
 header#page_header {
-  & > nav {
+  &>nav {
     @extend .navbar;
     @extend .navbar-fixed-top;
+
     .navbar-inner {
-      padding: 0 20px;
-      & > a {
+      &>a {
         @extend .brand;
+        margin: 0;
+        padding-left: 15px;
         &:after {
           content: "alpha";
           position: relative;
           left: 0.45em;
           top: -0.45em;
           font-size: $baseFontSize; }
-        &:hover {
-          color: $white; } }
-      & > ul {
-        @extend .nav;
-        @extend .pull-right; } } } }
+        &:hover { color: $white; } }
+
+      &>ul {
+        margin: 0;
+        padding-right: 10px;
+        @extend .nav !optional;
+        @extend .pull-right; } } }
+}
 
 
 // Main
 // -------------------------
 section#main {
-  @extend .row-fluid;
-  @extend .span12;
   padding: 20px;
   margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
   @include border-radius(0 0 6px 6px);
-  @include box-shadow(0 1px 2px rgba(0,0,0,.15)); }
-
-section#messages {
-  @extend .row-fluid;
-  @extend .span12; }
-
-section#content {
-  @extend .row-fluid;
-  @extend .span12; }
+  @include box-shadow(0 1px 2px rgba(0,0,0,.15));
+}
 
 
 // Footer
 // -------------------------
 footer#page_footer {
-  @extend .row-fluid;
-  @include size(percentage(75px/940px), 100%);
+  @include size(75px, 100%);
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayLighter;
+
   p {
-    @extend .span6;
-    @extend .pull-left;
+    width: 49%;
+    float: left;
     color: $grayLight; }
+
   nav {
-    @extend .span6;
-    @extend .pull-right;
+    width: 49%;
+    float: right;
     ul {
-      @extend .pull-right;
+      float: right;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -103,7 +105,8 @@ footer#page_footer {
           color: $gray;
           &:hover {
             color: $grayDarker;
-            text-decoration: none; } } } } } }
+            text-decoration: none; } } } } }
+}
 
 
 // Miscellaneous
@@ -112,40 +115,47 @@ footer#page_footer {
   $marginBottom: $baseLineHeight * 1.5;
   $fontSize: $baseFontSize * 3;
   $lineHeight: $baseLineHeight * 2;
-  @include pwm-header($marginBottom, $fontSize, $lineHeight); }
+  @include pwm-header($marginBottom, $fontSize, $lineHeight);
+}
 
 .pw-header {
   $marginBottom: $baseLineHeight * .25;
   $fontSize: $baseFontSize * 1.5;
   $lineHeight: $baseLineHeight * 1.5;
-  @include pwm-header($marginBottom, $fontSize, $lineHeight); }
+  @include pwm-header($marginBottom, $fontSize, $lineHeight);
+}
 
 .pw-view_buttons {
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 
 .pw-action_buttons {
   margin-top: 20px;
   padding-top: 5px;
-  border-top: 1px solid $grayLighter; }
+  border-top: 1px solid $grayLighter;
+}
 
 .badge-fav {
-  background-color: darken($orange, 5%); }
+  background-color: darken($orange, 5%);
+}
 
 .pw-help {
   cursor: help;
-  &:hover {
-    text-decoration: none; } }
+  &:hover { text-decoration: none; }
+}
 
 .pw-icon {
-  @include scale(1.5); }
+  @include scale(1.5);
+}
 
 .pw-debug {
-  @extend .row-fluid;
   margin-bottom: 30px;
-  pre.debug_dump {
-    @extend .pull-left; }
-  code.debug_dump {
-    @extend .pull-right; }
+
+  pre.debug_dump { float: left; }
+  code.debug_dump { float: right; }
+
   .debug_dump {
-    @extend .span6;
-    padding: 5px; } }
+    width: 47%;
+    @include pwm-respond_from(800px) { width: 48%; }
+    padding: 5px; }
+}

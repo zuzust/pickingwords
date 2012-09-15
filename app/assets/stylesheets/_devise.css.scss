@@ -1,36 +1,19 @@
 // Registrations/new
-// -------------------------
-section#signup {
-  @extend .row-fluid;
-  @extend .span8;
-  @extend .offset2;
-  header {
-    @extend .pw-main_header; }
-  form {
-    @extend .form-horizontal; } }
-
-
 // Registrations/edit
+// Sessions/new
 // -------------------------
-section#settings {
-  @extend .row-fluid;
-  @extend .span8;
-  @extend .offset2;
-  header {
-    @extend .pw-main_header; }
-  form {
-    @extend .form-horizontal; } }
+section#signup, section#settings, section#signin {
+  width: pwf-cols(8);
+  @include pwm-respond_upto(980px) { width: 100%; }
+  margin: auto;
+
+  header { @extend .pw-main_header; }
+  form { @extend .form-horizontal; }
+}
 
 
 // Sessions/new
 // -------------------------
 section#signin {
-  @extend .row-fluid;
-  @extend .span8;
-  @extend .offset2;
-  header {
-    @extend .pw-main_header; }
-  form {
-    @extend .form-horizontal; }
-  footer {
-    @extend .pw-view_buttons; } }
+  footer { @extend .pw-view_buttons; }
+}

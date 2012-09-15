@@ -12,23 +12,28 @@
     %title= full_title(yield(:title))
 
   %body{:role => "application"}
-    %header#page_header
-      = render 'layouts/header_content'
+    .container
+      .row-fluid
+        .span12
+          %header#page_header
+            = render 'layouts/header_content'
 
-    %section#main{:role => "main"}
-      %section#messages
-        = render 'layouts/messages'
-      %section#content
-        = yield
+          %section#main{:role => "main"}
+            %section#messages
+              = render 'layouts/messages'
+            %section#content
+              = yield
 
-    - cache("footer", expires_in: 24.hours) do
-      %footer#page_footer{:role => "contentinfo"}
-        = render 'layouts/footer_content'
+          - cache("footer", expires_in: 24.hours) do
+            %footer#page_footer{:role => "contentinfo"}
+              = render 'layouts/footer_content'
 
-    - if Rails.env.development?
-      .pw-debug
-        = debug(params)
-        = debug(session)
+          - if Rails.env.development?
+            .row-fluid
+              .span12
+                .pw-debug
+                  = debug(params)
+                  = debug(session)
 
     = javascript_include_tag "application"
     /[if lt IE 9]

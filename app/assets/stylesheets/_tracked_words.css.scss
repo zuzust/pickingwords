@@ -1,7 +1,5 @@
 // Index
 // -------------------------
 section#words {
-  @extend .row-fluid;
-  @extend .span12;
-  header {
-    @extend .pw-main_header; } }
+  header { @extend .pw-main_header; }
+}

@@ -51,6 +51,12 @@ module BootstrapHelper
   end
 
   # renders:
+  # <li class='divider-vertical'></li>
+  def menu_divider_v
+    content_tag :li, '', class: 'divider-vertical'
+  end
+
+  # renders:
   # <a href='#' rel='tooltip' title='title' class='pw-help'>...</a>
   def tooltip(title, &block)
     link_to '#', rel: 'tooltip', title: title, class: 'pw-help' do

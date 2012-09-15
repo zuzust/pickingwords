@@ -1,8 +1,5 @@
-%li.dropdown
-  = menu_header 'Dashboard'
-  %ul.dropdown-menu
-    = menu_entry 'Users', users_path
-    = menu_entry 'Words', tracked_words_path
+= menu_entry 'Users', users_path
+= menu_entry 'Words', tracked_words_path
+= menu_divider_v
 
-%li= link_to 'Sign out', destroy_admin_session_path, method: 'delete'
-
+= logout_entry 'Sign out', destroy_admin_session_path

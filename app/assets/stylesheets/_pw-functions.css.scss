@@ -1,3 +1,3 @@
 @function pwf-cols($columns) {
-  @return ($gridColumnWidthLarge * $columns) + ($gridGutterWidthLarge * ($columns - 1));
+  @return ($pwColumnWidth * $columns) + ($pwGutterWidth * ($columns - 1));
 }

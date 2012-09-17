@@ -4,6 +4,25 @@ body, p {
   font-family: 'Ubuntu', $baseFontFamily;
 }
 
+h1, h2, h3 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: $baseLineHeight * 2;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: $baseLineHeight * 2;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: $baseLineHeight * 1.5;
+}
+
 table {
   @extend .table;
   @extend .table-bordered;
@@ -15,6 +34,7 @@ input[type=text], input[type=email], input[type=password] {
 }
 
 input[type=submit] {
+  @extend .btn;
   @extend .btn-primary;
 }
 
@@ -44,6 +64,7 @@ small {
 header#page_header {
   &>nav {
     @extend .navbar;
+    @extend .navbar-inverse;
     @extend .navbar-fixed-top;
 
     .navbar-inner {
@@ -63,7 +84,8 @@ header#page_header {
         margin: 0;
         padding-right: 10px;
         @extend .nav !optional;
-        @extend .pull-right; } } }
+        @extend .pull-right;
+        &>li { margin-left: 0; margin-right: 0; } } } }
 }
 
 

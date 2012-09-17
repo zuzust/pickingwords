@@ -88,15 +88,18 @@ section#translation_form {
   @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
 
   form {
-    width: pwf-cols(4);
+    width: 380px;
     margin: auto;
     padding-top: 10px;
     position: relative;
 
+    #fields {
+      textarea { @include size(75px, 365px); } }
+
     #actions {
       position: absolute;
       top: 10px;
-      right: 10px; } }
+      right: 0; } }
 }
 
 section#filters {

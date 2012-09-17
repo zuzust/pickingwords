@@ -4,7 +4,7 @@ HOST_OS = RbConfig::CONFIG['host_os']
 source 'https://rubygems.org'
 ruby "1.9.3"
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 
 gem 'jquery-rails',                '~> 2.1.2'
 gem 'bootstrap-sass',              '~> 2.1.0.0'
@@ -13,8 +13,8 @@ gem 'simple_form',                 '~> 2.0.2'
 gem 'will_paginate',               '~> 3.0.3'
 gem 'will_paginate_mongoid',       '~> 1.0.5'
 gem 'bootstrap-will_paginate',     '~> 0.0.8'
-gem 'bson_ext',                    '~> 1.6.4'
-gem 'mongoid',                     '~> 2.4.11'
+gem 'bson_ext',                    '~> 1.7.0'
+gem 'mongoid',                     '~> 2.5.0'
 gem 'mongoid_magic_counter_cache', '~> 0.1.1'
 gem 'devise',                      '~> 2.1.2'
 gem 'cancan',                      '~> 1.6.8'
@@ -57,7 +57,7 @@ group :development do
   gem 'guard-cucumber',     '~> 1.2.0'
   gem 'guard-spork',        '~> 1.2.0'
   gem 'guard-coffeescript', '~> 1.2.0'
-  gem 'bullet',             '~> 4.1.6'
+  # gem 'bullet',             '~> 4.1.6'
   gem 'pry-rails',          '~> 0.2.1'
 end
 

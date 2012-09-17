@@ -46,9 +46,9 @@ Pickingwords::Application.configure do
 
   # Bullet configuration
   # See https://github.com/flyerhzm/bullet
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
-    Bullet.rails_logger = true
-  end
+  # config.after_initialize do
+  #   Bullet.enable = true
+  #   Bullet.bullet_logger = true
+  #   Bullet.rails_logger = true
+  # end
 end

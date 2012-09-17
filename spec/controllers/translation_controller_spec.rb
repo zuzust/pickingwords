@@ -6,16 +6,20 @@ describe TranslationController do
     @user = Fabricate(:user)
     sign_in @user
   end
+
+  let(:scope) {{ user_id: @user }}
   
   describe "translating" do
     describe "with invalid params" do
-      before(:each) { get :translate, { name: "", ctxt: "" } }
+      let(:params)  { scope.merge({ name: "", ctxt: "" })}
+      before(:each) { get :translate, params }
       specify { response.should redirect_to(user_picked_words_path(@user, locale: I18n.locale)) }
     end
 
     describe "with valid params" do
-      let(:params)  {{ name: "word", from: "en", to: "ca", ctxt: "this is a word in English" }}
-      let(:tf)      { TranslationForm.new(params) }
+      let(:data)   {{ name: "word", from: "en", to: "ca", ctxt: "this is a word in English" }}
+      let(:params) { scope.merge data }
+      let(:tf)     { TranslationForm.new(data) }
       let(:fake_translation) { mock(:picked_word) }
       let(:fake_result)      { [fake_translation, 10] }
 
@@ -40,7 +44,7 @@ describe TranslationController do
         end
 
         specify { assigns(:picked_word).should == fake_translation }
-        specify { response.should render_template('picked_words/new') }
+        specify { response.should have_rendered('picked_words/new') }
       end
 
       it "should update user trans_chars counter" do

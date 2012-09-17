@@ -50,23 +50,31 @@ describe PickedWordsController do
     @picked.save
   end
 
+  let(:scope) {{ user_id: @user }}
+
   describe "GET index" do
+    let(:params) { scope.merge({locale: @picked.from_lang}) }
+
     it "assigns all picked_words as @picked_words" do
-      get :index, { locale: @picked.from_lang }
+      get :index, params
       assigns(:picked_words).should eq([@picked])
     end
   end
 
   describe "GET show" do
+    let(:params) { scope.merge({id: @picked.to_param}) }
+
     it "assigns the requested picked_word as @picked_word" do
-      get :show, {:id => @picked.to_param}
+      get :show, params
       assigns(:picked_word).should eq(@picked)
     end
   end
 
   describe "GET edit" do
+    let(:params) { scope.merge({id: @picked.to_param}) }
+
     it "assigns the requested picked_word as @picked_word" do
-      get :edit, {:id => @picked.to_param}
+      get :edit, params
       assigns(:picked_word).should eq(@picked)
     end
   end
@@ -81,47 +89,51 @@ describe PickedWordsController do
     end
 
     describe "with valid params" do
+      let(:params) { scope.merge({picked_word: create_valid_params}) }
+
       it "creates a new PickedWord" do
         expect {
-          post :create, {:picked_word => create_valid_params}
+          post :create, params
         }.to change(PickedWord, :count).by(1)
       end
 
       it "increments related User picks by 1" do
         expect {
-          post :create, {:picked_word => create_valid_params}
+          post :create, params
         }.to change { @user.reload.picked }.by(1)
       end
 
       it "increments related TrackedWord picks by 1" do
         expect {
-          post :create, {:picked_word => create_valid_params}
+          post :create, params
         }.to change { @tracked.reload.picked }.by(1)
       end
 
       it "assigns a newly created picked_word as @picked_word" do
-        post :create, {:picked_word => create_valid_params}
+        post :create, params
         assigns(:picked_word).should be_a(PickedWord)
         assigns(:picked_word).should be_persisted
       end
 
       it "redirects to the created picked_word" do
-        post :create, {:picked_word => create_valid_params}
+        post :create, params
         response.should redirect_to([@user, PickedWord.unscoped.last])
       end
     end
 
     describe "with invalid params" do
+      let(:params) { scope.merge({picked_word: create_invalid_params}) }
+
       it "assigns a newly created but unsaved picked_word as @picked_word" do
         # Trigger the behavior that occurs when invalid params are submitted
-        post :create, {:picked_word => create_invalid_params}
+        post :create, params
         assigns(:picked_word).should be_a_new(PickedWord)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        post :create, {:picked_word => create_invalid_params}
-        response.should render_template("new")
+        post :create, params
+        response.should have_rendered("new")
       end
     end
   end
@@ -136,68 +148,75 @@ describe PickedWordsController do
     end
 
     describe "with valid params" do
+      let(:params) { scope.merge({id: @picked.to_param, picked_word: update_valid_params}) }
+
       it "updates the requested picked_word" do
         # This specifies that the PickedWord
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         PickedWord.any_instance.should_receive(:update_attributes).with({"translation" => "updated", "contexts_attributes" => []})
-        put :update, {:id => @picked.to_param, :picked_word => update_valid_params}
+        put :update, params
       end
 
       it "assigns the requested picked_word as @picked_word" do
-        put :update, {:id => @picked.to_param, :picked_word => update_valid_params}
+        put :update, params
         assigns(:picked_word).should eq(@picked)
       end
 
       it "redirects to the picked_word" do
-        put :update, {:id => @picked.to_param, :picked_word => update_valid_params}
+        put :update, params
         response.should redirect_to([@user, @picked])
       end
     end
 
     describe "with invalid params" do
+      let(:params) { scope.merge({id: @picked.to_param, picked_word: update_invalid_params}) }
+
       it "assigns the picked_word as @picked_word" do
         # Trigger the behavior that occurs when invalid params are submitted
-        put :update, {:id => @picked.to_param, :picked_word => update_invalid_params}
+        put :update, params
         assigns(:picked_word).should eq(@picked)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        put :update, {:id => @picked.to_param, :picked_word => update_invalid_params}
-        response.should render_template("edit")
+        put :update, params
+        response.should have_rendered("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
+    let(:params) { scope.merge({id: @picked.to_param}) }
+
     it "destroys the requested picked_word" do
       expect {
-        delete :destroy, {:id => @picked.to_param}
+        delete :destroy, params
       }.to change(PickedWord, :count).by(-1)
     end
 
     it "decrements related User picks by 1" do
       expect {
-        delete :destroy, {:id => @picked.to_param}
+        delete :destroy, params
       }.to change { @user.reload.picked }.by(-1)
     end
 
     it "decrements related TrackedWord picks by 1" do
       expect {
-        delete :destroy, {:id => @picked.to_param}
+        delete :destroy, params
       }.to change { @tracked.reload.picked }.by(-1)
     end
 
     it "redirects to the picked_words list" do
-      delete :destroy, {:id => @picked.to_param}
+      delete :destroy, params
       response.should redirect_to(user_picked_words_url(@user))
     end
   end
 
   describe "searching" do
     describe "with invalid params" do
-      before(:each) { get :search, { name: "" } }
+      let(:params)  { scope.merge({name: ""}) }
+      before(:each) { get :search, params }
       it { response.should redirect_to(user_picked_words_path(@user, locale: I18n.locale)) }
     end
 
@@ -205,27 +224,29 @@ describe PickedWordsController do
       let(:fake_results) { [mock(:picked_word, name: "word")] }
 
       shared_examples_for "returning search results" do
-        it { response.should render_template(:index) }
+        it { response.should have_rendered(:index) }
         it { assigns(:picked_words).should == results }
       end
 
       it "should look for word among user picks" do
+        params = scope.merge({ name: "word", from: "en", to: "ca" })
         controller.should_receive(:search_matching_picks).with(@user.picks, "word", "en", "ca").and_return(fake_results)
-        get :search, { name: "word", from: "en", to: "ca" }
+        get :search, params
       end
 
       describe "for picked word" do
+        let(:params)  { scope.merge({name: "word"}) }
         let(:results) { fake_results }
         before(:each) do
           controller.stub(:search_matching_picks).and_return(results)
-          get :search, { name: "word" }
+          get :search, params
         end
 
         it_should_behave_like "returning search results"
       end
 
       describe "for not picked word" do
-        let(:params)  {{ name: "not picked", from: "en", to: "ca" }}
+        let(:params)  { scope.merge({name: "not picked", from: "en", to: "ca"}) }
         let(:results) { [] }
         before(:each) { controller.stub(:search_matching_picks).and_return(results) }
 

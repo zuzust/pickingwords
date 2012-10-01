@@ -87,47 +87,53 @@ section#translation_form {
   @include border-radius(6px);
   @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
 
-  form {
-    width: 380px;
-    margin: auto;
-    padding-top: 10px;
-    position: relative;
+  div { 
+    &>a { margin-right: 5px; }
+    form {
+      width: 380px;
+      margin: auto;
+      padding-top: 10px;
+      position: relative;
 
-    #fields {
-      textarea { @include size(75px, 365px); } }
+      #fields {
+        textarea { @include size(75px, 365px); } }
 
-    #actions {
-      position: absolute;
-      top: 10px;
-      right: 0; } }
+      #actions {
+        position: absolute;
+        top: 10px;
+        right: 0; } } }
 }
 
 section#filters {
-  margin-bottom: 20px;
+  .pw-filters_wrapper {
 
-  #lang_filter {
-    margin-top: 5px;
-    a:hover {
-      text-decoration: none; } }
+    #lang_filter {
+      margin-top: 5px;
+      a:hover { text-decoration: none; }
+      .pw-tf_wrapper {
+        float: right;
+        @include scale(1.5);
+        color: $gray;
+        &:hover { color: $grayDarker; cursor: pointer; } } }
 
-  #letter_filter {
-    font-size: $baseFontSize * 2.5;
-    margin-top: 5px;
-    padding-top: 15px;
-    border: {
-      top: 1px solid $grayLighter;
-      bottom: 1px solid $grayLighter; }
-    ul {
-      @extend .nav !optional;
-      @extend .nav-pills;
-      li {
-        a {
-          color: $gray;
-          &:hover { @include scale(1.5); } }
-        &.active>a, &.active>a:hover {
-          color: $gray;
-          background-color: $grayLighter;
-          @include scale(1.5); } } } }
+    #letter_filter {
+      font-size: $baseFontSize * 2.5;
+      margin: { top: 5px; bottom: 20px; }
+      padding-top: 15px;
+      border: {
+        top: 1px solid $grayLighter;
+        bottom: 1px solid $grayLighter; }
+      ul {
+        @extend .nav !optional;
+        @extend .nav-pills;
+        li {
+          a {
+            color: $gray;
+            &:hover { @include scale(1.5); } }
+          &.active>a, &.active>a:hover {
+            color: $gray;
+            background-color: $grayLighter;
+            @include scale(1.5); } } } } }
 }
 
 section#picks {

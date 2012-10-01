@@ -7,7 +7,8 @@
         %ul= render 'layouts/navigation_admin'
 
       -else
-        %ul= render 'layouts/navigation_user'
+        %ul.no-js= render 'layouts/navigation_user'
+        %ul.js= render 'layouts/navigation_user_js'
 
     - else
       %ul

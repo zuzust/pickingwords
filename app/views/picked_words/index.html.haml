@@ -4,11 +4,13 @@
   = render 'picked_words/translation_form'
 
 %section#filters
-  #lang_filter
-    = render 'picked_words/lang_filter'
+  .pw-filters_wrapper
 
-  #letter_filter
-    = render 'picked_words/letter_filter'
+    #lang_filter
+      = render 'picked_words/lang_filter'
+
+    #letter_filter
+      = render 'picked_words/letter_filter'
 
 %section#picks
   - if @picked_words.size == 0

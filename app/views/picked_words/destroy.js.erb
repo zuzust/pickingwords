@@ -1,0 +1,11 @@
+<% mesg = 'Pick successfully deleted' %>
+
+$('#<%= @picked_word.id %>').fadeOut(function(){
+  $(this).remove();
+  $('<div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a><%= mesg %></div>').appendTo('#messages');
+
+  var picksLeft = $('#picks article').length;
+  if (picksLeft === 0) {
+    $('<p>No picks to show</p>').appendTo('#picks');
+  }
+});

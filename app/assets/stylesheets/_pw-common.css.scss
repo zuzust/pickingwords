@@ -85,7 +85,6 @@ header#page_header {
         padding-right: 10px;
         @extend .nav !optional;
         @extend .pull-right;
-        &.js { display: none; }
         &>li { margin-left: 0; margin-right: 0; } } } }
 }
 

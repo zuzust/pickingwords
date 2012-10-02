@@ -1,5 +1,7 @@
 class PickedWordsController < ApplicationController
   respond_to :html, :json
+  respond_to :js, only: [:index, :destroy]
+
   helper_method :locale, :letter, :favs
 
   before_filter :authenticate_user!

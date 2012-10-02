@@ -1,0 +1,8 @@
+var picks = $('#picks');
+picks.contents().remove();
+
+- if @picked_words.size == 0
+  picks.append('<p>No picks to show</p>')
+
+- else
+  picks.append('#{j render @picked_words}');

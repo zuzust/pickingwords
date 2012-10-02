@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require waypoints
+//= require jquery.scrollTo
 //= require_tree .

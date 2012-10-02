@@ -111,9 +111,10 @@ section#filters {
       margin-top: 5px;
       a:hover { text-decoration: none; }
       .pw-tf_wrapper {
+        display: none;
         float: right;
-        @include scale(1.5);
         color: $gray;
+        @include scale(1.5);
         &:hover { color: $grayDarker; cursor: pointer; } } }
 
     #letter_filter {

@@ -1,6 +1,5 @@
 - cache(picked_word, expires_in: 1.hour) do
-  / start of word
-  %article
+  %article{:id => "#{picked_word.id}"}
     %div
       %span.pw-word_name= picked_word.name
       %span.pw-word_trans= picked_word.translation
@@ -20,5 +19,4 @@
       \|
       = link_to 'Edit', [:edit, user, picked_word]
       \|
-      = link_to 'Delete', [user, picked_word], method: :delete, data: {confirm: 'Are you sure?'}
-  / end of word
+      = link_to 'Delete', [user, picked_word], method: :delete, data: {confirm: 'Are you sure?'}, remote: true

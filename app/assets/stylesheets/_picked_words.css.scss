@@ -138,27 +138,32 @@ section#filters {
 }
 
 section#picks {
-  &>p { text-align: center; font-size: $pwFontM; }
-
-  article {
+  #mesgs {
     width: 490px;
-    min-height: 85px;
     margin: auto;
-    margin-top: 10px;
-    padding: 20px 20px 10px;
-    border: 1px solid $grayLighter;
-    @include border-radius(6px);
-    @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
+    &>p { text-align: center; font-size: $pwFontM; }
+    &>p#error, &>p#loading { display: none; } }
 
-    div {
-      margin-bottom: 10px;
-      &:nth-child(1) {
-        &>span { margin-right: 10px; }
-        &>small {
-          float: right;
-          .badge { position: relative; top: 0.45em; } } }
-      &:nth-child(2) {
-        &>small { margin-left: 10px; } } }
+  #list {
+    article {
+      width: 490px;
+      min-height: 85px;
+      margin: auto;
+      margin-top: 10px;
+      padding: 20px 20px 10px;
+      border: 1px solid $grayLighter;
+      @include border-radius(6px);
+      @include box-shadow(inset 0 1px 1px rgba(0,0,0,.05));
 
-    footer { float: right; } }
+      div {
+        margin-bottom: 10px;
+        &:nth-child(1) {
+          &>span { margin-right: 10px; }
+          &>small {
+            float: right;
+            .badge { position: relative; top: 0.45em; } } }
+        &:nth-child(2) {
+          &>small { margin-left: 10px; } } }
+
+      footer { float: right; } } }
 }

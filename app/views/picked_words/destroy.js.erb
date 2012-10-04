@@ -1,11 +1,14 @@
 <% mesg = 'Pick successfully deleted' %>
 
+var messages = $('#messages');
+messages.contents().remove();
+
 $('#<%= @picked_word.id %>').fadeOut(function(){
   $(this).remove();
-  $('<div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a><%= mesg %></div>').appendTo('#messages');
+  $('<div class="alert alert-success"><a class="close" data-dismiss="alert">&times;</a><%= mesg %></div>').appendTo(messages);
 
-  var picksLeft = $('#picks article').length;
+  var picksLeft = $('#picks #list article').length;
   if (picksLeft === 0) {
-    $('<p>No picks to show</p>').appendTo('#picks');
+    $('#picks #mesgs #nopicks').show();
   }
 });

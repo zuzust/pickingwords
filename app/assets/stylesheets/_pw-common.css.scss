@@ -172,9 +172,11 @@ footer#page_footer {
 }
 
 .pw-sticky {
-  position: fixed;
-  z-index: 1;
-  background-color: $white;
+  @include pwm-respond_from(980px) {
+    position: fixed;
+    top: 40px;
+    z-index: 1;
+    background-color: $white; }
 }
 
 .pw-debug {

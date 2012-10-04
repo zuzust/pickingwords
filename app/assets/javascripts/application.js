@@ -15,4 +15,6 @@
 //= require bootstrap
 //= require waypoints
 //= require jquery.scrollTo
+//= require spin
+//= require jquery.spin
 //= require_tree .

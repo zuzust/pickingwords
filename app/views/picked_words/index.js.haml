@@ -1,8 +1,11 @@
-var picks = $('#picks');
+var picks = $('#picks #list');
+var nopicksMesg = $('#picks #mesgs #nopicks');
+
 picks.contents().remove();
 
 - if @picked_words.size == 0
-  picks.append('<p>No picks to show</p>')
+  nopicksMesg.stop(true).fadeIn('fast');
 
 - else
+  nopicksMesg.stop(true).hide();
   picks.append('#{j render @picked_words}');

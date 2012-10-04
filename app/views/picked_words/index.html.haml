@@ -1,11 +1,11 @@
 - title 'Picked Words'
+- display = @picked_words.size > 0 ? 'none' : 'block'
 
 %section#translation_form
   = render 'picked_words/translation_form'
 
 %section#filters
   .pw-filters_wrapper
-
     #lang_filter
       = render 'picked_words/lang_filter'
 
@@ -13,7 +13,10 @@
       = render 'picked_words/letter_filter'
 
 %section#picks
-  - if @picked_words.size == 0
-    %p No picks to show
-  - else
+  #mesgs
+    %p#error Whoops, unable to pull your picks. Try again in a minute.
+    %p#loading Just a minute while we pull up your picks.
+    %p#nopicks{:style => "display: #{display};"} No picks to show
+
+  #list
     = render @picked_words

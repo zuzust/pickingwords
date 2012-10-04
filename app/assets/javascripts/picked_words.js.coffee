@@ -45,7 +45,7 @@ pwIndex =
           p.list.children().fadeOut 1000
           p.errorMesg.hide()
           p.nopicksMesg.delay(1000).fadeOut 'fast'
-          p.loadingMesg.delay(1000).fadeIn('fast').spin {radius: 5, width: 3, top: 40}
+          p.loadingMesg.delay(1000).fadeIn('fast').spin {radius: 5, width: 3, left: 450, top: 'auto'}
         complete: ->
           p.loadingMesg.spin(false).stop(true).hide()
           f.filtering = null

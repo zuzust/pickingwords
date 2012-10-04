@@ -2,7 +2,7 @@
 - req_params = { locale: locale, favs: favs }
 
 %ul
-  %li= link_to '@', user_picked_words_path(user, req_params)
+  %li= link_to '@', user_picked_words_path(user, req_params), data: {filter: '@'}
   - ('a'..'z').each do |letter|
     %li{:class => "#{letter == letter_filter ? 'active' : 'none'}"}
-      = link_to letter, user_picked_words_path(user, req_params.merge(letter: letter))
+      = link_to letter, user_picked_words_path(user, req_params.merge(letter: letter)), data: {filter: letter}

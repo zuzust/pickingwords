@@ -118,7 +118,7 @@ section#filters {
         &:hover { color: $grayDarker; cursor: pointer; } } }
 
     #letter_filter {
-      font-size: $baseFontSize * 2.5;
+      font-size: $baseFontSize * 2.4;
       margin: { top: 5px; bottom: 20px; }
       padding-top: 15px;
       border: {
@@ -139,7 +139,7 @@ section#filters {
 
 section#picks {
   #mesgs {
-    width: 490px;
+    width: 500px;
     margin: auto;
     &>p { text-align: center; font-size: $pwFontM; }
     &>p#error, &>p#loading { display: none; } }
@@ -161,7 +161,9 @@ section#picks {
           &>span { margin-right: 10px; }
           &>small {
             float: right;
-            .badge { position: relative; top: 0.45em; } } }
+            a:hover { text-decoration: none; }
+            .badge { position: relative; top: 0.45em; }
+            span[data-badge=fav]:not(.badge-fav) { display:none; } } }
         &:nth-child(2) {
           &>small { margin-left: 10px; } } }
 

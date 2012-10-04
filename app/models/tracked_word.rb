@@ -54,7 +54,7 @@ class TrackedWord
   end
 
   def translate(locale)
-    name_translations[locale]
+    name_translations[locale] == 'unset' ? nil : name_translations[locale]
   end
 
   def translations

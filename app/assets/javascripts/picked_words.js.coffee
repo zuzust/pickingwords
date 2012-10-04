@@ -5,12 +5,10 @@ $('html').addClass 'js'
 
 pwIndex =
   config:
-    transF:
-      effect: 'slideToggle'
-      speed: 300
-    transFW:
-      effect: 'fadeToggle'
-      speed: 300
+    transF:  { effect: 'slideToggle', speed: 300 }
+    transFW: { effect: 'fadeToggle', speed: 300 }
+    spin:    { radius: 5, width: 3, left: 450, top: 'auto' }
+    latency: 800
 
   picks:
     container:   $('#picks')
@@ -18,16 +16,77 @@ pwIndex =
     errorMesg:   $('#picks #mesgs #error')
     loadingMesg: $('#picks #mesgs #loading')
     nopicksMesg: $('#picks #mesgs #nopicks')
+    updating:    null
+
+    updatePick: (args) ->
+      cfg = pwIndex.config
+      p   = pwIndex.picks
+
+      pick = $(@)
+      url  = pick.find('a[data-action=show]').attr 'href'
+
+      p.updating.abort() if p.updating?
+      p.updating = $.ajax
+        type: 'PUT'
+        url: url
+        data: args.data
+        dataType: 'json'
+        cache: false
+        timeout: 8000
+        beforeSend: ->
+          $('#messages').contents().remove()
+          p.loadingMesg.delay(cfg.latency).fadeIn('fast').spin(cfg.spin)
+        complete: ->
+          p.loadingMesg.spin(false).stop(true).hide()
+          p.updating = null
+        success: (json) ->
+          args.onSuccess?.call pick
+        error: (json) ->
+          args.onError?.call(pick) unless json.statusText is 'abort'
+
+    toggleEditable: (e) ->
+      pick  = $(@)
+      badge = pick.find('span[data-badge=fav]')
+
+      badge.parent().removeClass('pw-help')
+      badge.stop(true).fadeToggle('fast') unless badge.hasClass('badge-fav')
+
+    toggleFav: (e) ->
+      e.preventDefault()
+
+      f = pwIndex.filters
+      p = pwIndex.picks
+
+      badge = $(@)
+      pick  = badge.closest 'article'
+      faved = if badge.hasClass('badge-fav') then 0 else 1
+
+      p.updatePick.call pick,
+        data: { picked_word: {fav: faved} }
+        onSuccess: ->
+          pick   = $(@)
+          badge  = pick.find('span[data-badge=fav]')
+          edited = pick.find('time')
+          favs   = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
+
+          badge.toggleClass 'badge-fav'
+          edited.text('today')
+
+          if favs and not badge.hasClass('badge-fav')
+            pick.fadeOut 'fast', ->
+              $(@).remove()
+              p.nopicksMesg.show() if p.list.children('article').length is 0
 
   filters:
-    container:      $('#filters')
-    wrapper:        $('#filters .pw-filters_wrapper')
-    langFilter:     $('#lang_filter')
-    letterFilter:   $('#letter_filter')
-    tfWrapper:      $('#filters .pw-tf_wrapper')
-    filtering:      null
+    container:    $('#filters')
+    wrapper:      $('#filters .pw-filters_wrapper')
+    langFilter:   $('#lang_filter')
+    letterFilter: $('#letter_filter')
+    tfWrapper:    $('#filters .pw-tf_wrapper')
+    filtering:    null
 
     applyFilter: (handlers) ->
+      cfg = pwIndex.config
       f = pwIndex.filters
       p = pwIndex.picks
 
@@ -42,15 +101,15 @@ pwIndex =
         timeout: 8000
         beforeSend: ->
           $('#messages').contents().remove()
-          p.list.children().fadeOut 1000
           p.errorMesg.hide()
-          p.nopicksMesg.delay(1000).fadeOut 'fast'
-          p.loadingMesg.delay(1000).fadeIn('fast').spin {radius: 5, width: 3, left: 450, top: 'auto'}
+          p.nopicksMesg.delay(cfg.latency).fadeOut('fast')
+          p.loadingMesg.delay(cfg.latency).fadeIn('fast').spin(cfg.spin)
+          p.list.children().fadeOut(cfg.latency)
         complete: ->
           p.loadingMesg.spin(false).stop(true).hide()
           f.filtering = null
         success: ->
-          handlers?.onSuccess.call link
+          handlers.onSuccess?.call link
         error: (response) ->
           p.errorMesg.show() unless response.statusText is 'abort'
 
@@ -70,30 +129,29 @@ pwIndex =
         link = $(@)
 
         f.hiliteLetter.call link
-        if link.text() is '@' then tf.restore() else tf.colapse()
+        if link.data('filter') is '@' then tf.restore() else tf.colapse()
 
     toggleFav: ->
       f  = pwIndex.filters
       lf = f.letterFilter
 
-      link = $(@)
-      span = link.children('span.badge')
+      link  = $(@)
+      badge = link.children('span.badge')
 
       lf.find('li.active').removeClass 'active'
-      span.toggleClass 'badge-fav'
+      badge.toggleClass 'badge-fav'
 
-      # if the 'fav' link url contained 'favs=1'
-      # we are served the faved picks
-      # and we must remove that chunk from current urls
-      url    = link.attr 'href'
-      faved  = url.search(/favs=1/) >= 0
+      # if we are served the faved picks
+      # we must remove 'favs=1' chunk from 'fav' filter url
+      # and append it to letter filters url
+      faved  = badge.hasClass 'badge-fav'
       chunks = unfav: {ptrn: /favs=1\&/, str: ''}, fav: {ptrn: /\?/, str: '?favs=1\&'}
 
       # fchunks: chunks used to update fav link url
       # lchunks: chunks used to update letters link url
       [fchunks, lchunks] = if faved then [chunks.unfav, chunks.fav] else [chunks.fav, chunks.unfav]
 
-      link.attr 'href', url.replace(fchunks.ptrn, fchunks.str)
+      link.attr 'href', link.attr('href').replace(fchunks.ptrn, fchunks.str)
       lf.find('a').each ->
         $(@).attr 'href', $(@).attr('href').replace(lchunks.ptrn, lchunks.str)
 
@@ -102,18 +160,18 @@ pwIndex =
       li   = link.parent()
 
       li.siblings('.active').removeClass 'active'
-      li.addClass 'active' unless link.text() is '@'
+      li.addClass 'active' unless link.data('filter') is '@'
 
     stick: (e, dir) ->
-      f = pwIndex.filters
-      c = $('#content')
+      f   = pwIndex.filters
+      c   = $('#content')
 
       if dir is 'down'
         f.container.css height: f.wrapper.outerHeight()
-        f.wrapper.addClass('pw-sticky').stop().animate {width: c.outerWidth()}, 'fast'
+        f.wrapper.addClass('pw-sticky').stop().css(top: 0).animate({top: 40, width: c.outerWidth()})
       else
         f.container.css height: 'auto'
-        f.wrapper.removeClass('pw-sticky').stop().animate {width: c.outerWidth()}, 'fast'
+        f.wrapper.removeClass('pw-sticky').stop().animate({top: 'auto', width: c.outerWidth()}, 'fast')
 
   translationForm:
     container: $('#translation_form')
@@ -127,25 +185,29 @@ pwIndex =
       tf.toggle() if tf.container.is(':hidden')
 
     toggle: ->
-      tf      = pwIndex.translationForm
-      f       = pwIndex.filters
-      tf_cfg  = pwIndex.config.transF
-      tfw_cfg = pwIndex.config.transFW
+      cfg = pwIndex.config
+      tf  = pwIndex.translationForm
+      f   = pwIndex.filters
 
-      f.tfWrapper[tfw_cfg.effect] tfw_cfg.speed
-      tf.container[tf_cfg.effect] tf_cfg.speed, ->
-        $.scrollTo '0px', tf_cfg.speed + 100
+      f.tfWrapper[cfg.transFW.effect] cfg.transFW.speed
+      tf.container[cfg.transF.effect] cfg.transF.speed, ->
+        $.scrollTo '0px', cfg.transF.speed + 100
 
   init: (options) ->
     $.extend @.config, options
 
     tf = @.translationForm
     f  = @.filters
+    p  = @.picks
 
-    tf.container.on   'click', '.close', tf.toggle
+    tf.container.on 'click', '.close', tf.toggle
+
     f.langFilter.on   'click', '.pw-tf_wrapper', tf.toggle
-    f.langFilter.on   'click', 'a:contains("fav")', f.filterByFav
+    f.langFilter.on   'click', 'a[data-filter=fav]', f.filterByFav
     f.letterFilter.on 'click', 'a', f.filterByLetter
     f.container.waypoint handler: f.stick
+
+    p.list.on { mouseenter: p.toggleEditable, mouseleave: p.toggleEditable}, 'article'
+    p.list.on 'click', 'article span[data-badge=fav]', p.toggleFav
 
 pwIndex.init()

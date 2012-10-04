@@ -1,14 +1,14 @@
 - favs_filter, klass = favs ? [nil, 'fav'] : ['1', '']
-= link_to user_picked_words_path(user, locale: locale, favs: favs_filter) do
-  = badge 'fav', klass
+= link_to user_picked_words_path(user, locale: locale, favs: favs_filter), data: {filter: 'fav'} do
+  = badge 'fav', 'fav', klass
 
 - locale_filter = locale.to_sym
 - locales.each do |locale|
   - if locale_filter == locale
-    = badge locale.upcase, 'info'
+    = badge locale.upcase, 'locale', 'info'
   - else
-    = link_to user_picked_words_path(user, locale: locale) do
-      = badge locale.upcase
+    = link_to user_picked_words_path(user, locale: locale), data: {filter: locale} do
+      = badge locale.upcase, 'locale'
 
 %span.pw-tf_wrapper
   %i.icon-search

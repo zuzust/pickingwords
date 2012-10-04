@@ -40,12 +40,17 @@ class PickedWordsController < ApplicationController
   end
 
   def update
-    if @picked_word.update_attributes(params[:picked_word])
-      expire_cached_content(@picked_word)
-      flash[:notice] = 'Pick successfully updated'
-    end
+    respond_to do |format|
+      if @picked_word.update_attributes(params[:picked_word])
+        expire_cached_content(@picked_word)
 
-    respond_with(user, @picked_word)
+        format.html { redirect_to [user, @picked_word], notice: 'Pick successfully updated' }
+        format.json { render json: @picked_word }
+      else
+        format.html { render :edit }
+        format.json { render json: @picked_word.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

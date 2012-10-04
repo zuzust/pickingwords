@@ -14,6 +14,7 @@ pwIndex =
 
   picks:
     container:   $('#picks')
+    list:        $('#picks #list')
     errorMesg:   $('#picks #mesgs #error')
     loadingMesg: $('#picks #mesgs #loading')
     nopicksMesg: $('#picks #mesgs #nopicks')
@@ -41,6 +42,7 @@ pwIndex =
         timeout: 8000
         beforeSend: ->
           $('#messages').contents().remove()
+          p.list.children().fadeOut 'fast'
           p.errorMesg.hide()
           p.nopicksMesg.delay(1000).fadeOut 'fast'
           p.loadingMesg.delay(1000).fadeIn('fast').spin {radius: 5, width: 3, top: 40}

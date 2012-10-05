@@ -17,5 +17,4 @@
 //= require spin
 //= require jquery.spin
 //= require jquery.scrollTo
-//= require jquery.color
 //= require_tree .

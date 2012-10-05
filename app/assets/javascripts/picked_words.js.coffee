@@ -42,38 +42,6 @@ pwIndex =
         error: (json) ->
           args.onError?.call pick
 
-    enableEditable: (e) ->
-      pick  = $(@)
-      badge = pick.find('span[data-badge=fav]')
-
-      unless badge.hasClass('badge-fav')
-        badge.stop()
-             .animate
-               color: '#fff'
-               backgroundColor: '#df8505'
-               borderLeftColor: '#fff'
-               borderTopColor: '#fff'
-               borderRightColor: '#fff'
-               borderBottomColor: '#fff'
-               'border-width': 0,
-               100
-
-    disableEditable: (e) ->
-      pick  = $(@)
-      badge = pick.find('span[data-badge=fav]')
-
-      unless badge.hasClass('badge-fav')
-        badge.stop()
-             .animate
-               color: '#999'
-               backgroundColor: '#fff'
-               borderLeftColor: '#999'
-               borderTopColor: '#999'
-               borderRightColor: '#999'
-               borderBottomColor: '#999'
-               'border-width': 2,
-               100
-
     toggleFav: (e) ->
       e.preventDefault()
 
@@ -91,7 +59,7 @@ pwIndex =
           badge  = pick.find('span[data-badge=fav]')
           edited = pick.find('time')
 
-          badge.stop(true, true).toggleClass('badge-fav badge-unfav')
+          badge.toggleClass('badge-fav badge-unfav')
           unless edited.data('edited-today')?
             edited.fadeOut 'fast', ->
               $(@).text($(@).data 'today').fadeIn()
@@ -233,7 +201,6 @@ pwIndex =
     f.letterFilter.on 'click', 'a', f.filterByLetter
     f.container.waypoint handler: f.stick
 
-    p.list.on { mouseenter: p.enableEditable, mouseleave: p.disableEditable}, 'article'
     p.list.on 'click', 'article span[data-badge=fav]', p.toggleFav
 
 pwIndex.init()

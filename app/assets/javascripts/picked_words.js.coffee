@@ -60,10 +60,10 @@ pwIndex =
           edited = pick.find('time')
 
           badge.toggleClass('badge-fav badge-unfav')
-          unless edited.data('edited-today')?
+          unless edited.data('edited_today') is 1
             edited.fadeOut 'fast', ->
-              $(@).text($(@).data 'today').fadeIn()
-              $(@).data 'edited-today', 1
+              $(@).text($(@).data 'i18n_today').fadeIn()
+              $(@).data 'edited_today', 1
 
           favs = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
           if favs and not badge.hasClass('badge-fav')

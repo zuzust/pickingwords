@@ -57,9 +57,10 @@ module BootstrapHelper
   end
 
   # renders:
-  # <a href='#' rel='tooltip' title='title' class='pw-help'>...</a>
-  def tooltip(title, &block)
-    link_to '#', rel: 'tooltip', title: title, class: 'pw-help' do
+  # <a href='#' rel='tooltip' title='title'[ class='pw-help']>...</a>
+  def tooltip(title, help=true, &block)
+    klass = help ? 'pw-help' : nil
+    link_to '#', rel: 'tooltip', title: title, class: klass do
       yield
     end
   end

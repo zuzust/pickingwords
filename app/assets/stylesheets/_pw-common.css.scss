@@ -159,7 +159,17 @@ footer#page_footer {
 }
 
 .badge-fav {
+  color: $white;
   background-color: darken($orange, 5%);
+  border: none;
+  @include opacity(1);
+}
+
+.badge-unfav {
+  color: $grayLight;
+  background-color: $white;
+  border: 2px solid $grayLight;
+  @include opacity(0.5);
 }
 
 .pw-help {

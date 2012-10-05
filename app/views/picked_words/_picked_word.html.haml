@@ -4,8 +4,8 @@
       %span.pw-word_name= picked_word.name
       %span.pw-word_trans= picked_word.translation
       %small
-        - klass = picked_word.fav ? 'fav' : ''
-        = tooltip('Fav') { badge 'f', 'fav', klass }
+        - klass = picked_word.fav ? 'fav' : 'unfav'
+        = tooltip('Fav', false) { badge 'f', 'fav', klass }
         = tooltip('Searches') { badge picked_word.searches, 'searches' }
 
     %div 
@@ -13,7 +13,7 @@
       = badge picked_word.to_lang.upcase, 'locale', 'info'
       %small
         last edited
-        %time= picked_word.updated_at.to_s(:last_edited_short)
+        %time{:data => {:today => "today"}}= picked_word.updated_at.to_s(:last_edited_short)
 
     %footer 
       = link_to 'Show', [user, picked_word], data: {action: 'show'}

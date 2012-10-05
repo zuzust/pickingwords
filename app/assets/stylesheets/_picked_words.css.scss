@@ -162,8 +162,7 @@ section#picks {
           &>small {
             float: right;
             a:hover { text-decoration: none; }
-            .badge { position: relative; top: 0.45em; }
-            span[data-badge=fav]:not(.badge-fav) { display:none; } } }
+            .badge { position: relative; top: 0.45em; } } }
         &:nth-child(2) {
           &>small { margin-left: 10px; } } }
 

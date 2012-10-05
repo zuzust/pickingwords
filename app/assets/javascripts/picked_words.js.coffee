@@ -35,21 +35,44 @@ pwIndex =
         timeout: 8000
         beforeSend: ->
           $('#messages').contents().remove()
-          p.loadingMesg.delay(cfg.latency).fadeIn('fast').spin(cfg.spin)
         complete: ->
-          p.loadingMesg.spin(false).stop(true).hide()
           p.updating = null
         success: (json) ->
           args.onSuccess?.call pick
         error: (json) ->
           args.onError?.call(pick) unless json.statusText is 'abort'
 
-    toggleEditable: (e) ->
+    enableEditable: (e) ->
       pick  = $(@)
       badge = pick.find('span[data-badge=fav]')
 
-      badge.parent().removeClass('pw-help')
-      badge.stop(true).fadeToggle('fast') unless badge.hasClass('badge-fav')
+      unless badge.hasClass('badge-fav')
+        badge.stop()
+             .animate
+               color: '#fff'
+               backgroundColor: '#df8505'
+               borderLeftColor: '#fff'
+               borderTopColor: '#fff'
+               borderRightColor: '#fff'
+               borderBottomColor: '#fff'
+               'border-width': 0,
+               100
+
+    disableEditable: (e) ->
+      pick  = $(@)
+      badge = pick.find('span[data-badge=fav]')
+
+      unless badge.hasClass('badge-fav')
+        badge.stop()
+             .animate
+               color: '#999'
+               backgroundColor: '#fff'
+               borderLeftColor: '#999'
+               borderTopColor: '#999'
+               borderRightColor: '#999'
+               borderBottomColor: '#999'
+               'border-width': 2,
+               100
 
     toggleFav: (e) ->
       e.preventDefault()
@@ -67,11 +90,14 @@ pwIndex =
           pick   = $(@)
           badge  = pick.find('span[data-badge=fav]')
           edited = pick.find('time')
-          favs   = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
 
-          badge.toggleClass 'badge-fav'
-          edited.text('today')
+          badge.stop(true, true).toggleClass('badge-fav badge-unfav')
+          unless edited.data('edited-today')?
+            edited.fadeOut 'fast', ->
+              $(@).text($(@).data 'today').fadeIn()
+              $(@).data 'edited-today', 1
 
+          favs = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
           if favs and not badge.hasClass('badge-fav')
             pick.fadeOut 'fast', ->
               $(@).remove()
@@ -207,7 +233,7 @@ pwIndex =
     f.letterFilter.on 'click', 'a', f.filterByLetter
     f.container.waypoint handler: f.stick
 
-    p.list.on { mouseenter: p.toggleEditable, mouseleave: p.toggleEditable}, 'article'
+    p.list.on { mouseenter: p.enableEditable, mouseleave: p.disableEditable}, 'article'
     p.list.on 'click', 'article span[data-badge=fav]', p.toggleFav
 
 pwIndex.init()

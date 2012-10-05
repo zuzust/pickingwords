@@ -25,7 +25,6 @@ pwIndex =
       pick = $(@)
       url  = pick.find('a[data-action=show]').attr 'href'
 
-      p.updating.abort() if p.updating?
       p.updating = $.ajax
         type: 'PUT'
         url: url
@@ -37,10 +36,11 @@ pwIndex =
           $('#messages').contents().remove()
         complete: ->
           p.updating = null
+          args.onComplete?.call pick
         success: (json) ->
           args.onSuccess?.call pick
         error: (json) ->
-          args.onError?.call(pick) unless json.statusText is 'abort'
+          args.onError?.call pick
 
     enableEditable: (e) ->
       pick  = $(@)
@@ -99,7 +99,7 @@ pwIndex =
 
           favs = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
           if favs and not badge.hasClass('badge-fav')
-            pick.fadeOut 'fast', ->
+            pick.fadeOut ->
               $(@).remove()
               p.nopicksMesg.show() if p.list.children('article').length is 0
 
@@ -111,7 +111,7 @@ pwIndex =
     tfWrapper:    $('#filters .pw-tf_wrapper')
     filtering:    null
 
-    applyFilter: (handlers) ->
+    applyFilter: (args) ->
       cfg = pwIndex.config
       f = pwIndex.filters
       p = pwIndex.picks
@@ -135,7 +135,7 @@ pwIndex =
           p.loadingMesg.spin(false).stop(true).hide()
           f.filtering = null
         success: ->
-          handlers.onSuccess?.call link
+          args.onSuccess?.call link
         error: (response) ->
           p.errorMesg.show() unless response.statusText is 'abort'
 

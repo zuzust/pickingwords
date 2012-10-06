@@ -11,11 +11,11 @@ pwIndex =
     latency: 800
 
   picks:
-    container:   $('#picks')
-    list:        $('#picks #list')
-    errorMesg:   $('#picks #mesgs #error')
-    loadingMesg: $('#picks #mesgs #loading')
-    nopicksMesg: $('#picks #mesgs #nopicks')
+    container:   $('section#picks')
+    list:        $('section#picks div#list')
+    errorMesg:   $('section#picks div#mesgs p#error')
+    loadingMesg: $('section#picks div#mesgs p#loading')
+    nopicksMesg: $('section#picks div#mesgs p#nopicks')
     updating:    null
 
     updatePick: (args) ->
@@ -37,9 +37,10 @@ pwIndex =
         complete: ->
           p.updating = null
           args.onComplete?.call pick
-        success: (json) ->
-          args.onSuccess?.call pick
-        error: (json) ->
+        success: ->
+          data = arguments[0]
+          args.onSuccess?.call pick, data
+        error: ->
           args.onError?.call pick
 
     toggleFav: (e) ->
@@ -54,29 +55,33 @@ pwIndex =
 
       p.updatePick.call pick,
         data: { picked_word: {fav: faved} }
-        onSuccess: ->
-          pick   = $(@)
-          badge  = pick.find('span[data-badge=fav]')
-          edited = pick.find('time')
+        onSuccess: (data) ->
+          pick = $(@)
 
+          badge = pick.find('span[data-info=fav]')
           badge.toggleClass('badge-fav badge-unfav')
-          unless edited.data('edited_today') is 1
-            edited.fadeOut 'fast', ->
-              $(@).text($(@).data 'i18n_today').fadeIn()
-              $(@).data 'edited_today', 1
 
-          favs = f.langFilter.find('span[data-badge=fav]').hasClass('badge-fav')
+          time = pick.find('time')
+          lastEdited = new Date(time.data('last_edited')).toDateString()
+          today = new Date(Date.now()).toDateString()
+
+          unless lastEdited is today
+            time.fadeOut 'fast', ->
+              $(@).text('today').fadeIn()
+              $(@).data('last_edited', data.updated_at)
+
+          favs = f.langFilter.find('span[data-info=fav]').hasClass('badge-fav')
           if favs and not badge.hasClass('badge-fav')
             pick.fadeOut ->
               $(@).remove()
               p.nopicksMesg.show() if p.list.children('article').length is 0
 
   filters:
-    container:    $('#filters')
-    wrapper:      $('#filters .pw-filters_wrapper')
-    langFilter:   $('#lang_filter')
-    letterFilter: $('#letter_filter')
-    tfWrapper:    $('#filters .pw-tf_wrapper')
+    container:    $('section#filters')
+    wrapper:      $('section#filters div.pw-filters_wrapper')
+    langFilter:   $('section#filters div#lang_filter')
+    letterFilter: $('section#filters div#letter_filter')
+    tfWrapper:    $('section#filters div#lang_filter span.pw-tf_wrapper')
     filtering:    null
 
     applyFilter: (args) ->
@@ -94,7 +99,7 @@ pwIndex =
         cache: false
         timeout: 8000
         beforeSend: ->
-          $('#messages').contents().remove()
+          $('section#messages').contents().remove()
           p.errorMesg.hide()
           p.nopicksMesg.delay(cfg.latency).fadeOut('fast')
           p.loadingMesg.delay(cfg.latency).fadeIn('fast').spin(cfg.spin)
@@ -104,8 +109,9 @@ pwIndex =
           f.filtering = null
         success: ->
           args.onSuccess?.call link
-        error: (response) ->
-          p.errorMesg.show() unless response.statusText is 'abort'
+        error: ->
+          status = arguments[1]
+          p.errorMesg.show() unless status is 'abort'
 
     filterByFav: (e) ->
       e.preventDefault()
@@ -158,7 +164,7 @@ pwIndex =
 
     stick: (e, dir) ->
       f   = pwIndex.filters
-      c   = $('#content')
+      c   = $('section#content')
 
       if dir is 'down'
         f.container.css height: f.wrapper.outerHeight()
@@ -168,7 +174,7 @@ pwIndex =
         f.wrapper.removeClass('pw-sticky').stop().animate({top: 'auto', width: c.outerWidth()}, 'fast')
 
   translationForm:
-    container: $('#translation_form')
+    container: $('section#translation_form')
 
     colapse: ->
       tf = pwIndex.translationForm
@@ -186,6 +192,7 @@ pwIndex =
       f.tfWrapper[cfg.transFW.effect] cfg.transFW.speed
       tf.container[cfg.transF.effect] cfg.transF.speed, ->
         $.scrollTo '0px', cfg.transF.speed + 100
+        tf.container.find('div#fields input#name').focus()
 
   init: (options) ->
     $.extend @.config, options
@@ -194,13 +201,13 @@ pwIndex =
     f  = @.filters
     p  = @.picks
 
-    tf.container.on 'click', '.close', tf.toggle
+    tf.container.on 'click', 'a.close', tf.toggle
 
-    f.langFilter.on   'click', '.pw-tf_wrapper', tf.toggle
+    f.langFilter.on   'click', 'span.pw-tf_wrapper', tf.toggle
     f.langFilter.on   'click', 'a[data-filter=fav]', f.filterByFav
     f.letterFilter.on 'click', 'a', f.filterByLetter
     f.container.waypoint handler: f.stick
 
-    p.list.on 'click', 'article span[data-badge=fav]', p.toggleFav
+    p.list.on 'click', 'article span[data-info=fav]', p.toggleFav
 
 pwIndex.init()

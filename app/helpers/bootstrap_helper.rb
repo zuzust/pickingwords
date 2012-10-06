@@ -66,10 +66,10 @@ module BootstrapHelper
   end
 
   # renders:
-  # <span class='badge' data-badge='type'>text</span>
+  # <span class='badge' data-info='type'>text</span>
   def badge(text, type, klass="")
     klass = klass.blank? ? "badge" : "badge badge-#{klass}" 
-    content_tag :span, text, class: klass, data: {badge: type}
+    content_tag :span, text, class: klass, data: {info: type}
   end
 
   # renders:

@@ -4,7 +4,7 @@
   %header
     %span
       = @picked_word.name
-      = badge @picked_word.from_lang.upcase, 'locale', 'info'
+      = badge @picked_word.from_lang.upcase, 'lang', 'info'
     %small
       = tooltip('Fav') { badge 'f', 'fav', 'fav' } if @picked_word.fav
       = tooltip('Searches') { badge @picked_word.searches, 'searches' }
@@ -17,7 +17,7 @@
       translation:
       %span
         = @picked_word.translation
-        = badge @picked_word.to_lang.upcase, 'locale', 'info'
+        = badge @picked_word.to_lang.upcase, 'lang', 'info'
 
     - if @picked_word.contexts.size > 0
       #contexts

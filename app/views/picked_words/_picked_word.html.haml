@@ -9,12 +9,11 @@
         = tooltip('Searches') { badge picked_word.searches, 'searches' }
 
     %div 
-      = badge picked_word.from_lang.upcase, 'locale', 'info'
-      = badge picked_word.to_lang.upcase, 'locale', 'info'
+      = badge picked_word.from_lang.upcase, 'lang', 'info'
+      = badge picked_word.to_lang.upcase, 'lang', 'info'
       %small
         last edited
-        - edited_today = picked_word.updated_at.getutc.today? ? 1 : 0
-        %time{:data => {:i18n_today => "today", :edited_today => "#{edited_today}"}}
+        %time{:data => {:last_edited => "#{picked_word.updated_at}"}}
           = picked_word.updated_at.to_s(:last_edited_short)
 
     %footer 

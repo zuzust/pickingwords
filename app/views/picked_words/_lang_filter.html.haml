@@ -5,10 +5,10 @@
 - locale_filter = locale.to_sym
 - locales.each do |locale|
   - if locale_filter == locale
-    = badge locale.upcase, 'locale', 'info'
+    = badge locale.upcase, 'lang', 'info'
   - else
     = link_to user_picked_words_path(user, locale: locale), data: {filter: locale} do
-      = badge locale.upcase, 'locale'
+      = badge locale.upcase, 'lang'
 
 %span.pw-tf_wrapper
   %i.icon-search

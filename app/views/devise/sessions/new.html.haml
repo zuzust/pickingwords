@@ -7,8 +7,8 @@
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     = f.error_notification
 
-    = f.input :email, required: false, autofocus: true
-    = f.input :password
+    = f.input :email, required: false, placeholder: 'guest@example.com', autofocus: true
+    = f.input :password, placeholder: 'secret'
 
     - if devise_mapping.rememberable?
       = f.input :remember_me, as: :boolean
